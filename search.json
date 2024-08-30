@@ -1,0 +1,16 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": " Openscapes JupyterHub Access ",
+    "section": "",
+    "text": "Openscapes JupyterHub Access \n\nOpenscapes runs JupyterHubs for organizations that are starting to explore cloud computing. These hubs provide a place for people to host workshops and experiment with cloud-based workflows.\nThe hubs are set up and administered by our amazing partners at 2i2c.\nAccess the login page for your organization below:\n\n\n\n\n\n\n\n\n\n\nNASA-Openscapes Hub Login\n\n\n\n\n\nNMFS-Openscapes Hub Login"
+  }
+]
