@@ -1,7 +1,7 @@
 /* css styles */
 img.login-logo {
     margin: 0 auto; 
-    height: 200px;
+    max-height: 185px;
 }
 
 img.inline{
