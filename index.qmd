@@ -5,14 +5,9 @@
 
 :::
 
-[Openscapes](https://openscapes.org) runs [JupyterHubs](https://jupyter.org/hub) for organizations that are starting to explore cloud computing. These hubs provide a place for 
-people to host workshops and experiment with cloud-based workflows. 
-
-The hubs are set up and administered by our amazing partners at [2i2c](https://2i2c.org).
+[Openscapes](https://openscapes.org) supports organizations that are starting to explore cloud computing by partnering with [2i2c](https://2i2c.org), who design and administer a global network of community hubs. Openscapes Hubs provide a place for people to teach workshops and experiment with cloud-based workflows.
 
 Access the login page for your organization below:
-
-<br>
 
 ---
 
@@ -24,7 +19,7 @@ Access the login page for your organization below:
 
 ![](images/nasa-openscapes.png){.login-logo alt="NASA logo to left of Openscapes logo"}
 
-[NASA-Openscapes Hub Login](https://openscapes.2i2c.cloud/){.btn-login .btn .btn-primary .btn-lg role="button"}
+[NASA-Openscapes Hub Login](https://openscapes.2i2c.cloud/){.btn-login .nasa .btn .btn-primary .btn-lg role="button"}
 
 :::
 
@@ -37,7 +32,7 @@ Access the login page for your organization below:
 
 ![](images/nmfs-openscapes.png){.login-logo alt="NMFS logo to left of Openscapes logo"}
 
-[NMFS-Openscapes Hub Login](){.btn-login .btn .btn-primary .btn-lg role="button"}
+[NMFS-Openscapes Hub Login](){.btn-login .noaa .btn .btn-primary .btn-lg role="button"}
 
 :::
 
