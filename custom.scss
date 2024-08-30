@@ -16,9 +16,11 @@ $openscapes-med-2: #FFAE64;
 $openscapes-dark: #FE844E;
 $openscapes-dark-2: #FF734F;
 $openscapes-blue: #C5C7F0;
+$noaa-light-blue: #0093D0;
+$nasa-blue: #2A2C94;
 
 // Navbar
-$navbar-bg: $openscapes-med-2;
+$navbar-bg: $openscapes-dark-2;
 //$navbar-fg: $bluegray !default;
 $navbar-hl: $white !default;
 
@@ -37,6 +39,14 @@ $navbar-hl: $white !default;
     border-radius: 20px;
     border: none;
     margin-top: 1em;
-    background-color: $openscapes-dark;
+    background-color: $openscapes-dark-2;
     font-weight: bolder;
+}
+
+.btn-login.nasa:hover {
+    background-color: $nasa-blue;
+}
+
+.btn-login.noaa:hover {
+    background-color: $noaa-light-blue;
 }
