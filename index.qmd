@@ -5,18 +5,18 @@
 
 :::
 
-Openscapes runs JupyterHubs for organizations that are starting to explore cloud computing. These hubs provide a place for 
+[Openscapes](https://openscapes.org) runs [JupyterHubs](https://jupyter.org/hub) for organizations that are starting to explore cloud computing. These hubs provide a place for 
 people to host workshops and experiment with cloud-based workflows. 
 
 The hubs are set up and administered by our amazing partners at [2i2c](https://2i2c.org).
 
 Access the login page for your organization below:
 
----
-
 <br>
 
-::: {layout-ncol="2"}
+---
+
+::: {layout-ncol="2" style="margin-top: 3em;"}
 
 ::: {.text-center}
 
@@ -45,3 +45,6 @@ Access the login page for your organization below:
 
 :::
 
+::: {.text-center}
+![](images/jupyterhub-logo.png){style="margin-top: 1em;"}
+:::
