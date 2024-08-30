@@ -1,0 +1,47 @@
+
+::: {.text-center style="margin-bottom: 2em;"}
+
+# ![](images/openscapes_hex.png){.inline} Openscapes JupyterHub Access ![](images/2i2c-logo.png){.inline}
+
+:::
+
+Openscapes runs JupyterHubs for organizations that are starting to explore cloud computing. These hubs provide a place for 
+people to host workshops and experiment with cloud-based workflows. 
+
+The hubs are set up and administered by our amazing partners at [2i2c](https://2i2c.org).
+
+Access the login page for your organization below:
+
+---
+
+<br>
+
+::: {layout-ncol="2"}
+
+::: {.text-center}
+
+::: {.login-area}
+
+![](images/nasa-openscapes.png){.login-logo alt="NASA logo to left of Openscapes logo"}
+
+[NASA-Openscapes Hub Login](https://openscapes.2i2c.cloud/){.btn-login .btn .btn-primary .btn-lg role="button"}
+
+:::
+
+:::
+
+
+::: {.text-center}
+
+::: {.login-area}
+
+![](images/nmfs-openscapes.png){.login-logo alt="NMFS logo to left of Openscapes logo"}
+
+[NMFS-Openscapes Hub Login](){.btn-login .btn .btn-primary .btn-lg role="button"}
+
+:::
+
+:::
+
+:::
+

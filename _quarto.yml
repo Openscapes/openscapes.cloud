@@ -1,0 +1,25 @@
+project:
+  type: website
+
+website:
+  title: "Openscapes JupyterHubs"
+  site-url: https://openscapes.cloud/ 
+  repo-url: https://github.com/Openscapes/openscapes.cloud 
+  repo-actions: [edit, source, issue]
+  favicon: images/openscapes_hex.png  
+  
+  page-footer:
+    right: "This page is built with ❤️ and [Quarto](https://quarto.org/)."
+    left: "&copy; CC-By Openscapes, 2024"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+
+format:
+  html:
+    theme:
+      light: [cosmo, custom.scss]
+    css: styles.css
+

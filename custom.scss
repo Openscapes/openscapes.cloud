@@ -1,0 +1,42 @@
+/*-- scss:functions --*/
+/*-- From Julia Silge's vetiver site: https://github.com/rstudio/vetiver.rstudio.com/blob/55690889e4510c1ecc735f58417f9599b5457cb8/custom.scss --*/
+
+/*-- scss:defaults --*/
+
+//
+// Color system
+//
+$white: #fff !default;
+$black: #000 !default;
+
+$openscapes-light: #FFF5CD;
+$openscapes-light-2: #FFDAA5;
+$openscapes-med: #FEBB7F;
+$openscapes-med-2: #FFAE64;
+$openscapes-dark: #FE844E;
+$openscapes-dark-2: #FF734F;
+$openscapes-blue: #C5C7F0;
+
+// Navbar
+$navbar-bg: $openscapes-med-2;
+//$navbar-fg: $bluegray !default;
+$navbar-hl: $white !default;
+
+/* -- scss:mixins --*/
+
+/*-- scss:rules --*/
+
+.login-area {
+    border: 1px solid #efefef;
+    border-radius: 20px;
+    padding: 1em;
+}
+
+.btn-login {
+    min-width: 165px;
+    border-radius: 20px;
+    border: none;
+    margin-top: 1em;
+    background-color: $openscapes-dark;
+    font-weight: bolder;
+}
