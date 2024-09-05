@@ -1,0 +1,12 @@
+---
+title: "Fledging"
+---
+
+Fledging is a goal of these JupyterHubs, so that users who have had success
+and want to continue their adventures in cloud computing, have the knowledge
+and resources to develop their own solutions.
+
+Here is a [presentation on fledging](https://docs.google.com/presentation/d/1-TiPN8bfY6iDL5EVcEuCQSjqFMs3jPSX2MlNWA6no2E/edit#slide=id.g2ece79fddf8_3_73) given at the Earth Science Information Partners
+(ESIP) conference in July, 2024.
+
+More resources coming soon...

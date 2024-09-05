@@ -24,6 +24,7 @@ website:
         menu:
           - longterm-access.qmd
           - workshop-access.qmd
+      - fledging.qmd
 
 format:
   html:
