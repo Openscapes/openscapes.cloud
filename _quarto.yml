@@ -20,7 +20,10 @@ website:
         menu:
           - access-policies.qmd
           - data-storage.qmd
-      - workshop-setup.qmd
+      - text: "Access Instructions"
+        menu:
+          - longterm-access.qmd
+          - workshop-access.qmd
 
 format:
   html:

@@ -2,6 +2,8 @@
 title: "Access Policies"
 ---
 
+<!-- two categories of use: experimenting and workshops; relate usage categories to access modes; and link to relevant access instructions for each --> 
+
 ### Obtaining Access to the NASA Openscapes Hub
 
 Access is controlled by the NASA Openscapes Team, who oversee the management of the Hub and Cloud costs. The first step to gaining access to the NASA Openscapes 2i2c Hub is to request access via [this form](https://forms.gle/sLM9szAYN2mq6SbL9). 
