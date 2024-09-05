@@ -16,6 +16,11 @@ website:
       - href: index.qmd
         text: Home
       - about.qmd
+      - text: Policies
+        menu:
+          - access-policies.qmd
+          - data-storage.qmd
+      - workshop-setup.qmd
 
 format:
   html:
