@@ -3,3 +3,25 @@ title: "About"
 ---
 
 About this site
+
+## Images used
+
+NASA-Openscapes:
+- [corn](https://github.com/NASA-Openscapes/corn)
+- [py-rocket](https://github.com/NASA-Openscapes/py-rocket)
+
+NMFS-Openscapes:
+- ...
+
+## Primary contacts
+
+Openscapes:
+- Julia Lowndes
+- Andy Teucher
+
+NASA:
+- Luis Lopez
+
+NMFS:
+- Eli Holmes
+
