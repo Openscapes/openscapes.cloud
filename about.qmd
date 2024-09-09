@@ -4,11 +4,11 @@ title: "About"
 
 ## Introduction
 
-A key objective of NASA Openscapes is to minimize “the time to science” for researchers. Cloud infrastructure can facilitate shortening this time. We use a 2i2c-managed JupyterHub, which lets us work in the cloud next to NASA Earthdata in AWS US-West-2. The purpose of the JupyterHub is to provide initial, exploratory experiences accessing NASA Earthdata in the cloud. It is not meant to be a long-term solution to support on-going science work or software development. For those users that decide working in the Cloud is advantageous and want to move there, we support a migration from the Hub to their own environment through Coiled.io. 
+A key objective of Openscapes is to minimize “the time to science” for researchers. Cloud infrastructure can facilitate shortening this time. We use a 2i2c-managed JupyterHub, which lets us work in the cloud next to NASA Earthdata in AWS region US-West-2. The purpose of the JupyterHub is to provide initial, exploratory experiences with cloud computing. It is not meant to be a long-term solution to support on-going science work or software development. For those users that decide working in the Cloud is advantageous and want to move there, we support a migration from the Hub to their own environment through Coiled.io. 
 
-**Hub Management:** [2i2c](http://2i2c.org/) is a nonprofit that designs, develops, and operates JupyterHubs in the cloud for research and education, including NASA Openscapes. 2i2c ensures that Hubs are cloud-vendor agnostic and are built using open-source software such as JupyterHub and Kubernetes. 
+**Hub Management:** [2i2c](http://2i2c.org/) is a nonprofit that designs, develops, and operates JupyterHubs in the cloud for research and education, including Openscapes. 2i2c ensures that Hubs are cloud-vendor agnostic and are built using open-source software such as JupyterHub and Kubernetes. 
 
-**User Management and Access:** 2i2c manages users through GitHub Teams within the NASA-Openscapes GitHub organization. This requires new users to accept an invitation from NASA-Openscapes. Following that acceptance, the user can then log on to the 2i2c Hub with their Github credentials. Using the NASA Openscapes Hub, the only software requirement to launch the Hub are access to a computer and the internet.
+**User Management and Access:** 2i2c manages users through GitHub Teams within a GitHub organization managed for each Hub. This requires new users to accept an invitation to join the relevant GitHub team. Following that acceptance, the user can then log on to the 2i2c Hub with their Github credentials. The only software requirements to launch the Hub are access to a computer and the internet.
 
 **Hub Location and Right to Replicate:** Our Openscapes JupyterHub is built on top of AWS and is in-region with NASA Earthdata (AWS US-West-2). 2i2c gives users the [right to replicate](https://2i2c.org/right-to-replicate/) their infrastructure. This means that our Hub could be replicated on GoogleEarthEngine or Microsoft Azure, or ported to another AWS region.
 
@@ -16,14 +16,26 @@ With this setup, we have flexibility to support a diverse range of user needs. T
 
 *This section drew from the ‘Solution’ section of the White Paper entitled, “[The Value of Hosted JupyterHubs in enabling Open NASA Earth Science in the Cloud](https://zenodo.org/records/7667299#.Y_Zxt3bMJPY)” (Nickles, et.al, 2022).*
 
-## Images used
+## Computing evironment
+
+The computing environment in the JuptyerHubs is provided by [Docker 
+container images](https://www.docker.com/resources/what-container/), enabling a 
+reproducible software environment for all users on the hub. These images contain 
+the development environment (JupyterLab, RStudio, VSCode etc), as well as the 
+software stack and the dependencies for R and Python based workflows, as
+well as MATLAB and QGIS. Each Hub has a set of preselected images users can 
+choose from when they log in, or users can provide their own image.
+
+### Core Images
 
 NASA-Openscapes:
-- [corn](https://github.com/NASA-Openscapes/corn)
-- [py-rocket](https://github.com/NASA-Openscapes/py-rocket)
+- [corn](https://github.com/NASA-Openscapes/corn): The base image for Python-based
+  workflows using NASA Earthdata.
+- [py-rocket](https://github.com/NASA-Openscapes/py-rocket): The base image for 
+  R-based workflows using NASA Earthdata.
 
 NMFS-Openscapes:
-- ...
+- TBD...
 
 ## Primary contacts
 
