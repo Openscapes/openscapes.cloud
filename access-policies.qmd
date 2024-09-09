@@ -2,35 +2,61 @@
 title: "Access Policies"
 ---
 
-<!-- two categories of use: experimenting and workshops; relate usage categories to access modes; and link to relevant access instructions for each --> 
+We provide Jupyter Hub access for two general categories of use, and use different
+means of access for each use case:
 
-### Obtaining Access to the NASA Openscapes Hub
+1. **Exploring and experimenting with cloud computing** - this includes Openscapes 
+Champions, and Openscapes Mentors and instructors building expertise in the
+environment. The users are given access to the Hub by membership in a
+GitHub Team in the relevant GitHub organization.
+2. **Workshop participants** - this includes access for short (less than a few 
+days) workshops.
 
-Access is controlled by the NASA Openscapes Team, who oversee the management of the Hub and Cloud costs. The first step to gaining access to the NASA Openscapes 2i2c Hub is to request access via [this form](https://forms.gle/sLM9szAYN2mq6SbL9). 
+## Obtaining Access to an Openscapes Hub
 
-Our JupyterHub users are managed in three GitHub Teams: 
+### Via a GitHub Team
 
-* [Long-term access](https://github.com/orgs/nasa-openscapes-workshops/teams/longtermaccess-2i2c): This access is for NASA Openscapes mentors and team, DAAC staff and others who request a longer-term engagement  
-* NASA Openscapes Champions: This access is for teams that participate in the NASA Openscapes Champions Program. These teams have access for up to a year as they migrate their workflows to the Cloud. 
-* Workshops and Hackathons: This provides short term access of up to 1-month to participants of NASA Earthdata workshops. Participants will be removed at any time and have no expectation of on-going storage in their home directories.
+Access is controlled by the Openscapes Team, who oversee the management of the 
+Hub and Cloud costs. The first step to gaining access to one of the Openscapes 
+2i2c Hubs is to request access via the relevant form. 
+[This form](https://forms.gle/sLM9szAYN2mq6SbL9) is used for the NASA Openscapes hub. 
 
-Instructions for admins on how to add people to the hub can be found [here](add-folks-to-2i2c-github-teams.qmd).
+There is a GitHub organization for each Hub, and within each organization our 
+JupyterHub users are managed in two (or three) GitHub Teams: 
 
-### Allowable Uses of 2i2c Hub 
+* Long-term access: 
+This access is for Openscapes mentors and team, staff and others who request a longer-term engagement.
+* Openscapes Champions: This access is for teams that participate in the NASA or NOAA Openscapes Champions Program. 
+These teams have access for up to a year as they experiment with migrating their workflows to the Cloud. 
+* If we have longer workshops which require continued access, or explicitly teach
+GitHub workflows, we may create additional GitHub teams to manage participants's access.
 
-Users who join these GitHub teams agree to use the NASA Openscapes Hub only for work on NASA EarthData related activities. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs). 
+Instructions for admins on how to add people to the hub can be found [here](longterm-access.qmd).
 
-Run large or parallel jobs over large geographic bounding boxes or over long temporal extents should be cleared with the NASA Openscapes Team by submitting an issue to the [2i2cAccessPolicies repository]( https://github.com/NASA-Openscapes/2i2cAccessPolicies).   
+### For workshop participants
 
-### Removal From the NASA Openscapes Hub
+Access is provided on the day of the workshop with a common, global password. The password 
+will be provided to participants at the start of the workshop, and participants will log in with 
+their email address and the shared password. This access method allows us to 
+ensure all workshop participants have easy access for the workshop, without having 
+prior familiarity with GitHub.
 
-The NASA Openscapes Hub is a shared, limited resource that incurs real costs. Users are granted access in the terms above and are removed at the end of those limits. Users that haven’t accessed the Hub in more than six months are also removed for security purposes. 
+## Allowable Uses of 2i2c Hub 
 
-We will do our best to alert users before they lose access to the NASA Openscapes Hub. However, we reserve the right to remove users at any time for any reason. Users that violate the terms of access or incur large Cloud costs without prior permission from the NASA Openscapes Team will be removed immediately.
+Users who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs). 
+
+Running large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the [2i2cAccessPolicies repository]( https://github.com/NASA-Openscapes/2i2cAccessPolicies). 
+<!-- TODO: add/fix repo for access policies for NOAA -->
+
+## Removal From the Openscapes Hub
+
+The Openscapes Hubs are a shared, limited resource that incurs real costs. Users are granted access in the terms above and are removed at the end of those limits. Users that haven’t accessed the Hub in more than six months are also removed for security purposes. 
+
+We will do our best to alert users before they lose access to the Openscapes Hub. However, we reserve the right to remove users at any time for any reason. Users that violate the terms of access or incur large Cloud costs without prior permission from the Openscapes Team will be removed immediately.
 
 ## Data storage policies
 
-Policies on data storage and use of the `HOME` directory can be found in the [data policies page](data-policies.qmd).
+Policies on data storage and use of the `HOME` directory can be found in the [data policies page](data-storage.qmd).
 
 ## Monitoring cloud usage costs
 
