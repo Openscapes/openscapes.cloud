@@ -14,26 +14,28 @@ days) workshops.
 
 ## Obtaining Access to an Openscapes Hub
 
-### Via a GitHub Team
+### Long-term access via a GitHub Team
 
 Access is controlled by the Openscapes Team, who oversee the management of the 
-Hub and Cloud costs. The first step to gaining access to one of the Openscapes 
-2i2c Hubs is to request access via the relevant form. 
-[This form](https://forms.gle/sLM9szAYN2mq6SbL9) is used for the NASA Openscapes hub. 
+Hub and Cloud costs.
 
 There is a GitHub organization for each Hub, and within each organization our 
-JupyterHub users are managed in two (or three) GitHub Teams: 
+JupyterHub users are managed in two (or more) GitHub Teams: 
 
-* Long-term access: 
-This access is for Openscapes mentors and team, staff and others who request a longer-term engagement.
-* Openscapes Champions: This access is for teams that participate in the NASA or NOAA Openscapes Champions Program. 
-These teams have access for up to a year as they experiment with migrating their workflows to the Cloud. 
-* If we have longer workshops which require continued access, or explicitly teach
-GitHub workflows, we may create additional GitHub teams to manage participants's access.
+* Long-term access: This access is for Openscapes mentors and team, staff and 
+  others who request a longer-term engagement.
+* Openscapes Champions: This access is for teams that participate in the NASA or 
+  NOAA Openscapes Champions Program. 
+These teams have access for up to a year as they experiment with migrating their 
+  workflows to the Cloud. 
+* If we have longer workshops which require continued access, or explicitly 
+  teach GitHub workflows in the workshop, we may create additional GitHub teams 
+  to manage participants' access.
 
-Instructions for admins on how to add people to the hub can be found [here](longterm-access.qmd).
+Instructions for admins on how to add people to the hub can be found 
+[here](longterm-access.qmd).
 
-### For workshop participants
+### Short-term access for workshop participants
 
 Access is provided on the day of the workshop with a common, global password. The password 
 will be provided to participants at the start of the workshop, and participants will log in with 
@@ -41,16 +43,21 @@ their email address and the shared password. This access method allows us to
 ensure all workshop participants have easy access for the workshop, without having 
 prior familiarity with GitHub.
 
+Instructions for admins on how to set up and use the shared-password approach 
+can be found [here](workshop-access.qmd). In general, access to the Hub with a 
+workshop shared password will persist for seven days post-workshop.
+
 ## Allowable Uses of 2i2c Hub 
 
 Users who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs). 
 
-Running large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the [2i2cAccessPolicies repository]( https://github.com/NASA-Openscapes/2i2cAccessPolicies). 
+Running large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the [2i2cAccessPolicies repository]( https://github.com/NASA-Openscapes/2i2cAccessPolicies).
+
 <!-- TODO: add/fix repo for access policies for NOAA -->
 
 ## Removal From the Openscapes Hub
 
-The Openscapes Hubs are a shared, limited resource that incurs real costs. Users are granted access in the terms above and are removed at the end of those limits. Users that haven’t accessed the Hub in more than six months are also removed for security purposes. 
+The Openscapes Hubs are a shared, limited resource that incur real costs. Users are granted access under the terms above and are removed at the end of those limits. Users that haven’t accessed the Hub in more than six months are also removed for security purposes. 
 
 We will do our best to alert users before they lose access to the Openscapes Hub. However, we reserve the right to remove users at any time for any reason. Users that violate the terms of access or incur large Cloud costs without prior permission from the Openscapes Team will be removed immediately.
 

@@ -4,7 +4,7 @@ title: "About"
 
 ## Introduction
 
-A key objective of Openscapes is to minimize “the time to science” for researchers. Cloud infrastructure can facilitate shortening this time. We use a 2i2c-managed JupyterHub, which lets us work in the cloud next to NASA Earthdata in AWS region US-West-2. The purpose of the JupyterHub is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development. For those users that decide working in the Cloud is advantageous and want to move there, we support a migration from the Hub to their own environment through Coiled.io.
+A key objective of Openscapes is to minimize “the time to science” for researchers, and cloud infrastructure can facilitate shortening this time. We use a 2i2c-managed JupyterHub hosted on Amazon Web Services (AWS). The purpose of the JupyterHub is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development. For those users that decide working in the cloud is advantageous and want to move some of their work there, we support a migration from the Hub to their own environment through Coiled.io.
 
 **Hub Management:** [2i2c](http://2i2c.org/) is a nonprofit that designs, develops, and operates JupyterHubs in the cloud for research and education, including Openscapes. 2i2c ensures that Hubs are cloud-vendor agnostic and are built using open-source software such as JupyterHub and Kubernetes. 
 
@@ -14,20 +14,20 @@ access for shorter workshops is differentiated from longer-term access for cloud
 experimentation, Openscapes Champions Cohorts, and longer workshops. See our
 [Access Policies](access-policies.qmd) for details.
 
-**Hub Location and Right to Replicate:** Our Openscapes JupyterHub is built on top of AWS and is in-region with NASA Earthdata (AWS US-West-2). 2i2c gives users the [right to replicate](https://2i2c.org/right-to-replicate/) their infrastructure. This means that our Hub could be replicated on GoogleEarthEngine or Microsoft Azure, or ported to another AWS region.
+**Hub Location and Right to Replicate:** Our Openscapes JupyterHub is hosted on AWS and is in-region with NASA Earthdata (AWS US-West-2). 2i2c gives users the [right to replicate](https://2i2c.org/right-to-replicate/) their infrastructure. This means that our Hub could be replicated on GoogleEarthEngine or Microsoft Azure, or ported to another AWS region.
 
 With this setup, we have flexibility to support a diverse range of user needs. The 2i2c Openscapes Hub has been used by the NASA-Openscapes Mentors and other NASA DAAC staff internally as a testing ground for developing cloud tutorials and workflows, but also externally in the research community for workshops like those for science teams and “Hackathons”, a term used here to describe multi-day events with split time for teaching and helping researchers implement concepts into their research projects. 
 
 *This section drew from the ‘Solution’ section of the White Paper entitled, “[The Value of Hosted JupyterHubs in enabling Open NASA Earth Science in the Cloud](https://zenodo.org/records/7667299#.Y_Zxt3bMJPY)” (Nickles, et.al, 2022).*
 
-## Computing evironment
+## Computing environment
 
 The computing environment in the JuptyerHubs is provided by [Docker 
 container images](https://www.docker.com/resources/what-container/), enabling a 
-reproducible software environment for all users on the hub - the only software 
+reproducible software environment for all users on the hub --- the only software 
 requirements to use the Hub are access to a computer and the internet. The images contain 
 the development environment (JupyterLab, RStudio, VSCode etc), as well as the 
-software stack and the dependencies for R and Python based workflows, and 
+software stack and required dependencies for R and Python based workflows, and 
 optionally other software such as MATLAB and QGIS. Each Hub has a set of 
 images users can choose from when they log in, or users can provide their own image.
 
