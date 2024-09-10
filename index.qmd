@@ -5,7 +5,7 @@
 
 :::
 
-[Openscapes](https://openscapes.org) supports organizations that are starting to explore cloud computing by partnering with [2i2c](https://2i2c.org), who design and administer a global network of community hubs. Openscapes Hubs provide a place for people to teach workshops and experiment with cloud-based workflows.
+[**Openscapes**](https://openscapes.org) supports organizations that are starting to explore cloud computing by partnering with [**2i2c**](https://2i2c.org), who design and administer a global network of community hubs. The purpose of Openscapes JupyterHubs is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. 
 
 Access the login page for your organization below:
 
