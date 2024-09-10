@@ -6,7 +6,7 @@ title: "Workshop Access"
 
 - Check with the [primary contact for your hub](about.qmd#primary-contacts) 
   that the Hub image has the packages you need
-- Reach out to 2i2c _a month in advance_ via email `support at 2i2c.freshdesk.com` 
+- Reach out to 2i2c _a month in advance_ via an email to `support at 2i2c.freshdesk.com` 
   (examples below) to tell them about the workshop date, start and end times, 
   \# of participants, anticipated level of resources to be used, access 
   method, and if appropriate, a desired password.
@@ -56,8 +56,8 @@ workshop be removed.
 
 ### Workshop Hub Access via GitHub Teams
 
-If you are hosting a smaller workshop with learners  
-with GitHub and who require longer-term access to the Hub after the workshop, 
+If you are hosting a workshop with where you will be teaching GitHub workflows, 
+or learners who require longer-term access to the Hub after the workshop, 
 follow the instructions to [add participants to the 2i2c Hub](longterm-access.qmd) 
 via a GitHub Team. Then send an email to `support at 2i2c.freshdesk.com`:
 

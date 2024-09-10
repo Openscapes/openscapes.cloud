@@ -1,22 +1,26 @@
 ---
-title: "Longterm Access"
+title: "GitHub-based Access"
 ---
 
-## Individual long-term access
+## Individual access through GitHub teams
 
-Individuals are given long-term access by adding them as members of the 
-`LongtermAccess` team in the relevant organization:
+Individuals are given Hub access by adding them as members of the 
+appropriate team in the relevant organization. The most common teams we use to 
+add users are those for long-term access for mentors and
+core team members in the `NASA-Openscapes` and `NMFS-Openscapes` GitHub organizations, 
+and NASA Openscapes Champions in the `nasa-openscapes-workshops` GitHub organization.
 
+- [NMFS-Openscapes Longterm-Access-2i2c team](https://github.com/orgs/nmfs-openscapes/teams/longterm-access-2i2c)
 - [NASA-Openscapes LongtermAccess-2i2c team](https://github.com/orgs/NASA-Openscapes/teams/longtermaccess-2i2c)
-- [NMFS-Openscapes LongtermAccess-2i2c team](https://github.com/orgs/nmfs-openscapes/teams/longterm-access-2i2c)
+- [NASA-Openscapes-Workshops nasa-champions-2024 team](https://github.com/orgs/nasa-openscapes-workshops/teams/nasa-champions-2024)
 
-This is the workflow to add individual users one by one.
+### 1. Share Google Form with users needing access
 
-### 1. Share Google Form with users needing long-term access
-
-Ask users: Please fill out the Foogle form for Openscapes JupyterHub Access. Users
+Ask users: Please fill out the Google form for Openscapes JupyterHub Access. Users
 must have a GitHub username to fill out the form, as this is how they
-will be given access to the Hub.
+will be given access to the Hub. If they are requesting long-term access they 
+should be sure to list their affiliation and who referred them, so administrators
+know that their request is within scope for the Hub.
 
 - [NASA-Openscapes form](https://forms.gle/htV2PxJwRaP8jDpC6)
 - [NMFS-Openscapes form](https://forms.gle/mP9E46xnJWjFhgmk7)
@@ -69,7 +73,8 @@ same steps as [for adding workshop participants](#4-add-users-to-a-team-in-a-bat
 Go to the appropriate team in GitHub \> Click Add member \> Paste GitHub username. 
 Note there are separate Teams for Champions Cohorts and workshops.
 
-- [NASA-Openscapes GitHub Teams](https://github.com/orgs/nasa-openscapes-workshops/teams)
+- [NASA-Openscapes GitHub Teams](https://github.com/orgs/nasa-openscapes/teams)
+- [NASA-Openscapes-workshops GitHub Teams](https://github.com/orgs/nasa-openscapes-workshops/teams)
 - [NMFS-Openscapes GitHub Teams](https://github.com/orgs/nmfs-openscapes-workshops/teams)
 
 ![](images/github-add-to-team.png){fig-alt="alt text goes here" fig-align="center" width="600"}
@@ -124,7 +129,8 @@ form request.
 ### Directions for invitees
 
 1.  Please go to:
- - NASA: <https://github.com/nasa-openscapes-workshops> 
+ - NASA (workshops/champions): <https://github.com/nasa-openscapes-workshops> 
+ - NASA (longterm access): <https://github.com/nasa-openscapes-workshops> 
  - NMFS: <https://github.com/nmfs-openscapes>
 
 2.  Click the big yellow bar that says "you've been invited" 
