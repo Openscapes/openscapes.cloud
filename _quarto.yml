@@ -13,8 +13,6 @@ website:
     left: "&copy; CC-By Openscapes, 2024"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - about.qmd
       - text: Policies
         menu:
