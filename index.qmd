@@ -32,7 +32,7 @@ Access the login page for your organization below:
 
 ![](images/nmfs-openscapes.png){.login-logo alt="NMFS logo to left of Openscapes logo"}
 
-[NMFS-Openscapes Hub Login](){.btn-login .noaa .btn .btn-primary .btn-lg role="button"}
+[NMFS-Openscapes Hub Login](https://nmfs-openscapes.2i2c.cloud/){.btn-login .noaa .btn .btn-primary .btn-lg role="button"}
 
 :::
 
