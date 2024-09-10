@@ -1,57 +1,110 @@
 ---
 title: "About"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
-## Introduction
+## JupyterHubs
 
-A key objective of Openscapes is to minimize “the time to science” for researchers, and cloud infrastructure can facilitate shortening this time. We use a 2i2c-managed JupyterHub hosted on Amazon Web Services (AWS). The purpose of the JupyterHub is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development. For those users that decide working in the cloud is advantageous and want to move some of their work there, we support a migration from the Hub to their own environment through Coiled.io.
+A key objective of Openscapes JupyterHubs is to minimize “the time to
+science” for researchers, and cloud infrastructure can facilitate
+shortening this time. We use 2i2c-managed JupyterHubs hosted on Amazon
+Web Services (AWS). The purpose of the JupyterHubs is to provide
+initial, exploratory experiences with cloud computing, and to provide a
+platform for running workshops. It is not meant to be a long-term
+solution to support on-going science work or software development. For
+those users that decide working in the cloud is advantageous and want to
+move some of their work there, we are also working on what that can look
+like (fledging).
 
-**Hub Management:** [2i2c](http://2i2c.org/) is a nonprofit that designs, develops, and operates JupyterHubs in the cloud for research and education, including Openscapes. 2i2c ensures that Hubs are cloud-vendor agnostic and are built using open-source software such as JupyterHub and Kubernetes. 
+**Hub Management:** [2i2c](http://2i2c.org/) is a nonprofit that
+designs, develops, and operates JupyterHubs ("Hubs") in the cloud for
+research and education, including Openscapes. 2i2c ensures that Hubs are
+cloud-vendor agnostic and are built using open-source software such as
+JupyterHub and Kubernetes.
 
-**User Management and Access:** Users are given access to the hub based on their 
-reason for accessing the hub, and the length of time they will need access. Short-term
-access for shorter workshops is differentiated from longer-term access for cloud 
-experimentation, Openscapes Champions Cohorts, and longer workshops. See our
-[Access Policies](access-policies.qmd) for details.
+**User Management and Access:** Users are given access to a Hub based on
+their reason for accessing the Hub, and the length of time they will
+need access. Short-term access for shorter workshops is differentiated
+from longer-term access for cloud experimentation, Openscapes Champions
+Cohorts, and longer workshops. See our [Access
+Policies](access-policies.qmd) for details.
 
-**Hub Location and Right to Replicate:** Our Openscapes JupyterHub is hosted on AWS and is in-region with NASA Earthdata (AWS US-West-2). 2i2c gives users the [right to replicate](https://2i2c.org/right-to-replicate/) their infrastructure. This means that our Hub could be replicated on GoogleEarthEngine or Microsoft Azure, or ported to another AWS region.
+**Hub Location and Right to Replicate:** Our JupyterHubs are hosted on
+AWS and are in-region with NASA Earthdata (AWS US-West-2). 2i2c gives
+users the [right to replicate](https://2i2c.org/right-to-replicate/)
+their infrastructure. This means that our Hubs could be replicated on
+GoogleEarthEngine or Microsoft Azure, or ported to another AWS region.
 
-With this setup, we have flexibility to support a diverse range of user needs. The 2i2c Openscapes Hub has been used by the NASA-Openscapes Mentors and other NASA DAAC staff internally as a testing ground for developing cloud tutorials and workflows, but also externally in the research community for workshops like those for science teams and “Hackathons”, a term used here to describe multi-day events with split time for teaching and helping researchers implement concepts into their research projects. 
+With this setup, we have flexibility to support a diverse range of user
+needs. The NASA Openscapes Hub has been used by the NASA Openscapes
+Mentors and other NASA data center (DAAC) staff internally as a testing
+ground for developing cloud tutorials and workflows, but also externally
+in the research community for workshops like those for science teams and
+“Hackathons”, a term used here to describe multi-day events with split
+time for teaching and helping researchers implement concepts into their
+research projects.
 
-*This section drew from the ‘Solution’ section of the White Paper entitled, “[The Value of Hosted JupyterHubs in enabling Open NASA Earth Science in the Cloud](https://zenodo.org/records/7667299#.Y_Zxt3bMJPY)” (Nickles, et.al, 2022).*
+*This section drew from the ‘Solution’ section of the White Paper
+entitled, “[The Value of Hosted JupyterHubs in enabling Open NASA Earth
+Science in the Cloud](https://zenodo.org/records/7667299#.Y_Zxt3bMJPY)”
+(Nickles, et.al, 2022).*
 
 ## Computing environment
 
-The computing environment in the JuptyerHubs is provided by [Docker 
-container images](https://www.docker.com/resources/what-container/), enabling a 
-reproducible software environment for all users on the hub --- the only software 
-requirements to use the Hub are access to a computer and the internet. The images contain 
-the development environment (JupyterLab, RStudio, VSCode etc), as well as the 
-software stack and required dependencies for R and Python based workflows, and 
-optionally other software such as MATLAB and QGIS. Each Hub has a set of 
-images users can choose from when they log in, or users can provide their own image.
+The computing environment in the JuptyerHubs is provided by [Docker
+container images](https://www.docker.com/resources/what-container/),
+enabling a reproducible software environment for all users on the hub
+--- the only software requirements to use the Hub are access to a
+computer and the internet. The images contain the development
+environment (JupyterLab, RStudio, VSCode etc), as well as the software
+stack and required dependencies for R and Python based workflows, and
+optionally other software such as MATLAB and QGIS. Each Hub has a set of
+images users can choose from when they log in, or users can provide
+their own image.
 
 ### Core Images
 
 #### NASA-Openscapes
 
-- [corn](https://github.com/NASA-Openscapes/corn): The base image for Python-based
-  workflows using NASA Earthdata.
-- [py-rocket](https://github.com/NASA-Openscapes/py-rocket): The base image for 
-  R-based workflows using NASA Earthdata.
+-   [corn](https://github.com/NASA-Openscapes/corn): The base image for
+    Python-based workflows using NASA Earthdata.
+-   [py-rocket](https://github.com/NASA-Openscapes/py-rocket): The base
+    image for R-based workflows using NASA Earthdata.
 
 #### NMFS-Openscapes
-- TBD...
+
+-   TBD...
+
+## Openscapes
+
+[Openscapes](https://openscapes.org/)
+is an open source approach and movement that helps researchers and
+those supporting research find each other and feel empowered to conduct
+data-intensive science. Through a creative approach drawing inspiration
+and skills from many places, we provide structures for technical
+skill-building, collaborative teamwork, and inclusive community
+development. Our work builds from many others in the open movement.
+
+Learn more about Openscapes
+[initiatives](https://openscapes.org/initiatives) through our many other
+[open resources](https://openscapes.org/resources),
+[media](https://openscapes.org/media), and
+[events](https://openscapes.org/events), and
+[connect](https://openscapes.org/connect) with us.
 
 ## Primary contacts
 
 #### Openscapes
-- Julia Lowndes
-- Andy Teucher
+
+-   Julia Lowndes
+-   Andy Teucher
 
 #### NASA
-- Luis Lopez
+
+-   Luis Lopez
 
 #### NMFS
-- Eli Holmes
 
+-   Eli Holmes
