@@ -2,10 +2,12 @@
 title: "GitHub-based Access"
 ---
 
-## Individual access through GitHub teams
+This page is written primarily for workshop leads (mentors and other partners) who are inviting people to the Hub, as a collaborator for developing workshop materials or as a participant.
+
+## Individual access through GitHub Teams
 
 Individuals are given Hub access by adding them as members of the 
-appropriate team in the relevant organization. The most common teams we use to 
+appropriate team in the relevant GitHub Organization. The most common teams we use to 
 add users are those for long-term access for mentors and
 core team members in the `NASA-Openscapes` and `NMFS-Openscapes` GitHub organizations, 
 and NASA Openscapes Champions in the `nasa-openscapes-workshops` GitHub organization.
