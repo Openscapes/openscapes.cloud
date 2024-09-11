@@ -2,7 +2,7 @@
 title: "Access Policies"
 ---
 
-We provide Jupyter Hub access for two general categories of use, and use different
+JupyterHub access has two general categories of use, with different
 means of access for each use case:
 
 1. **Exploring and experimenting with cloud computing** - this includes Openscapes 
@@ -22,15 +22,13 @@ Hub and Cloud costs.
 There is a GitHub organization for each Hub, and within each organization our 
 JupyterHub users are managed in two (or more) GitHub Teams: 
 
-* Long-term access: This access is for Openscapes mentors and team, staff and 
+* **Long-term access**: This access is for Openscapes mentors and team, staff and 
   others who request a longer-term engagement.
-* Openscapes Champions: This access is for teams that participate in the NASA or 
+* **Openscapes Champions**: This access is for teams that participate in the NASA or 
   NOAA Openscapes Champions Program. 
 These teams have access for up to a year as they experiment with migrating their 
   workflows to the Cloud. 
-* If we have longer workshops which require continued access, or explicitly 
-  teach GitHub workflows in the workshop, we may create additional GitHub teams 
-  to manage participants' access.
+* **Workshops that teach GitHub workflows**: We create additional GitHub teams to manage participants' access. These teams have access for 3 months as they experiment with migrating their workflows to the Cloud. 
 
 Instructions for admins on how to add people to the hub can be found 
 [here](longterm-access.qmd).
@@ -38,8 +36,7 @@ Instructions for admins on how to add people to the hub can be found
 ### Short-term access for workshop participants
 
 Access is provided on the day of the workshop with a common, global password. The password 
-will be provided to participants at the start of the workshop, and participants will log in with 
-their email address and the shared password. This access method allows us to 
+will be provided to participants at the start of the workshop, and participants will log in with their email address and the shared password. This access method allows us to 
 ensure all workshop participants have easy access for the workshop, without having 
 prior familiarity with GitHub.
 
