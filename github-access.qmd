@@ -157,7 +157,7 @@ for workshops, with low overhead for instructors and participants. This process
 removes the need to add people to a GitHub team, and gives participants "just 
 in time" access to a special workshop hub with a username and shared 
 workshop-specific password. Instructions for this simplified setup are 
-[here](workshop-access.qmd#workshop-hub-access-via-shared-password).
+[here](password-access.qmd#workshop-hub-access-via-shared-password).
 :::
 
 We use a dedicated GitHub Organization - [nasa-openscapes-workshops](https://github.com/nasa-openscapes-workshops) - to manage access, with [GitHub Teams](https://github.com/orgs/nasa-openscapes-workshops/teams) for NASA-Openscapes Champions Cohorts and certain workshops.

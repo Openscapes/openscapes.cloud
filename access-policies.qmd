@@ -31,7 +31,7 @@ These teams have access for up to a year as they experiment with migrating their
 * **Workshops that teach GitHub workflows**: We create additional GitHub teams to manage participants' access. These teams have access for 3 months as they experiment with migrating their workflows to the Cloud. 
 
 Instructions for admins on how to add people to the hub can be found 
-[here](longterm-access.qmd).
+[here](github-access.qmd).
 
 ### Short-term access for workshop participants
 
@@ -41,7 +41,7 @@ ensure all workshop participants have easy access for the workshop, without havi
 prior familiarity with GitHub.
 
 Instructions for admins on how to set up and use the shared-password approach 
-can be found [here](workshop-access.qmd). In general, access to the Hub with a 
+can be found [here](password-access.qmd). In general, access to the Hub with a 
 workshop shared password will persist for seven days post-workshop.
 
 ## Allowable Uses of 2i2c Hub 

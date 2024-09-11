@@ -20,8 +20,8 @@ website:
           - data-storage.qmd
       - text: "Access Instructions"
         menu:
-          - longterm-access.qmd
-          - workshop-access.qmd
+          - github-access.qmd
+          - password-access.qmd
       - fledging.qmd
 
 format:
