@@ -79,8 +79,10 @@ their own image.
 
 ## Openscapes
 
-[Openscapes](https://openscapes.org/)
-is an open source approach and movement that helps researchers and
+The Openscapes Team oversees the management of the Hub and Cloud costs.
+
+[Openscapes](https://openscapes.org/) is an open source approach and
+movement that helps researchers and
 those supporting research find each other and feel empowered to conduct
 data-intensive science. Through a creative approach drawing inspiration
 and skills from many places, we provide structures for technical
