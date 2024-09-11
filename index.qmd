@@ -1,3 +1,8 @@
+---
+format:
+  html:
+    toc: false
+---
 
 ::: {.text-center style="margin-bottom: 2em;"}
 
