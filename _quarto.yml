@@ -13,13 +13,20 @@ website:
     left: "&copy; CC-By Openscapes, 2024"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
       - about.qmd
+      - text: Policies
+        menu:
+          - access-policies.qmd
+          - data-storage.qmd
+      - text: "Access Instructions"
+        menu:
+          - github-access.qmd
+          - password-access.qmd
+      - fledging.qmd
 
 format:
   html:
     theme:
       light: [cosmo, custom.scss]
     css: styles.css
-
+    toc: true

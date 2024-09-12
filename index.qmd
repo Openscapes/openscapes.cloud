@@ -1,3 +1,8 @@
+---
+format:
+  html:
+    toc: false
+---
 
 ::: {.text-center style="margin-bottom: 2em;"}
 
@@ -5,7 +10,7 @@
 
 :::
 
-[Openscapes](https://openscapes.org) supports organizations that are starting to explore cloud computing by partnering with [2i2c](https://2i2c.org), who design and administer a global network of community hubs. Openscapes Hubs provide a place for people to teach workshops and experiment with cloud-based workflows.
+[**Openscapes**](https://openscapes.org) supports organizations that are starting to explore cloud computing by partnering with [**2i2c**](https://2i2c.org), who design and administer a global network of community hubs. The purpose of Openscapes JupyterHubs is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development.
 
 Access the login page for your organization below:
 
@@ -32,7 +37,7 @@ Access the login page for your organization below:
 
 ![](images/nmfs-openscapes.png){.login-logo alt="NMFS logo to left of Openscapes logo"}
 
-[NMFS-Openscapes Hub Login](){.btn-login .noaa .btn .btn-primary .btn-lg role="button"}
+[NMFS-Openscapes Hub Login](https://nmfs-openscapes.2i2c.cloud/){.btn-login .noaa .btn .btn-primary .btn-lg role="button"}
 
 :::
 
