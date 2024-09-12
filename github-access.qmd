@@ -1,10 +1,14 @@
 ---
 title: "GitHub-based Access"
+toc-location: right-body
+toc-depth: 2
 ---
 
-This page is written primarily for workshop leads (mentors and other partners) who are inviting people to the Hub, as a collaborator for developing workshop materials or as a participant.
+---
 
-## Individual access through GitHub Teams
+This page is written primarily for workshop leads (mentors and other partners) 
+who are inviting people to the Hub, as a collaborator for developing workshop 
+materials or as a participant.
 
 Individuals are given Hub access by adding them as members of the 
 appropriate team in the relevant GitHub Organization. The most common teams we use to 
@@ -15,6 +19,11 @@ and NASA Openscapes Champions in the `nasa-openscapes-workshops` GitHub organiza
 - [NMFS-Openscapes Longterm-Access-2i2c team](https://github.com/orgs/nmfs-openscapes/teams/longterm-access-2i2c)
 - [NASA-Openscapes LongtermAccess-2i2c team](https://github.com/orgs/NASA-Openscapes/teams/longtermaccess-2i2c)
 - [NASA-Openscapes-Workshops nasa-champions-2024 team](https://github.com/orgs/nasa-openscapes-workshops/teams/nasa-champions-2024)
+
+If you want to add many people to a team at once, for a Champions cohort or
+for a workshop, [jump to instructions for adding people in a batch](#adding-champions-or-workshop-participants-to-the-hub-as-a-batch)
+
+## Individual long-term access through GitHub Teams
 
 ### 1. Share Google Form with users needing access
 
@@ -42,21 +51,19 @@ When you get an email click '**view response**' (not `view summary`)
 ![](images/google-form-view-response.png){fig-alt="alt text goes here" fig-align="center" width="600"}
 
 ::: {.callout-note}
-
 If you are not sure if the access request is valid (i.e., the requestor does not appear to be an Openscapes mentor, staff member or close collaborator etc.), ask the mentor community in Slack to verify if the person requesting access is affiliated with any mentors' work. If not, then send the requestor the following email, and do not add them to the GitHub team:
 
 > Dear XXX, 
 >
 > Thank you for your interest in our JupyterHub. Currently we provide access to people who participate in workshops taught by NASA Data Center (DAAC) staff through the NASA Openscapes community. We will be adding upcoming events you can sign up for here: https://nasa-openscapes.github.io/news.
 > 
-> Cheers,
+> Best,
 
 Note in the "Notes" column in the Google form response sheet that this email was
 sent denying access, and the date.
 
 - [NASA-Openscapes responses sheet](https://docs.google.com/spreadsheets/d/1TgokoQa-jYncYSOjeYoWYRuDAbyo4uUR-MSzUotvM00/edit?resourcekey#gid=1416760746)
 - [NMFS-Openscapes responses sheet](https://docs.google.com/spreadsheets/d/1e-ysoYDdpe3DHs0j_ZkuNKpkYnU1qX554cBVTwyM3H0/edit?resourcekey#gid=270874439)
-
 :::
 
 ### 4. Copy GitHub username
@@ -72,8 +79,7 @@ If you are adding many new mentors to the long-term access team, you can use the
 same steps as [for adding workshop participants](#4-add-users-to-a-team-in-a-batch-using-kyber)
 :::
 
-Go to the appropriate team in GitHub \> Click Add member \> Paste GitHub username. 
-Note there are separate Teams for Champions Cohorts and workshops.
+Go to the appropriate team in GitHub \> Click Add member \> Paste GitHub username.
 
 - [NASA-Openscapes GitHub Teams](https://github.com/orgs/nasa-openscapes/teams)
 - [NASA-Openscapes-workshops GitHub Teams](https://github.com/orgs/nasa-openscapes-workshops/teams)
@@ -97,32 +103,34 @@ This is what the invitation looks like in the GitHub website interface - clickin
 
 ### 6. Email confirmation
 
-Go back to the Google form response and grab their email address. Send the following email to the person.
+Go back to the Google form response and grab their email address. Send the following email to the person:
 
-**Email for General requests:** 
+:::{.callout-tip collapse="true"}
+## Email for General requests: 
 
-> Subject: [NASA/NMFS] Openscapes Access to 2i2c Hub
-> 
-> Hi \[FIRST NAME\],
->
-> I have added you to the [NASA/NMFS] Openscapes 2i2c Jupyter Hub. Here is the link to the hub: <https://openscapes.cloud/>
->
-> There is a getting started guide in the NASA Earthdata Cloud Cookbook here: <https://nasa-openscapes.github.io/earthdata-cloud-cookbook/>. 
-> You can see policies for hub use here: <https://openscapes.cloud/access-policies.html>, 
-> and policies and best practices for data storage here <https://openscapes.cloud/data-storage.html>
->
-> We'd love to know about the kind of work you are doing on the hub. Please add a brief description of your progress as you go at <https://github.com/NASA-Openscapes/2i2cAccessPolicies/discussions/2>. We will follow up in the next few months. 
->
-> Best,
+Subject: [NASA/NMFS] Openscapes Access to 2i2c Hub
+
+Hi \[FIRST NAME\],
+
+I have added you to the [NASA/NMFS] Openscapes 2i2c Jupyter Hub. Here is the link to the hub: <https://openscapes.cloud/>
+
+There is a getting started guide in the NASA Earthdata Cloud Cookbook here: <https://nasa-openscapes.github.io/earthdata-cloud-cookbook/>. 
+You can see policies for hub use here: <https://openscapes.cloud/access-policies.html>, 
+and policies and best practices for data storage here <https://openscapes.cloud/data-storage.html>
+
+We'd love to know about the kind of work you are doing on the hub. Please add a brief description of your progress as you go at <https://github.com/NASA-Openscapes/2i2cAccessPolicies/discussions/2>. We will follow up in the next few months. 
+
+Best,
 
 <!-- TODO: Will we have a "Discussions" place for NMFS cloud stories? -->
+:::
 
 
 ### 7. Register date in Form Response Sheet
 
 In the Form Response Sheet 
 ([NASA](https://docs.google.com/spreadsheets/d/1TgokoQa-jYncYSOjeYoWYRuDAbyo4uUR-MSzUotvM00/edit?resourcekey#gid=1416760746)/
-[NOAA](https://docs.google.com/spreadsheets/d/1e-ysoYDdpe3DHs0j_ZkuNKpkYnU1qX554cBVTwyM3H0/edit?resourcekey=&gid=270874439#gid=270874439)), 
+[NOAA](https://docs.google.com/spreadsheets/d/1e-ysoYDdpe3DHs0j_ZkuNKpkYnU1qX554cBVTwyM3H0/edit?resourcekey=#gid=270874439)), 
 in column `Added to 2i2c hub` add the date they were added to the Hub, or if the
 request came via email add a new row - in part so that we as admins knew if 
 someone had already fulfilled the request. Check Column A for the date of the 
@@ -145,7 +153,7 @@ form request.
 
     3.  You can also check your email that you use for GitHub and look for an invitation from GitHub and Openscapes
 
-## Adding Champions cohorts as a batch
+## Adding Champions or workshop participants to the hub as a batch
 
 Participants in the NASA-Openscapes Champions program workshops are given Openscapes 
 2i2c JupyterHub access, as are participants in certain workshops run by NASA or 
@@ -157,7 +165,7 @@ for workshops, with low overhead for instructors and participants. This process
 removes the need to add people to a GitHub team, and gives participants "just 
 in time" access to a special workshop hub with a username and shared 
 workshop-specific password. Instructions for this simplified setup are 
-[here](password-access.qmd#workshop-hub-access-via-shared-password).
+[here](password-access.qmd).
 :::
 
 We use a dedicated GitHub Organization - [nasa-openscapes-workshops](https://github.com/nasa-openscapes-workshops) - to manage access, with [GitHub Teams](https://github.com/orgs/nasa-openscapes-workshops/teams) for NASA-Openscapes Champions Cohorts and certain workshops.
@@ -176,8 +184,37 @@ workshop date in the format `yyyy-mm-dd`
 
 ### 2. Add team name to workshop registry
 
-We keep a registry of all NASA-Openscapes workshops in [this sheet](https://docs.google.com/spreadsheets/d/1Sg4fMDGxMLI0p5cgK5xyamFJpKC6NyNneqXLDReSKcg/edit#gid=695033382). Add the name 
-of the GitHub team to `2i2c access type` column in the appropriate row.
+We keep a registry of all NASA-Openscapes workshops in 
+[this sheet](https://docs.google.com/spreadsheets/d/1Sg4fMDGxMLI0p5cgK5xyamFJpKC6NyNneqXLDReSKcg/edit#gid=695033382). 
+Add the name of the GitHub team to `2i2c access type` column in the appropriate row.
+
+### Tell 2i2c about your upcoming workshop
+
+- Check with the [primary contact for your hub](about.qmd#primary-contacts) to 
+  ensure that the Hub image has the packages you need
+- Reach out to 2i2c _a month in advance_ via an email to `support at 2i2c.freshdesk.com` 
+  (example below) to tell them about the workshop date, start and end times, 
+  \# of participants, and anticipated level of resources to be used. Also tell
+  them that you will be using the normal hub and adding users through GitHub.
+
+::: {.callout-tip collapse="true"}
+## Example email to 2i2c for a workshop with GitHub authentication
+
+Hello,
+
+I wanted to reach out to the support desk to let you know that Openscapes will have a workshop using Python 2i2c instances for about 50 attendees.
+
+Title: Data Access Workshop for NASA’s SWOT Satellite \
+Date: February 13, 2024 \
+Duration/Time: half day, 9:00 am-12:30 pm HST (Honolulu, HI). \
+Expected Usage: 3.7 GB per person (\~50 people) \
+The URL of the hub that will be used for the event: https://openscapes.2i2c.cloud/ \
+Access Method: GitHub Team named XXXXXX
+
+Thank you!
+
+Cassie
+:::
 
 ### 3. Add teams to 2i2c Hub configuration
 

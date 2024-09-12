@@ -3,18 +3,25 @@ title: "Access Policies"
 ---
 
 JupyterHub access has two general categories of use, with different
-means of access for each use case:
+means of access depending on the specifics of each use case:
 
 1. **Exploring and experimenting with cloud computing** - this includes Openscapes 
 Champions, and Openscapes Mentors and instructors building expertise in the
 environment. The users are given access to the Hub by membership in a
-GitHub Team in the relevant GitHub organization.
-2. **Workshop participants** - this includes access for short (less than a few 
-days) workshops.
+[GitHub Team](#access-via-a-github-team) in the relevant GitHub organization.
+2. **Workshop participants** - Participants in workshops hosted by Mentors,
+Openscapes, or collaborators. The type of workshop will dictate the mode of
+access, depending on requirements determined by workshop leads:
+  a. Workshops where learners require access after the workshop (up to three months), 
+     and/or GitHub workflows are part of the curriculum. These workshops should use
+     [GitHub Team-based access](#access-via-a-github-team).
+  b. Workshops where learners do not require access to the hub after the workshop, 
+     and GitHub is not being taught as part of the lessons. These workshops should
+     use [shared password](#access-via-a-shared-password) access.
 
 ## Obtaining Access to an Openscapes Hub
 
-### Long-term access via a GitHub Team
+### Access via a GitHub Team
 
 Access is controlled by the Openscapes Team, who oversee the management of the 
 Hub and Cloud costs.
@@ -30,19 +37,17 @@ These teams have access for up to a year as they experiment with migrating their
   workflows to the Cloud. 
 * **Workshops that teach GitHub workflows**: We create additional GitHub teams to manage participants' access. These teams have access for 3 months as they experiment with migrating their workflows to the Cloud. 
 
-Instructions for admins on how to add people to the hub can be found 
-[here](github-access.qmd).
+**[Instructions for admins on how to add people to the hub using GitHub](github-access.qmd)**
 
-### Short-term access for workshop participants
+### Access via a shared password
 
 Access is provided on the day of the workshop with a common, global password. The password 
 will be provided to participants at the start of the workshop, and participants will log in with their email address and the shared password. This access method allows us to 
 ensure all workshop participants have easy access for the workshop, without having 
-prior familiarity with GitHub.
-
-Instructions for admins on how to set up and use the shared-password approach 
-can be found [here](password-access.qmd). In general, access to the Hub with a 
+prior familiarity with GitHub. In general, access to the Hub with a 
 workshop shared password will persist for seven days post-workshop.
+
+**[Instructions for admins on how to set up a shared-password workshop](password-access.qmd)**
 
 ## Allowable Uses of 2i2c Hub 
 
@@ -62,11 +67,12 @@ We will do our best to alert users before they lose access to the Openscapes Hub
 
 Policies on data storage and use of the `HOME` directory can be found in the [data policies page](data-storage.qmd).
 
+<!-- 
+TODO: Refine and shift to 'costs' page when monthly reporting is in a better place
+
 ## Monitoring cloud usage costs
 
 ### AWS Cost Explorer
-
-<!-- TODO: Integrate/add links to monthly cost/storage report being developed at  -->
 
 *This is a work in progress, currently with minimal steps and screenshots that we will augment.*
 
@@ -98,4 +104,4 @@ We can also set up email alerts at certain dollar amounts.
 
 ![](images/budget-threshold-alerts.png){fig-align="center" width="426"}
 
-We receive emails when we spend \$100, \$200, \$500 of our Credits, which show up in the system as \$1000 intervals.
+We receive emails when we spend \$100, \$200, \$500 of our Credits, which show up in the system as \$1000 intervals. -->
