@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Openscapes JupyterHubs</title>
+<title>Data Storage Policies – Openscapes JupyterHubs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -138,43 +138,148 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#using-s3-bucket-storage" id="toc-using-s3-bucket-storage" class="nav-link active" data-scroll-target="#using-s3-bucket-storage">Using S3 Bucket Storage</a></li>
+  <li><a href="#data-retention-and-archiving-policy" id="toc-data-retention-and-archiving-policy" class="nav-link" data-scroll-target="#data-retention-and-archiving-policy">Data retention and archiving policy</a>
+  <ul class="collapse">
+  <li><a href="#the-_shared-directory" id="toc-the-_shared-directory" class="nav-link" data-scroll-target="#the-_shared-directory">The <code>_shared</code> directory</a></li>
+  </ul></li>
+  <li><a href="#how-to-archive-old-home-directories-admin" id="toc-how-to-archive-old-home-directories-admin" class="nav-link" data-scroll-target="#how-to-archive-old-home-directories-admin">How to archive old home directories (admin)</a>
+  <ul class="collapse">
+  <li><a href="#finding-large-home-directories" id="toc-finding-large-home-directories" class="nav-link" data-scroll-target="#finding-large-home-directories">Finding large <code>$HOME</code> directories</a></li>
+  <li><a href="#authenticate-with-s3-archive-bucket" id="toc-authenticate-with-s3-archive-bucket" class="nav-link" data-scroll-target="#authenticate-with-s3-archive-bucket">Authenticate with S3 archive bucket</a></li>
+  <li><a href="#setting-up-and-running-the-archive-script" id="toc-setting-up-and-running-the-archive-script" class="nav-link" data-scroll-target="#setting-up-and-running-the-archive-script">Setting up and running the archive script</a></li>
+  <li><a href="#archiving-the-shared-directory" id="toc-archiving-the-shared-directory" class="nav-link" data-scroll-target="#archiving-the-shared-directory">Archiving the shared directory</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/data-storage.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/data-storage.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Data Storage Policies</h1>
+</div>
 
 
 
-<section id="openscapes-jupyterhub-access" class="level1 text-center" style="margin-bottom: 2em;">
-<h1><img src="images/openscapes_hex.png" class="inline img-fluid"> Openscapes JupyterHub Access <img src="images/2i2c-logo.png" class="inline img-fluid"></h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Storing large amounts of data in the cloud can incur significant ongoing costs if not done optimally. We are charged daily for data stored in our Hub. We are developing technical strategies and policies to reduce storage costs that will keep the Openscapes 2i2c Hub a shared resource for us all to use, while also providing reusable strategies for other admins.</p>
+<p>The Hub uses an <a href="https://aws.amazon.com/ec2/">EC2</a> compute instance, with the <code>$HOME</code> directory (<code>/users/jovyan/</code> in python images and <code>/users/rstudio/</code> in R images) mounted to <a href="https://aws.amazon.com/efs/">AWS Elastic File System (EFS)</a> storage. This drive is really handy because it is persistent across server restarts and is a great place to store your code. However the <code>$HOME</code> directory should not be used to store data, as it is very expensive, and can also be quite slow to read from and write to.</p>
+<p>To that end, the Hub provides every user access to two <a href="https://aws.amazon.com/s3/">AWS S3</a> buckets - a “scratch” bucket for short-term storage, and a “persistent” bucket for longer-term storage. AWS S3 buckets are like online storage containers, accessible through the internet, where you can store and retrieve files. S3 buckets have fast read/write, and storage costs are relatively inexpensive compared to storing in your <code>$HOME</code> directory. All major cloud providers provide a similar storage service - S3 is Amazon’s version, while Google provides “Google Cloud Storage”, and Microsoft provides “Azure Blob Storage”.</p>
+<p>These buckets are accessible only when you are working inside the Hub; you can access them using the environment variables:</p>
+<ul>
+<li><code>$SCRATCH_BUCKET</code> pointing to <code>s3://openscapeshub-scratch/[your-username]</code>
+<ul>
+<li>Scratch buckets are designed for storage of temporary files, e.g. intermediate results. Objects stored in a scratch bucket are removed after 7 days from their creation.</li>
+</ul></li>
+<li><code>$PERSISTENT_BUCKET</code> pointing to <code>s3://openscapeshub-persistent/[your-username]</code>
+<ul>
+<li>Persistent buckets are designed for storing data that is consistently used throughout the lifetime of a project. There is no automatic purging of objects in persistent buckets, so it is the responsibility of the Hub admin and/or Hub users to delete objects when they are no longer needed to minimize cloud billing costs.</li>
+</ul></li>
+</ul>
+<section id="using-s3-bucket-storage" class="level3">
+<h3 class="anchored" data-anchor-id="using-s3-bucket-storage">Using S3 Bucket Storage</h3>
+<p>Please see the short tutorial in the Earthdata Cloud Cookbook on <a href="./how-tos/using-s3-storage.html">Using S3 Bucket Storage in NASA-Openscapes Hub</a>.</p>
 </section>
-<p><a href="https://openscapes.org"><strong>Openscapes</strong></a> supports organizations that are starting to explore cloud computing by partnering with <a href="https://2i2c.org"><strong>2i2c</strong></a>, who design and administer a global network of community hubs. The purpose of Openscapes JupyterHubs is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development.</p>
-<p>Access the login page for your organization below:</p>
-<hr>
-<div>
+<section id="data-retention-and-archiving-policy" class="level2">
+<h2 class="anchored" data-anchor-id="data-retention-and-archiving-policy">Data retention and archiving policy</h2>
+<p>User <code>$HOME</code> directories will be retained for six months after their last use. After a home directory has been idle for six months, it will be <a href="#how-to-archive-old-home-directories">archived to our “archive” S3 bucket, and removed</a>. If a user requests their archive back, an admin can restore it for them.</p>
+<p>Once a user’s home directory archive has been sitting in the archive for an additional six months, it will be permanently removed from the archive. After this it can no longer be retrieved. <!-- TODO make this automatic policy in S3 console --></p>
+<p>In addition to these policies, admins will keep an eye on the <a href="https://grafana.openscapes.2i2c.cloud/d/bd232539-52d0-4435-8a62-fe637dc822be/home-directory-usage-dashboard?orgId=1">Home Directory Usage Dashboard</a> in Grafana. When a user’s home directory increases in size to over 100GB, we will contact them and work with them to reduce the size of their home directory - by removing large unnecessary files, and moving the rest to the appropriate S3 bucket (e.g., <code>$PERSISTENT_BUCKET</code>).</p>
+<section id="the-_shared-directory" class="level3">
+<h3 class="anchored" data-anchor-id="the-_shared-directory">The <code>_shared</code> directory</h3>
+<p><a href="https://infrastructure.2i2c.org/topic/infrastructure/storage-layer/#shared-directories">The <code>_shared</code> directory</a> is a place where instructors can put workshop materials for participants to access. It is mounted as <code>/home/jovyan/shared</code>, and is <em>read only</em> for all users. For those with admin access to the Hub, it is also mounted as a writeable directory as <code>/home/jovyan/shared-readwrite</code>.</p>
+<p>This directory will follow the same policies as users’ home directories: after six months, contents will be archived to the “archive” S3 bucket (more below). After an additional six months, the archive will be deleted.</p>
+</section>
+</section>
+<section id="how-to-archive-old-home-directories-admin" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-archive-old-home-directories-admin">How to archive old home directories (admin)</h2>
+<p>To start, you will need to be an admin of the Openscapes Jupyterhub so that the <code>allusers</code> directory is mounted in your home directory. This will contain all users’ home directories, and you will have full read-write access.</p>
+<section id="finding-large-home-directories" class="level3">
+<h3 class="anchored" data-anchor-id="finding-large-home-directories">Finding large <code>$HOME</code> directories</h3>
+<p>Look at the <a href="https://grafana.openscapes.2i2c.cloud/d/bd232539-52d0-4435-8a62-fe637dc822be/home-directory-usage-dashboard?orgId=1">Home Directory Usage Dashboard</a> in Grafana to see the directories that haven’t been used in a long time and/or are very large.</p>
+<p>You can also view and sort users’ directories by size in the Hub with the following command, though this takes a while because it has to summarize <em>a lot</em> of files and directories. This will show the 30 largest home directories:</p>
+<pre><code>du -h --max-depth=1 /home/jovyan/allusers/ | sort -hr | head -n 30</code></pre>
+</section>
+<section id="authenticate-with-s3-archive-bucket" class="level3">
+<h3 class="anchored" data-anchor-id="authenticate-with-s3-archive-bucket">Authenticate with S3 archive bucket</h3>
+<p>We have created an AWS IAM user called <code>archive-homedirs</code> with appropriate permissions to write to the <code>openscapeshub-prod-homedirs-archive</code> bucket. Get access keys for this user from the AWS console, and use these keys to authenticate in the Hub:</p>
+<p>In the terminal, type:</p>
+<pre><code>awsv2 configure</code></pre>
+<p>Enter the access key and secret key at the prompts, and set default region to <code>us-west-2</code>.</p>
+<p>You will also need to temporarily unset some AWS environment variables that have been configured to authenticate with NASA S3 storage. (These will be reset the next time you log in):</p>
+<pre><code>unset AWS_ROLE_ARN
+unset AWS_WEB_IDENTITY_TOKEN_FILE</code></pre>
+<p>Test to make sure you can access the archive bucket:</p>
+<pre><code># test s3 access:
+awsv2 s3 ls s3://openscapeshub-prod-homedirs-archive/archives/
+touch test123.txt
+awsv2 s3 mv test123.txt s3://openscapeshub-prod-homedirs-archive/archives/
+awsv2 s3 rm s3://openscapeshub-prod-homedirs-archive/archives/test123.txt</code></pre>
+</section>
+<section id="setting-up-and-running-the-archive-script" class="level3">
+<h3 class="anchored" data-anchor-id="setting-up-and-running-the-archive-script">Setting up and running the archive script</h3>
+<p>We use a <a href="https://github.com/NASA-Openscapes/2i2cAccessPolicies/blob/main/scripts/archive-home-dirs.py">python script</a>, <a href="https://github.com/2i2c-org/features/issues/32">developed by <span class="citation" data-cites="yuvipanda">@yuvipanda</span></a>, that reproducibly archives a list of users’ directories into a specified S3 bucket.</p>
+<p>Copy the script into your home directory in the Hub.</p>
+<p>In the Hub as of 2024-05-17, a couple of dependencies for the script are missing; you can install them before running the script:</p>
+<pre><code>pip install escapism
 
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="margin-top: 3em;">
-<div class="quarto-layout-row">
-<div class="text-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="login-area">
-<p><img src="images/nasa-openscapes.png" class="login-logo img-fluid" alt="NASA logo to left of Openscapes logo"></p>
-<p><a href="https://openscapes.2i2c.cloud/" class="btn-login nasa btn btn-primary btn-lg" role="button">NASA-Openscapes Hub Login</a></p>
-</div>
-</div>
-<div class="text-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="login-area">
-<p><img src="images/nmfs-openscapes.png" class="login-logo img-fluid" alt="NMFS logo to left of Openscapes logo"></p>
-<p><a href="https://nmfs-openscapes.2i2c.cloud/" class="btn-login noaa btn btn-primary btn-lg" role="button">NMFS-Openscapes Hub Login</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center">
-<p><img src="images/jupyterhub-logo.png" class="img-fluid" style="margin-top: 1em;"></p>
-</div>
+# I had solver errors with pigz so needed to use the classic solver. 
+# Also, the installation of pigz required a machine with &gt;= 3.7GB memory
+conda install pigz --solver classic</code></pre>
+<p>Create a text file, with one username per line, of users’ home directories you would like to archive to s3. It will look like:</p>
+<pre><code>username1
+username2
+# etc...</code></pre>
+<p>Finally, run the script from the terminal, changing the parameter values as required:</p>
+<pre><code>python3 archive-home-dirs.py \
+    --archive-name="archive-$(date +'%Y-%m-%d')" \
+    --basedir=/home/jovyan/allusers/ \
+    --bucket-name=openscapeshub-prod-homedirs-archive \
+    --object-prefix="archives/" \
+    --usernames-file=users-to-archive.txt \
+    --temp-path=/home/jovyan/archive-staging/</code></pre>
+<p>Omitted in the above example, but available to use, is the <code>--delete</code> flag, which will delete the users’ home directory once the archive is completed.</p>
+<p>If you don’t use the <code>--delete</code> flag, first verify that the archive was successfully completed and then remove the user’s home directory manually.</p>
+</section>
+<section id="archiving-the-shared-directory" class="level3">
+<h3 class="anchored" data-anchor-id="archiving-the-shared-directory">Archiving the shared directory</h3>
+<p>You can use the same script to archive directories in the <code>shared</code> directory, by modifying the inputs slightly:</p>
+<ul>
+<li>Set <code>--basedir=/home/jovyan/shared/</code>, (or <code>--basedir=/home/jovyan/shared-readwrite/</code> if you want to be able use the <code>--delete</code> flag).</li>
+<li>Create a file with a list of directories in the <code>shared</code> directory you want to archive, and pass it to the <code>--usernames-file</code> argument.</li>
+<li>Set <code>--object-prefix="archives/_shared/</code> to put the archives in the <code>_shared</code> subdirectory in the archive bucket.</li>
+</ul>
+<p>E.g.:</p>
+<pre><code>python3 archive-home-dirs.py \
+    --archive-name="archive-$(date +'%Y-%m-%d')" \
+    --basedir=/home/jovyan/shared/ \
+    --bucket-name=openscapeshub-prod-homedirs-archive \
+    --object-prefix="archives/_shared/" \
+    --usernames-file=/home/jovyan/shared-to-archive.txt \
+    --temp-path=/home/jovyan/archive-staging/</code></pre>
+<p>By default, archives (<code>.tar.gz</code>) are created in your <code>/tmp</code> directory before upload to the S3 bucket. The <code>/tmp</code> directory is cleared out when you shut down the Hub. However, <code>/tmp</code> has limited space (80GB shared by up to four users on a single node), so if you are archiving many large directories, you will likely need to specify a location in your <code>$HOME</code> directory by passing a path to the <code>--temp-path</code> argument. The script will endeavour to clean up after itself and remove the <code>tar.gz</code> file after uploading, but double check that directory when you are finished or you may have copies of all of the other user directories in your own <code>$HOME</code>!</p>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -605,7 +710,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/data-storage.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/data-storage.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

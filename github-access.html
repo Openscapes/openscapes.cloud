@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>GitHub-based Access – Openscapes JupyterHubs</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./images/openscapes_hex.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Openscapes JupyterHubs</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-policies" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Policies</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-policies">    
+        <li>
+    <a class="dropdown-item" href="./access-policies.html">
+ <span class="dropdown-text">Access Policies</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./data-storage.html">
+ <span class="dropdown-text">Data Storage Policies</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-access-instructions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Access Instructions</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-access-instructions">    
+        <li>
+    <a class="dropdown-item" href="./github-access.html">
+ <span class="dropdown-text">GitHub-based Access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./password-access.html">
+ <span class="dropdown-text">Password-based Access</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./fledging.html"> 
+<span class="menu-text">Fledging</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul class="collapse">
+  <li><a href="#individual-long-term-access-through-github-teams" id="toc-individual-long-term-access-through-github-teams" class="nav-link active" data-scroll-target="#individual-long-term-access-through-github-teams">Individual long-term access through GitHub Teams</a></li>
+  <li><a href="#adding-champions-or-workshop-participants-to-the-hub-as-a-batch" id="toc-adding-champions-or-workshop-participants-to-the-hub-as-a-batch" class="nav-link" data-scroll-target="#adding-champions-or-workshop-participants-to-the-hub-as-a-batch">Adding Champions or workshop participants to the hub as a batch</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting">Troubleshooting</a></li>
+  </ul>
+<div class="toc-actions"><ul class="collapse"><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/github-access.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/github-access.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">GitHub-based Access</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+<nav id="TOC-body" role="doc-toc">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#individual-long-term-access-through-github-teams" id="toc-individual-long-term-access-through-github-teams">Individual long-term access through GitHub Teams</a></li>
+  <li><a href="#adding-champions-or-workshop-participants-to-the-hub-as-a-batch" id="toc-adding-champions-or-workshop-participants-to-the-hub-as-a-batch">Adding Champions or workshop participants to the hub as a batch</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting">Troubleshooting</a></li>
+  </ul>
+</nav>
+<hr>
+<p>This page is written primarily for workshop leads (mentors and other partners) who are inviting people to the Hub, as a collaborator for developing workshop materials or as a participant.</p>
+<p>Individuals are given Hub access by adding them as members of the appropriate team in the relevant GitHub Organization. The most common teams we use to add users are those for long-term access for mentors and core team members in the <code>NASA-Openscapes</code> and <code>NMFS-Openscapes</code> GitHub organizations, and NASA Openscapes Champions in the <code>nasa-openscapes-workshops</code> GitHub organization.</p>
+<ul>
+<li><a href="https://github.com/orgs/nmfs-openscapes/teams/longterm-access-2i2c">NMFS-Openscapes Longterm-Access-2i2c team</a></li>
+<li><a href="https://github.com/orgs/NASA-Openscapes/teams/longtermaccess-2i2c">NASA-Openscapes LongtermAccess-2i2c team</a></li>
+<li><a href="https://github.com/orgs/nasa-openscapes-workshops/teams/nasa-champions-2024">NASA-Openscapes-Workshops nasa-champions-2024 team</a></li>
+</ul>
+<p>If you want to add many people to a team at once, for a Champions cohort or for a workshop, <a href="#adding-champions-or-workshop-participants-to-the-hub-as-a-batch">jump to instructions for adding people in a batch</a></p>
+<section id="individual-long-term-access-through-github-teams" class="level2">
+<h2 class="anchored" data-anchor-id="individual-long-term-access-through-github-teams">Individual long-term access through GitHub Teams</h2>
+<section id="share-google-form-with-users-needing-access" class="level3">
+<h3 class="anchored" data-anchor-id="share-google-form-with-users-needing-access">1. Share Google Form with users needing access</h3>
+<p>Ask users: Please fill out the Google form for Openscapes JupyterHub Access. Users must have a GitHub username to fill out the form, as this is how they will be given access to the Hub. If they are requesting long-term access they should be sure to list their affiliation and who referred them, so administrators know that their request is within scope for the Hub.</p>
+<ul>
+<li><a href="https://forms.gle/htV2PxJwRaP8jDpC6">NASA-Openscapes form</a></li>
+<li><a href="https://forms.gle/mP9E46xnJWjFhgmk7">NMFS-Openscapes form</a></li>
+</ul>
+</section>
+<section id="google-form-response-setup" class="level3">
+<h3 class="anchored" data-anchor-id="google-form-response-setup">2. Google Form response setup</h3>
+<p>Set the form responses to notify you by email when there are responses: Click on Responses &gt; click three vertical dots and then check “email notification.”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/google-form.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="alt text goes here" width="600"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/google-form-notifications.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="alt text goes here" width="600"></p>
+</figure>
+</div>
+</section>
+<section id="email-alert-of-new-signup" class="level3">
+<h3 class="anchored" data-anchor-id="email-alert-of-new-signup">3. Email alert of new signup</h3>
+<p>When you get an email click ‘<strong>view response</strong>’ (not <code>view summary</code>)</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/google-form-view-response.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="alt text goes here" width="600"></p>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are not sure if the access request is valid (i.e., the requestor does not appear to be an Openscapes mentor, staff member or close collaborator etc.), ask the mentor community in Slack to verify if the person requesting access is affiliated with any mentors’ work. If not, then send the requestor the following email, and do not add them to the GitHub team:</p>
+<blockquote class="blockquote">
+<p>Dear XXX,</p>
+<p>Thank you for your interest in our JupyterHub. Currently we provide access to people who participate in workshops taught by NASA Data Center (DAAC) staff through the NASA Openscapes community. We will be adding upcoming events you can sign up for here: https://nasa-openscapes.github.io/news.</p>
+<p>Best,</p>
+</blockquote>
+<p>Note in the “Notes” column in the Google form response sheet that this email was sent denying access, and the date.</p>
+<ul>
+<li><a href="https://docs.google.com/spreadsheets/d/1TgokoQa-jYncYSOjeYoWYRuDAbyo4uUR-MSzUotvM00/edit?resourcekey#gid=1416760746">NASA-Openscapes responses sheet</a></li>
+<li><a href="https://docs.google.com/spreadsheets/d/1e-ysoYDdpe3DHs0j_ZkuNKpkYnU1qX554cBVTwyM3H0/edit?resourcekey#gid=270874439">NMFS-Openscapes responses sheet</a></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="copy-github-username" class="level3">
+<h3 class="anchored" data-anchor-id="copy-github-username">4. Copy GitHub username</h3>
+<p>On the response page, copy the Github Username</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/google-form-gh-username.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="alt text goes here" width="600"></p>
+</figure>
+</div>
+</section>
+<section id="add-github-username-to-the-github-team" class="level3">
+<h3 class="anchored" data-anchor-id="add-github-username-to-the-github-team">5. Add GitHub username to the GitHub Team</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are adding many new mentors to the long-term access team, you can use the same steps as <a href="#4-add-users-to-a-team-in-a-batch-using-kyber">for adding workshop participants</a></p>
+</div>
+</div>
+<p>Go to the appropriate team in GitHub &gt; Click Add member &gt; Paste GitHub username.</p>
+<ul>
+<li><a href="https://github.com/orgs/nasa-openscapes/teams">NASA-Openscapes GitHub Teams</a></li>
+<li><a href="https://github.com/orgs/nasa-openscapes-workshops/teams">NASA-Openscapes-workshops GitHub Teams</a></li>
+<li><a href="https://github.com/orgs/nmfs-openscapes-workshops/teams">NMFS-Openscapes GitHub Teams</a></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github-add-to-team.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="alt text goes here" width="600"></p>
+</figure>
+</div>
+<p>GitHub may ask you for 2-factor authentication for the first one you add in a batch, not after that.</p>
+<p>People may see invitation notifications in two ways; in GitHub itself, and/or via email. They must accept the invitation to be able to access the Hub. This is what it looks like in their email inbox:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github-notification-email.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="alt text goes here" width="600"></p>
+</figure>
+</div>
+<p>This is what the invitation looks like in the GitHub website interface - clicking the yellow banner notification leads to the invitation:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github-notification-banner.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%" alt="alt text goes here"></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github-notification-banner-part2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:85.0%"></p>
+</figure>
+</div>
+</section>
+<section id="email-confirmation" class="level3">
+<h3 class="anchored" data-anchor-id="email-confirmation">6. Email confirmation</h3>
+<p>Go back to the Google form response and grab their email address. Send the following email to the person:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Email for General requests:&nbsp;
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Subject: [NASA/NMFS] Openscapes Access to 2i2c Hub</p>
+<p>Hi [FIRST NAME],</p>
+<p>I have added you to the [NASA/NMFS] Openscapes 2i2c Jupyter Hub. Here is the link to the hub: <a href="https://openscapes.cloud/" class="uri">https://openscapes.cloud/</a></p>
+<p>There is a getting started guide in the NASA Earthdata Cloud Cookbook here: <a href="https://nasa-openscapes.github.io/earthdata-cloud-cookbook/" class="uri">https://nasa-openscapes.github.io/earthdata-cloud-cookbook/</a>. You can see policies for hub use here: <a href="https://openscapes.cloud/access-policies.html" class="uri">https://openscapes.cloud/access-policies.html</a>, and policies and best practices for data storage here <a href="https://openscapes.cloud/data-storage.html" class="uri">https://openscapes.cloud/data-storage.html</a></p>
+<p>We’d love to know about the kind of work you are doing on the hub. Please add a brief description of your progress as you go at <a href="https://github.com/NASA-Openscapes/2i2cAccessPolicies/discussions/2" class="uri">https://github.com/NASA-Openscapes/2i2cAccessPolicies/discussions/2</a>. We will follow up in the next few months.&nbsp;</p>
+<p>Best,</p>
+<!-- TODO: Will we have a "Discussions" place for NMFS cloud stories? -->
+</div>
+</div>
+</div>
+</section>
+<section id="register-date-in-form-response-sheet" class="level3">
+<h3 class="anchored" data-anchor-id="register-date-in-form-response-sheet">7. Register date in Form Response Sheet</h3>
+<p>In the Form Response Sheet (<a href="https://docs.google.com/spreadsheets/d/1TgokoQa-jYncYSOjeYoWYRuDAbyo4uUR-MSzUotvM00/edit?resourcekey#gid=1416760746">NASA</a>/ <a href="https://docs.google.com/spreadsheets/d/1e-ysoYDdpe3DHs0j_ZkuNKpkYnU1qX554cBVTwyM3H0/edit?resourcekey=#gid=270874439">NOAA</a>), in column <code>Added to 2i2c hub</code> add the date they were added to the Hub, or if the request came via email add a new row - in part so that we as admins knew if someone had already fulfilled the request. Check Column A for the date of the form request.</p>
+</section>
+<section id="directions-for-invitees" class="level3">
+<h3 class="anchored" data-anchor-id="directions-for-invitees">Directions for invitees</h3>
+<ol type="1">
+<li>Please go to:</li>
+</ol>
+<ul>
+<li>NASA (workshops/champions): <a href="https://github.com/nasa-openscapes-workshops" class="uri">https://github.com/nasa-openscapes-workshops</a></li>
+<li>NASA (longterm access): <a href="https://github.com/nasa-openscapes-workshops" class="uri">https://github.com/nasa-openscapes-workshops</a></li>
+<li>NMFS: <a href="https://github.com/nmfs-openscapes" class="uri">https://github.com/nmfs-openscapes</a></li>
+</ul>
+<ol start="2" type="1">
+<li><p>Click the big yellow bar that says “you’ve been invited”&nbsp;</p></li>
+<li><p>Not seeing that bar?&nbsp;</p>
+<ol type="1">
+<li><p>Are you logged into <a href="https://github.com">GitHub.com</a>?</p></li>
+<li><p>Have you shared your GitHub username via the Google Form (<a href="https://forms.gle/htV2PxJwRaP8jDpC6">NASA</a>/<a href="https://forms.gle/mP9E46xnJWjFhgmk7">NOAA</a>)?</p></li>
+<li><p>You can also check your email that you use for GitHub and look for an invitation from GitHub and Openscapes</p></li>
+</ol></li>
+</ol>
+</section>
+</section>
+<section id="adding-champions-or-workshop-participants-to-the-hub-as-a-batch" class="level2">
+<h2 class="anchored" data-anchor-id="adding-champions-or-workshop-participants-to-the-hub-as-a-batch">Adding Champions or workshop participants to the hub as a batch</h2>
+<p>Participants in the NASA-Openscapes Champions program workshops are given Openscapes 2i2c JupyterHub access, as are participants in certain workshops run by NASA or NOAA Openscapes Mentors.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>We have a newly developed process for giving people short-term access to the hub for workshops, with low overhead for instructors and participants. This process removes the need to add people to a GitHub team, and gives participants “just in time” access to a special workshop hub with a username and shared workshop-specific password. Instructions for this simplified setup are <a href="./password-access.html">here</a>.</p>
+</div>
+</div>
+<p>We use a dedicated GitHub Organization - <a href="https://github.com/nasa-openscapes-workshops">nasa-openscapes-workshops</a> - to manage access, with <a href="https://github.com/orgs/nasa-openscapes-workshops/teams">GitHub Teams</a> for NASA-Openscapes Champions Cohorts and certain workshops.</p>
+<section id="create-a-team-in-nasa-openscapes-workshops" class="level3">
+<h3 class="anchored" data-anchor-id="create-a-team-in-nasa-openscapes-workshops">1. Create a team in <a href="https://github.com/orgs/nasa-openscapes-workshops/teams">nasa-openscapes-workshops</a></h3>
+<!-- TODO: Check if we will make a nmfs-openscapes-workshops org, and if so make 
+this applicable to both -->
+<p>There are several teams in this organization; the <code>AdminTeam</code> team is for members who have permission to create teams and add members to teams.</p>
+<ul>
+<li>If this is for a new champions cohort, name the team <code>nasa-champions-yyyy</code></li>
+<li>If this is for a one-off workshop, name the team <code>[workshop-name]-[workshop-date]</code>, with workshop date in the format <code>yyyy-mm-dd</code></li>
+</ul>
+</section>
+<section id="add-team-name-to-workshop-registry" class="level3">
+<h3 class="anchored" data-anchor-id="add-team-name-to-workshop-registry">2. Add team name to workshop registry</h3>
+<p>We keep a registry of all NASA-Openscapes workshops in <a href="https://docs.google.com/spreadsheets/d/1Sg4fMDGxMLI0p5cgK5xyamFJpKC6NyNneqXLDReSKcg/edit#gid=695033382">this sheet</a>. Add the name of the GitHub team to <code>2i2c access type</code> column in the appropriate row.</p>
+</section>
+<section id="tell-2i2c-about-your-upcoming-workshop" class="level3">
+<h3 class="anchored" data-anchor-id="tell-2i2c-about-your-upcoming-workshop">Tell 2i2c about your upcoming workshop</h3>
+<ul>
+<li>Check with the <a href="./about.html#primary-contacts">primary contact for your hub</a> to ensure that the Hub image has the packages you need</li>
+<li>Reach out to 2i2c <em>a month in advance</em> via an email to <code>support at 2i2c.freshdesk.com</code> (example below) to tell them about the workshop date, start and end times, # of participants, and anticipated level of resources to be used. Also tell them that you will be using the normal hub and adding users through GitHub.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Example email to 2i2c for a workshop with GitHub authentication
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Hello,</p>
+<p>I wanted to reach out to the support desk to let you know that Openscapes will have a workshop using Python 2i2c instances for about 50 attendees.</p>
+<p>Title: Data Access Workshop for NASA’s SWOT Satellite<br>
+Date: February 13, 2024<br>
+Duration/Time: half day, 9:00 am-12:30 pm HST (Honolulu, HI).<br>
+Expected Usage: 3.7 GB per person (~50 people)<br>
+The URL of the hub that will be used for the event: https://openscapes.2i2c.cloud/<br>
+Access Method: GitHub Team named XXXXXX</p>
+<p>Thank you!</p>
+<p>Cassie</p>
+</div>
+</div>
+</div>
+</section>
+<section id="add-teams-to-2i2c-hub-configuration" class="level3">
+<h3 class="anchored" data-anchor-id="add-teams-to-2i2c-hub-configuration">3. Add teams to 2i2c Hub configuration</h3>
+<p>Make a pull request to the relevant <code>common.values.yaml</code> configuration file in the 2i2c infrastructure repository:</p>
+<ul>
+<li><a href="https://github.com/2i2c-org/infrastructure/blob/main/config/clusters/openscapes/common.values.yaml">NASA-Openscapes <code>common.values.yaml</code></a></li>
+<li><a href="https://github.com/2i2c-org/infrastructure/blob/main/config/clusters/nmfs-openscapes/common.values.yaml">NMFS-Openscapes <code>common.values.yaml</code></a></li>
+</ul>
+<p>Add the new team to the <code>allowed-teams</code> item in whichever sections are appropriate for your workshop/cohort (likely all of them):</p>
+<ul>
+<li><code>display_name: Python</code></li>
+<li><code>display_name: R</code></li>
+<li><code>display_name: Matlab</code></li>
+<li><code>display_name: "Bring your own image"</code></li>
+</ul>
+<p>These will determine which images are available to participants when they log in to the Hub.</p>
+<p>Team specification is in the form <code>[github-org]:[team]</code> (e.g., <code>nasa-openscapes-workshops:champions-access-2i2c-2024</code>)</p>
+<p>You also need to add the team to the <code>allowed_organizations</code> item under <code>hub &gt; config &gt; GitHubOAuthenticator</code></p>
+<p>You can see an example pull request <a href="https://github.com/2i2c-org/infrastructure/pull/3944">here</a>.</p>
+</section>
+<section id="share-google-form-with-participants-needing-access-for-the-cohort-or-workshop" class="level3">
+<h3 class="anchored" data-anchor-id="share-google-form-with-participants-needing-access-for-the-cohort-or-workshop">4. Share Google Form with participants needing access for the cohort or workshop</h3>
+<p>Ask users: Please add your GitHub Username to the Google form:</p>
+<ul>
+<li><a href="https://forms.gle/htV2PxJwRaP8jDpC6">Google form for NASA Openscapes JupyterHub Access</a></li>
+<li><a href="https://forms.gle/mP9E46xnJWjFhgmk7">Google form for NMFS Openscapes JupyterHub Access</a></li>
+</ul>
+</section>
+<section id="add-users-to-a-team-in-a-batch-using-kyber" class="level3">
+<h3 class="anchored" data-anchor-id="add-users-to-a-team-in-a-batch-using-kyber">5. Add users to a Team in a batch using <a href="https://github.com/Openscapes/kyber">kyber</a></h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do this fairly close to the day of the workshop to try to get the greatest number participants to have filled out the form, and reduce the number of manual additions on the day of the workshop.</p>
+</div>
+</div>
+<ol type="1">
+<li>Open the spreadsheet of form responses (<a href="https://docs.google.com/spreadsheets/d/1TgokoQa-jYncYSOjeYoWYRuDAbyo4uUR-MSzUotvM00/edit?resourcekey#gid=1416760746">NASA</a>/ <a href="https://docs.google.com/spreadsheets/d/1e-ysoYDdpe3DHs0j_ZkuNKpkYnU1qX554cBVTwyM3H0/edit?resourcekey=&amp;gid=270874439#gid=270874439">NOAA</a>), select the GitHub usernames from the rows containing the people you want to add, and copy it to your clipboard.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Some workshop instructors will use their own form to record participants, rather than the Openscapes form. In that case use those responses instead. But do paste all those rows into this Main form; it is important that we have a record of everyone using the Hub and a way to contact them via email.</p>
+</div>
+</div>
+<ol start="2" type="1">
+<li>In R, do the following:</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kyber)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(datapasta)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Run datapasta::tribble_paste() or use the RStudio Addin 'Paste as tribble'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># assign the pasted output to a new object:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>responses <span class="ot">&lt;-</span> tribble<span class="sc">::</span><span class="fu">tribble</span>(</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The stuff that was pasted</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The <code>responses</code> object will have a column of usernames. It likely won’t be called <code>username</code>, so you can rename it or even easier, change the name inside the <code>tribble::tribble()</code> call that you pasted. Verify these are the usernames you want to add, and run <code>kyber::add_team_members()</code> as follows, choosing the appropriate GitHub organization and team.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>team_name <span class="ot">&lt;-</span> <span class="st">"the name of the github team you want to add to"</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>org_name <span class="ot">&lt;-</span> <span class="st">"the name of the github org that contains the team"</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">add_team_members</span>(</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  team_name, </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">members =</span> responses<span class="sc">$</span>username, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">org =</span> org_name</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<ol start="3" type="1">
+<li>Go the appropriate team in the relevant GitHub organization and verify that there are the appropriate “pending members”:</li>
+</ol>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github-pending-member.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="alt text goes here" width="399"></p>
+</figure>
+</div>
+<ol start="4" type="1">
+<li>Go back to the spreadsheet of responses, and fill in the <code>Added to NASA/NMFS 2i2c hub</code> column with the date you added them.</li>
+</ol>
+</section>
+<section id="directions-for-workshop-participants" class="level3">
+<h3 class="anchored" data-anchor-id="directions-for-workshop-participants">Directions for workshop participants</h3>
+<ol type="1">
+<li>Please go to:</li>
+</ol>
+<ul>
+<li>NASA: <a href="https://github.com/nasa-openscapes-workshops" class="uri">https://github.com/nasa-openscapes-workshops</a></li>
+<li>NMFS: <a href="https://github.com/nmfs-openscapes" class="uri">https://github.com/nmfs-openscapes</a></li>
+</ul>
+<ol start="2" type="1">
+<li><p>Click the big yellow bar that says “you’ve been invited”&nbsp;</p></li>
+<li><p>Not seeing that bar?&nbsp;</p>
+<ol type="1">
+<li><p>Are you logged into <a href="https://github.com">GitHub.com</a>?</p></li>
+<li><p>Have you shared your GitHub username via the Google Form (<a href="https://forms.gle/htV2PxJwRaP8jDpC6">NASA</a>/<a href="https://forms.gle/mP9E46xnJWjFhgmk7">NOAA</a>)?</p></li>
+<li><p>You can also check your email that you use for GitHub and look for an invitation from GitHub and Openscapes</p></li>
+</ol></li>
+</ol>
+</section>
+</section>
+<section id="troubleshooting" class="level2">
+<h2 class="anchored" data-anchor-id="troubleshooting">Troubleshooting</h2>
+<section id="users-get-403-error" class="level3">
+<h3 class="anchored" data-anchor-id="users-get-403-error">Users get 403 error</h3>
+<p>This is a common issue. User must find email notification from GitHub and accept invitation. If they had clicked in email to accept but did not complete accepting in GitHub, edit their invitation in GitHub to uninvite and reinvite. They should get a new email to accept.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/github-pending-member.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="alt text goes here" width="399"></p>
+</figure>
+</div>
+</section>
+<section id="didnt-get-email" class="level3">
+<h3 class="anchored" data-anchor-id="didnt-get-email">Didn’t get email</h3>
+<p>Go to <a href="https://github.com/nasa-openscapes-workshops" class="uri">https://github.com/nasa-openscapes-workshops</a>, see the big yellow bar that says You’re invited.&nbsp;</p>
+</section>
+<section id="notes-on-process-and-any-issues" class="level3">
+<h3 class="anchored" data-anchor-id="notes-on-process-and-any-issues">Notes on process and any issues</h3>
+<p>Yuvi has started documenting the issues we are running into here -&gt; <a href="https://hackmd.io/tWfqVai4SDC1CbQ4mhfIbw" class="uri">https://hackmd.io/tWfqVai4SDC1CbQ4mhfIbw</a>&nbsp;</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/openscapes\.cloud\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© CC-By Openscapes, 2024</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/github-access.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/github-access.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

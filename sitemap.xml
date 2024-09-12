@@ -1,11 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://openscapes.cloud/index.html</loc>
-    <lastmod>2024-08-30T22:18:17.124Z</lastmod>
+    <loc>https://openscapes.cloud/about.html</loc>
+    <lastmod>2024-09-12T21:57:16.052Z</lastmod>
   </url>
   <url>
-    <loc>https://openscapes.cloud/about.html</loc>
-    <lastmod>2024-08-30T22:18:17.120Z</lastmod>
+    <loc>https://openscapes.cloud/password-access.html</loc>
+    <lastmod>2024-09-12T21:57:16.068Z</lastmod>
+  </url>
+  <url>
+    <loc>https://openscapes.cloud/access-policies.html</loc>
+    <lastmod>2024-09-12T21:57:16.052Z</lastmod>
+  </url>
+  <url>
+    <loc>https://openscapes.cloud/github-access.html</loc>
+    <lastmod>2024-09-12T21:57:16.052Z</lastmod>
+  </url>
+  <url>
+    <loc>https://openscapes.cloud/data-storage.html</loc>
+    <lastmod>2024-09-12T21:57:16.052Z</lastmod>
+  </url>
+  <url>
+    <loc>https://openscapes.cloud/index.html</loc>
+    <lastmod>2024-09-12T21:57:16.068Z</lastmod>
+  </url>
+  <url>
+    <loc>https://openscapes.cloud/fledging.html</loc>
+    <lastmod>2024-09-12T21:57:16.052Z</lastmod>
   </url>
 </urlset>

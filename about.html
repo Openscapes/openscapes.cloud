@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -90,12 +90,42 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html"> 
-<span class="menu-text">Home</span></a>
-  </li>  
-  <li class="nav-item">
     <a class="nav-link active" href="./about.html" aria-current="page"> 
 <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-policies" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Policies</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-policies">    
+        <li>
+    <a class="dropdown-item" href="./access-policies.html">
+ <span class="dropdown-text">Access Policies</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./data-storage.html">
+ <span class="dropdown-text">Data Storage Policies</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-access-instructions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Access Instructions</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-access-instructions">    
+        <li>
+    <a class="dropdown-item" href="./github-access.html">
+ <span class="dropdown-text">GitHub-based Access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./password-access.html">
+ <span class="dropdown-text">Password-based Access</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./fledging.html"> 
+<span class="menu-text">Fledging</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -108,7 +138,21 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#jupyterhubs" id="toc-jupyterhubs" class="nav-link active" data-scroll-target="#jupyterhubs">JupyterHubs</a></li>
+  <li><a href="#computing-environment" id="toc-computing-environment" class="nav-link" data-scroll-target="#computing-environment">Computing environment</a>
+  <ul class="collapse">
+  <li><a href="#core-images" id="toc-core-images" class="nav-link" data-scroll-target="#core-images">Core Images</a></li>
+  </ul></li>
+  <li><a href="#openscapes" id="toc-openscapes" class="nav-link" data-scroll-target="#openscapes">Openscapes</a></li>
+  <li><a href="#primary-contacts" id="toc-primary-contacts" class="nav-link" data-scroll-target="#primary-contacts">Primary contacts</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/about.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/about.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -131,9 +175,65 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>About this site</p>
+<section id="jupyterhubs" class="level2">
+<h2 class="anchored" data-anchor-id="jupyterhubs">JupyterHubs</h2>
+<p>A key objective of Openscapes JupyterHubs is to minimize “the time to science” for researchers, and cloud infrastructure can facilitate shortening this time. We use 2i2c-managed JupyterHubs hosted on Amazon Web Services (AWS). The purpose of the JupyterHubs is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development. For those users that decide working in the cloud is advantageous and want to move some of their work there, we are also working on what that can look like (fledging).</p>
+<p><strong>Hub Management:</strong> <a href="http://2i2c.org/">2i2c</a> is a nonprofit that designs, develops, and operates JupyterHubs (“Hubs”) in the cloud for research and education, including Openscapes. 2i2c ensures that Hubs are cloud-vendor agnostic and are built using open-source software such as JupyterHub and Kubernetes.</p>
+<p><strong>User Management and Access:</strong> Users are given access to a Hub based on their reason for accessing the Hub, and the length of time they will need access. Short-term access for shorter workshops is differentiated from longer-term access for cloud experimentation, Openscapes Champions Cohorts, and longer workshops. See our <a href="./access-policies.html">Access Policies</a> for details.</p>
+<p><strong>Hub Location and Right to Replicate:</strong> Our JupyterHubs are hosted on AWS and are in-region with NASA Earthdata (AWS US-West-2). 2i2c gives users the <a href="https://2i2c.org/right-to-replicate/">right to replicate</a> their infrastructure. This means that our Hubs could be replicated on GoogleEarthEngine or Microsoft Azure, or ported to another AWS region.</p>
+<p>With this setup, we have flexibility to support a diverse range of user needs. The NASA Openscapes Hub has been used by the NASA Openscapes Mentors and other NASA data center (DAAC) staff internally as a testing ground for developing cloud tutorials and workflows, but also externally in the research community for workshops like those for science teams and “Hackathons”, a term used here to describe multi-day events with split time for teaching and helping researchers implement concepts into their research projects.</p>
+<p><em>This section drew from the ‘Solution’ section of the White Paper entitled, “<a href="https://zenodo.org/records/7667299#.Y_Zxt3bMJPY">The Value of Hosted JupyterHubs in enabling Open NASA Earth Science in the Cloud</a>” (Nickles, et.al, 2022).</em></p>
+</section>
+<section id="computing-environment" class="level2">
+<h2 class="anchored" data-anchor-id="computing-environment">Computing environment</h2>
+<p>The computing environment in the JuptyerHubs is provided by <a href="https://www.docker.com/resources/what-container/">Docker container images</a>, enabling a reproducible software environment for all users on the hub — the only software requirements to use the Hub are access to a computer and the internet. The images contain the development environment (JupyterLab, RStudio, VSCode etc), as well as the software stack and required dependencies for R and Python based workflows, and optionally other software such as MATLAB and QGIS. Each Hub has a set of images users can choose from when they log in, or users can provide their own image.</p>
+<section id="core-images" class="level3">
+<h3 class="anchored" data-anchor-id="core-images">Core Images</h3>
+<section id="nasa-openscapes" class="level4">
+<h4 class="anchored" data-anchor-id="nasa-openscapes">NASA-Openscapes</h4>
+<ul>
+<li><a href="https://github.com/NASA-Openscapes/corn">corn</a>: The base image for Python-based workflows using NASA Earthdata.</li>
+<li><a href="https://github.com/NASA-Openscapes/py-rocket">py-rocket</a>: The base image for R-based workflows using NASA Earthdata.</li>
+</ul>
+</section>
+<section id="nmfs-openscapes" class="level4">
+<h4 class="anchored" data-anchor-id="nmfs-openscapes">NMFS-Openscapes</h4>
+<ul>
+<li>TBD…</li>
+</ul>
+</section>
+</section>
+</section>
+<section id="openscapes" class="level2">
+<h2 class="anchored" data-anchor-id="openscapes">Openscapes</h2>
+<p>The Openscapes Team oversees the management of the Hub and Cloud costs.</p>
+<p><a href="https://openscapes.org/">Openscapes</a> is an open source approach and movement that helps researchers and those supporting research find each other and feel empowered to conduct data-intensive science. Through a creative approach drawing inspiration and skills from many places, we provide structures for technical skill-building, collaborative teamwork, and inclusive community development. Our work builds from many others in the open movement.</p>
+<p>Learn more about Openscapes <a href="https://openscapes.org/initiatives">initiatives</a> through our many other <a href="https://openscapes.org/resources">open resources</a>, <a href="https://openscapes.org/media">media</a>, and <a href="https://openscapes.org/events">events</a>, and <a href="https://openscapes.org/connect">connect</a> with us.</p>
+</section>
+<section id="primary-contacts" class="level2">
+<h2 class="anchored" data-anchor-id="primary-contacts">Primary contacts</h2>
+<section id="openscapes-1" class="level4">
+<h4 class="anchored" data-anchor-id="openscapes-1">Openscapes</h4>
+<ul>
+<li>Julia Lowndes</li>
+<li>Andy Teucher</li>
+</ul>
+</section>
+<section id="nasa" class="level4">
+<h4 class="anchored" data-anchor-id="nasa">NASA</h4>
+<ul>
+<li>Luis Lopez</li>
+</ul>
+</section>
+<section id="nmfs" class="level4">
+<h4 class="anchored" data-anchor-id="nmfs">NMFS</h4>
+<ul>
+<li>Eli Holmes</li>
+</ul>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -564,7 +664,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/about.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/about.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/about.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/about.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>

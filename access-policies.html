@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Openscapes JupyterHubs</title>
+<title>Access Policies – Openscapes JupyterHubs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -138,43 +138,127 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#obtaining-access-to-an-openscapes-hub" id="toc-obtaining-access-to-an-openscapes-hub" class="nav-link active" data-scroll-target="#obtaining-access-to-an-openscapes-hub">Obtaining Access to an Openscapes Hub</a>
+  <ul class="collapse">
+  <li><a href="#access-via-a-github-team" id="toc-access-via-a-github-team" class="nav-link" data-scroll-target="#access-via-a-github-team">Access via a GitHub Team</a></li>
+  <li><a href="#access-via-a-shared-password" id="toc-access-via-a-shared-password" class="nav-link" data-scroll-target="#access-via-a-shared-password">Access via a shared password</a></li>
+  </ul></li>
+  <li><a href="#allowable-uses-of-2i2c-hub" id="toc-allowable-uses-of-2i2c-hub" class="nav-link" data-scroll-target="#allowable-uses-of-2i2c-hub">Allowable Uses of 2i2c Hub</a></li>
+  <li><a href="#removal-from-the-openscapes-hub" id="toc-removal-from-the-openscapes-hub" class="nav-link" data-scroll-target="#removal-from-the-openscapes-hub">Removal From the Openscapes Hub</a></li>
+  <li><a href="#data-storage-policies" id="toc-data-storage-policies" class="nav-link" data-scroll-target="#data-storage-policies">Data storage policies</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/access-policies.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/access-policies.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Access Policies</h1>
+</div>
 
 
 
-<section id="openscapes-jupyterhub-access" class="level1 text-center" style="margin-bottom: 2em;">
-<h1><img src="images/openscapes_hex.png" class="inline img-fluid"> Openscapes JupyterHub Access <img src="images/2i2c-logo.png" class="inline img-fluid"></h1>
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>JupyterHub access has two general categories of use, with different means of access depending on the specifics of each use case:</p>
+<ol type="1">
+<li><strong>Exploring and experimenting with cloud computing</strong> - this includes Openscapes Champions, and Openscapes Mentors and instructors building expertise in the environment. The users are given access to the Hub by membership in a <a href="#access-via-a-github-team">GitHub Team</a> in the relevant GitHub organization.</li>
+<li><strong>Workshop participants</strong> - Participants in workshops hosted by Mentors, Openscapes, or collaborators. The type of workshop will dictate the mode of access, depending on requirements determined by workshop leads:</li>
+</ol>
+<ol type="a">
+<li>Workshops where learners require access after the workshop (up to three months), and/or GitHub workflows are part of the curriculum. These workshops should use <a href="#access-via-a-github-team">GitHub Team-based access</a>.</li>
+<li>Workshops where learners do not require access to the hub after the workshop, and GitHub is not being taught as part of the lessons. These workshops should use <a href="#access-via-a-shared-password">shared password</a> access.</li>
+</ol>
+<section id="obtaining-access-to-an-openscapes-hub" class="level2">
+<h2 class="anchored" data-anchor-id="obtaining-access-to-an-openscapes-hub">Obtaining Access to an Openscapes Hub</h2>
+<section id="access-via-a-github-team" class="level3">
+<h3 class="anchored" data-anchor-id="access-via-a-github-team">Access via a GitHub Team</h3>
+<p>Access is controlled by the Openscapes Team, who oversee the management of the Hub and Cloud costs.</p>
+<p>There is a GitHub organization for each Hub, and within each organization our JupyterHub users are managed in two (or more) GitHub Teams:</p>
+<ul>
+<li><strong>Long-term access</strong>: This access is for Openscapes mentors and team, staff and others who request a longer-term engagement.</li>
+<li><strong>Openscapes Champions</strong>: This access is for teams that participate in the NASA or NOAA Openscapes Champions Program. These teams have access for up to a year as they experiment with migrating their workflows to the Cloud.</li>
+<li><strong>Workshops that teach GitHub workflows</strong>: We create additional GitHub teams to manage participants’ access. These teams have access for 3 months as they experiment with migrating their workflows to the Cloud.</li>
+</ul>
+<p><strong><a href="./github-access.html">Instructions for admins on how to add people to the hub using GitHub</a></strong></p>
 </section>
-<p><a href="https://openscapes.org"><strong>Openscapes</strong></a> supports organizations that are starting to explore cloud computing by partnering with <a href="https://2i2c.org"><strong>2i2c</strong></a>, who design and administer a global network of community hubs. The purpose of Openscapes JupyterHubs is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development.</p>
-<p>Access the login page for your organization below:</p>
-<hr>
-<div>
+<section id="access-via-a-shared-password" class="level3">
+<h3 class="anchored" data-anchor-id="access-via-a-shared-password">Access via a shared password</h3>
+<p>Access is provided on the day of the workshop with a common, global password. The password will be provided to participants at the start of the workshop, and participants will log in with their email address and the shared password. This access method allows us to ensure all workshop participants have easy access for the workshop, without having prior familiarity with GitHub. In general, access to the Hub with a workshop shared password will persist for seven days post-workshop.</p>
+<p><strong><a href="./password-access.html">Instructions for admins on how to set up a shared-password workshop</a></strong></p>
+</section>
+</section>
+<section id="allowable-uses-of-2i2c-hub" class="level2">
+<h2 class="anchored" data-anchor-id="allowable-uses-of-2i2c-hub">Allowable Uses of 2i2c Hub</h2>
+<p>Users who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs).</p>
+<p>Running large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the <a href="https://github.com/NASA-Openscapes/2i2cAccessPolicies">2i2cAccessPolicies repository</a>.</p>
+<!-- TODO: add/fix repo for access policies for NOAA -->
+</section>
+<section id="removal-from-the-openscapes-hub" class="level2">
+<h2 class="anchored" data-anchor-id="removal-from-the-openscapes-hub">Removal From the Openscapes Hub</h2>
+<p>The Openscapes Hubs are a shared, limited resource that incur real costs. Users are granted access under the terms above and are removed at the end of those limits. Users that haven’t accessed the Hub in more than six months are also removed for security purposes.</p>
+<p>We will do our best to alert users before they lose access to the Openscapes Hub. However, we reserve the right to remove users at any time for any reason. Users that violate the terms of access or incur large Cloud costs without prior permission from the Openscapes Team will be removed immediately.</p>
+</section>
+<section id="data-storage-policies" class="level2">
+<h2 class="anchored" data-anchor-id="data-storage-policies">Data storage policies</h2>
+<p>Policies on data storage and use of the <code>HOME</code> directory can be found in the <a href="./data-storage.html">data policies page</a>.</p>
+<!-- 
+TODO: Refine and shift to 'costs' page when monthly reporting is in a better place
 
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="margin-top: 3em;">
-<div class="quarto-layout-row">
-<div class="text-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="login-area">
-<p><img src="images/nasa-openscapes.png" class="login-logo img-fluid" alt="NASA logo to left of Openscapes logo"></p>
-<p><a href="https://openscapes.2i2c.cloud/" class="btn-login nasa btn btn-primary btn-lg" role="button">NASA-Openscapes Hub Login</a></p>
-</div>
-</div>
-<div class="text-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="login-area">
-<p><img src="images/nmfs-openscapes.png" class="login-logo img-fluid" alt="NMFS logo to left of Openscapes logo"></p>
-<p><a href="https://nmfs-openscapes.2i2c.cloud/" class="btn-login noaa btn btn-primary btn-lg" role="button">NMFS-Openscapes Hub Login</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center">
-<p><img src="images/jupyterhub-logo.png" class="img-fluid" style="margin-top: 1em;"></p>
-</div>
+## Monitoring cloud usage costs
+
+### AWS Cost Explorer
+
+*This is a work in progress, currently with minimal steps and screenshots that we will augment.*
+
+AWS Cost Explorer lets you examine how much your usage costs. When using Credits, your usage does not immediately show up. Select Charge type as "Usage" from the right menu.
+
+![AWS Cost Explorer. Charge type == "Usage"](images/cost-explorer-usage.png){fig-align="center" width="437"}
+
+### AWS Budgeting Alerts
+
+*This is a work in progress, currently with minimal steps and screenshots that we will augment.*
+
+There are two types of alerts we set up.
+
+#### Budgeting alerts
+
+When adding new Cloud credits to our AWS account, we also create a budget and alerts (received via email) as we spend our credits. These are some beginning notes (credit and thank you to Joe Kennedy!).
+
+Create an annual budget of the total Credits left (you may need to calculate this if credits rolled over at the beginning of the calendar year). In the Budget menu, create a Budget. Then select Customize and Cost budget.
+
+![](images/choose-budget-type.png){fig-align="center" width="394"}
+
+Exclude Credits and Refunds, include Discounts. You can elect to receive emails with a regular cadence: weekly, monthly.
+
+We set these up at 50, 75, 90, 95% of the total budget, and we will receive emails at those percentages. The thinking is that we will need to request more credits starting at 50-75%, and then make sure we have them in hand by 90-95%.
+
+#### Threshold alerts
+
+We can also set up email alerts at certain dollar amounts.
+
+![](images/budget-threshold-alerts.png){fig-align="center" width="426"}
+
+We receive emails when we spend \$100, \$200, \$500 of our Credits, which show up in the system as \$1000 intervals. -->
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -605,7 +689,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/access-policies.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/access-policies.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
