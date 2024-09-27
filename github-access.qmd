@@ -1,6 +1,6 @@
 ---
 title: "GitHub-based Access"
-toc-location: right-body
+#toc-location: right-body
 toc-depth: 2
 ---
 
