@@ -148,7 +148,7 @@ ul.task-list li input[type="checkbox"] {
   <ul class="collapse">
   <li><a href="#the-_shared-directory" id="toc-the-_shared-directory" class="nav-link" data-scroll-target="#the-_shared-directory">The <code>_shared</code> directory</a></li>
   </ul></li>
-  <li><a href="#how-to-archive-old-home-directories-admin" id="toc-how-to-archive-old-home-directories-admin" class="nav-link" data-scroll-target="#how-to-archive-old-home-directories-admin">How to archive old home directories (admin)</a>
+  <li><a href="#how-to-archive-old-home-dir" id="toc-how-to-archive-old-home-dir" class="nav-link" data-scroll-target="#how-to-archive-old-home-dir">How to archive old home directories (admin)</a>
   <ul class="collapse">
   <li><a href="#finding-large-home-directories" id="toc-finding-large-home-directories" class="nav-link" data-scroll-target="#finding-large-home-directories">Finding large <code>$HOME</code> directories</a></li>
   <li><a href="#authenticate-with-s3-archive-bucket" id="toc-authenticate-with-s3-archive-bucket" class="nav-link" data-scroll-target="#authenticate-with-s3-archive-bucket">Authenticate with S3 archive bucket</a></li>
@@ -196,11 +196,11 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <section id="using-s3-bucket-storage" class="level3">
 <h3 class="anchored" data-anchor-id="using-s3-bucket-storage">Using S3 Bucket Storage</h3>
-<p>Please see the short tutorial in the Earthdata Cloud Cookbook on <a href="./how-tos/using-s3-storage.html">Using S3 Bucket Storage in NASA-Openscapes Hub</a>.</p>
+<p>Please see the short tutorial in the Earthdata Cloud Cookbook on <a href="https://nasa-openscapes.github.io/earthdata-cloud-cookbook/how-tos/using-s3-storage.html">Using S3 Bucket Storage in NASA-Openscapes Hub</a>.</p>
 </section>
 <section id="data-retention-and-archiving-policy" class="level2">
 <h2 class="anchored" data-anchor-id="data-retention-and-archiving-policy">Data retention and archiving policy</h2>
-<p>User <code>$HOME</code> directories will be retained for six months after their last use. After a home directory has been idle for six months, it will be <a href="#how-to-archive-old-home-directories">archived to our “archive” S3 bucket, and removed</a>. If a user requests their archive back, an admin can restore it for them.</p>
+<p>User <code>$HOME</code> directories will be retained for six months after their last use. After a home directory has been idle for six months, it will be <a href="#how-to-archive-old-home-dir">archived to our “archive” S3 bucket, and removed</a>. If a user requests their archive back, an admin can restore it for them.</p>
 <p>Once a user’s home directory archive has been sitting in the archive for an additional six months, it will be permanently removed from the archive. After this it can no longer be retrieved. <!-- TODO make this automatic policy in S3 console --></p>
 <p>In addition to these policies, admins will keep an eye on the <a href="https://grafana.openscapes.2i2c.cloud/d/bd232539-52d0-4435-8a62-fe637dc822be/home-directory-usage-dashboard?orgId=1">Home Directory Usage Dashboard</a> in Grafana. When a user’s home directory increases in size to over 100GB, we will contact them and work with them to reduce the size of their home directory - by removing large unnecessary files, and moving the rest to the appropriate S3 bucket (e.g., <code>$PERSISTENT_BUCKET</code>).</p>
 <section id="the-_shared-directory" class="level3">
@@ -209,8 +209,8 @@ ul.task-list li input[type="checkbox"] {
 <p>This directory will follow the same policies as users’ home directories: after six months, contents will be archived to the “archive” S3 bucket (more below). After an additional six months, the archive will be deleted.</p>
 </section>
 </section>
-<section id="how-to-archive-old-home-directories-admin" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-archive-old-home-directories-admin">How to archive old home directories (admin)</h2>
+<section id="how-to-archive-old-home-dir" class="level2">
+<h2 class="anchored" data-anchor-id="how-to-archive-old-home-dir">How to archive old home directories (admin)</h2>
 <p>To start, you will need to be an admin of the Openscapes Jupyterhub so that the <code>allusers</code> directory is mounted in your home directory. This will contain all users’ home directories, and you will have full read-write access.</p>
 <section id="finding-large-home-directories" class="level3">
 <h3 class="anchored" data-anchor-id="finding-large-home-directories">Finding large <code>$HOME</code> directories</h3>
