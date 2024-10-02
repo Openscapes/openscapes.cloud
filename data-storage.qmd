@@ -38,13 +38,13 @@ access them using the environment variables:
 ### Using S3 Bucket Storage 
 
 Please see the short tutorial in the Earthdata Cloud Cookbook on 
-[Using S3 Bucket Storage in NASA-Openscapes Hub](/how-tos/using-s3-storage.html).
+[Using S3 Bucket Storage in NASA-Openscapes Hub](https://nasa-openscapes.github.io/earthdata-cloud-cookbook/how-tos/using-s3-storage.html).
 
 ## Data retention and archiving policy
 
 User `$HOME` directories will be retained for six months after their last use.
-After a home directory has been idle for six months, it will be [archived to our
-"archive" S3 bucket, and removed](#how-to-archive-old-home-directories). If a
+After a home directory has been idle for six months, it will be 
+[archived to our "archive" S3 bucket, and removed](#how-to-archive-old-home-dir). If a
 user requests their archive back, an admin can restore it for them.
 
 Once a user's home directory archive has been sitting in the archive for an 
@@ -70,7 +70,7 @@ This directory will follow the same policies as users' home directories: after
 six months, contents will be archived to the "archive" S3 bucket (more below). 
 After an additional six months, the archive will be deleted.
 
-## How to archive old home directories (admin)
+## How to archive old home directories (admin) {#how-to-archive-old-home-dir}
 
 To start, you will need to be an admin of the Openscapes Jupyterhub so that
 the `allusers` directory is mounted in your home directory. This will contain
