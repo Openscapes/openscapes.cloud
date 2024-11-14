@@ -1,5 +1,40 @@
 [
   {
+    "objectID": "access-policies.html",
+    "href": "access-policies.html",
+    "title": "Access Policies",
+    "section": "",
+    "text": "JupyterHub access has two general categories of use, with different means of access depending on the specifics of each use case:"
+  },
+  {
+    "objectID": "access-policies.html#obtaining-access-to-an-openscapes-hub",
+    "href": "access-policies.html#obtaining-access-to-an-openscapes-hub",
+    "title": "Access Policies",
+    "section": "Obtaining Access to an Openscapes Hub",
+    "text": "Obtaining Access to an Openscapes Hub\n\nAccess via a GitHub Team\nAccess is controlled by the Openscapes Team, who oversee the management of the Hub and Cloud costs.\nThere is a GitHub organization for each Hub, and within each organization our JupyterHub users are managed in two (or more) GitHub Teams:\n\nLong-term access: This access is for Openscapes mentors and team, staff and others who request a longer-term engagement.\nOpenscapes Champions: This access is for teams that participate in the NASA or NOAA Openscapes Champions Program. These teams have access for up to a year as they experiment with migrating their workflows to the Cloud.\nWorkshops that teach GitHub workflows: We create additional GitHub teams to manage participants’ access. These teams have access for 3 months as they experiment with migrating their workflows to the Cloud.\n\nInstructions for admins on how to add people to the hub using GitHub\n\n\nAccess via a shared password\nAccess is provided on the day of the workshop with a common, global password. The password will be provided to participants at the start of the workshop, and participants will log in with their email address and the shared password. This access method allows us to ensure all workshop participants have easy access for the workshop, without having prior familiarity with GitHub. In general, access to the Hub with a workshop shared password will persist for seven days post-workshop.\nInstructions for admins on how to set up a shared-password workshop"
+  },
+  {
+    "objectID": "access-policies.html#allowable-uses-of-2i2c-hub",
+    "href": "access-policies.html#allowable-uses-of-2i2c-hub",
+    "title": "Access Policies",
+    "section": "Allowable Uses of 2i2c Hub",
+    "text": "Allowable Uses of 2i2c Hub\nUsers who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs).\nRunning large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the 2i2cAccessPolicies repository."
+  },
+  {
+    "objectID": "access-policies.html#removal-from-the-openscapes-hub",
+    "href": "access-policies.html#removal-from-the-openscapes-hub",
+    "title": "Access Policies",
+    "section": "Removal From the Openscapes Hub",
+    "text": "Removal From the Openscapes Hub\nThe Openscapes Hubs are a shared, limited resource that incur real costs. Users are granted access under the terms above and are removed at the end of those limits. Users that haven’t accessed the Hub in more than six months are also removed for security purposes.\nWe will do our best to alert users before they lose access to the Openscapes Hub. However, we reserve the right to remove users at any time for any reason. Users that violate the terms of access or incur large Cloud costs without prior permission from the Openscapes Team will be removed immediately."
+  },
+  {
+    "objectID": "access-policies.html#data-storage-policies",
+    "href": "access-policies.html#data-storage-policies",
+    "title": "Access Policies",
+    "section": "Data storage policies",
+    "text": "Data storage policies\nPolicies on data storage and use of the HOME directory can be found in the data policies page."
+  },
+  {
     "objectID": "about.html",
     "href": "about.html",
     "title": "About",
@@ -33,13 +68,6 @@
     "title": "About",
     "section": "Primary contacts",
     "text": "Primary contacts\n\nOpenscapes\n\nJulia Lowndes\nAndy Teucher\n\n\n\nNASA\n\nLuis Lopez\n\n\n\nNMFS\n\nEli Holmes"
-  },
-  {
-    "objectID": "fledging.html",
-    "href": "fledging.html",
-    "title": "Fledging",
-    "section": "",
-    "text": "Fledging is a goal of these JupyterHubs, so that users who have had success and want to continue their adventures in cloud computing, have the knowledge and resources to develop their own solutions.\nHere is a presentation on fledging given at the Earth Science Information Partners (ESIP) conference in July, 2024.\nMore resources coming soon…"
   },
   {
     "objectID": "github-access.html",
@@ -91,11 +119,11 @@
     "text": "How to archive old home directories (admin)\nTo start, you will need to be an admin of the Openscapes Jupyterhub so that the allusers directory is mounted in your home directory. This will contain all users’ home directories, and you will have full read-write access.\n\nFinding large $HOME directories\nLook at the Home Directory Usage Dashboard in Grafana to see the directories that haven’t been used in a long time and/or are very large.\nYou can also view and sort users’ directories by size in the Hub with the following command, though this takes a while because it has to summarize a lot of files and directories. This will show the 30 largest home directories:\ndu -h --max-depth=1 /home/jovyan/allusers/ | sort -hr | head -n 30\n\n\nAuthenticate with S3 archive bucket\nWe have created an AWS IAM user called archive-homedirs with appropriate permissions to write to the openscapeshub-prod-homedirs-archive bucket. Get access keys for this user from the AWS console, and use these keys to authenticate in the Hub:\nIn the terminal, type:\nawsv2 configure\nEnter the access key and secret key at the prompts, and set default region to us-west-2.\nYou will also need to temporarily unset some AWS environment variables that have been configured to authenticate with NASA S3 storage. (These will be reset the next time you log in):\nunset AWS_ROLE_ARN\nunset AWS_WEB_IDENTITY_TOKEN_FILE\nTest to make sure you can access the archive bucket:\n# test s3 access:\nawsv2 s3 ls s3://openscapeshub-prod-homedirs-archive/archives/\ntouch test123.txt\nawsv2 s3 mv test123.txt s3://openscapeshub-prod-homedirs-archive/archives/\nawsv2 s3 rm s3://openscapeshub-prod-homedirs-archive/archives/test123.txt\n\n\nSetting up and running the archive script\nWe use a python script, developed by @yuvipanda, that reproducibly archives a list of users’ directories into a specified S3 bucket.\nCopy the script into your home directory in the Hub.\nIn the Hub as of 2024-05-17, a couple of dependencies for the script are missing; you can install them before running the script:\npip install escapism\n\n# I had solver errors with pigz so needed to use the classic solver. \n# Also, the installation of pigz required a machine with &gt;= 3.7GB memory\nconda install pigz --solver classic\nCreate a text file, with one username per line, of users’ home directories you would like to archive to s3. It will look like:\nusername1\nusername2\n# etc...\nFinally, run the script from the terminal, changing the parameter values as required:\npython3 archive-home-dirs.py \\\n    --archive-name=\"archive-$(date +'%Y-%m-%d')\" \\\n    --basedir=/home/jovyan/allusers/ \\\n    --bucket-name=openscapeshub-prod-homedirs-archive \\\n    --object-prefix=\"archives/\" \\\n    --usernames-file=users-to-archive.txt \\\n    --temp-path=/home/jovyan/archive-staging/\nOmitted in the above example, but available to use, is the --delete flag, which will delete the users’ home directory once the archive is completed.\nIf you don’t use the --delete flag, first verify that the archive was successfully completed and then remove the user’s home directory manually.\n\n\nArchiving the shared directory\nYou can use the same script to archive directories in the shared directory, by modifying the inputs slightly:\n\nSet --basedir=/home/jovyan/shared/, (or --basedir=/home/jovyan/shared-readwrite/ if you want to be able use the --delete flag).\nCreate a file with a list of directories in the shared directory you want to archive, and pass it to the --usernames-file argument.\nSet --object-prefix=\"archives/_shared/ to put the archives in the _shared subdirectory in the archive bucket.\n\nE.g.:\npython3 archive-home-dirs.py \\\n    --archive-name=\"archive-$(date +'%Y-%m-%d')\" \\\n    --basedir=/home/jovyan/shared/ \\\n    --bucket-name=openscapeshub-prod-homedirs-archive \\\n    --object-prefix=\"archives/_shared/\" \\\n    --usernames-file=/home/jovyan/shared-to-archive.txt \\\n    --temp-path=/home/jovyan/archive-staging/\nBy default, archives (.tar.gz) are created in your /tmp directory before upload to the S3 bucket. The /tmp directory is cleared out when you shut down the Hub. However, /tmp has limited space (80GB shared by up to four users on a single node), so if you are archiving many large directories, you will likely need to specify a location in your $HOME directory by passing a path to the --temp-path argument. The script will endeavour to clean up after itself and remove the tar.gz file after uploading, but double check that directory when you are finished or you may have copies of all of the other user directories in your own $HOME!"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": " Openscapes JupyterHub Access ",
+    "objectID": "fledging.html",
+    "href": "fledging.html",
+    "title": "Fledging",
     "section": "",
-    "text": "Openscapes JupyterHub Access \n\nOpenscapes supports organizations that are starting to explore cloud computing by partnering with 2i2c, who design and administer a global network of community hubs. The purpose of Openscapes JupyterHubs is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development. Work to date has been co-developed with the NASA Openscapes community via the Earthdata Cloud Cookbook.\nAccess the login page for your organization below:\n\n\n\n\n\n\n\n\n\nNASA-Openscapes Hub Login\n\n\n\n\n\nNMFS-Openscapes Hub Login"
+    "text": "Fledging is a goal of these JupyterHubs, so that users who have had success and want to continue their adventures in cloud computing, have the knowledge and resources to develop their own solutions.\nHere is a presentation on fledging given at the Earth Science Information Partners (ESIP) conference in July, 2024.\nMore resources coming soon…"
   },
   {
     "objectID": "password-access.html",
@@ -119,38 +147,10 @@
     "text": "Workshop Hub Access via GitHub Teams\nIf you are hosting a workshop with where you will be teaching GitHub workflows, and/or have learners who require longer-term access to the Hub after the workshop, follow the instructions to add participants to the 2i2c Hub via a GitHub Team."
   },
   {
-    "objectID": "access-policies.html",
-    "href": "access-policies.html",
-    "title": "Access Policies",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": " Openscapes JupyterHub Access ",
     "section": "",
-    "text": "JupyterHub access has two general categories of use, with different means of access depending on the specifics of each use case:"
-  },
-  {
-    "objectID": "access-policies.html#obtaining-access-to-an-openscapes-hub",
-    "href": "access-policies.html#obtaining-access-to-an-openscapes-hub",
-    "title": "Access Policies",
-    "section": "Obtaining Access to an Openscapes Hub",
-    "text": "Obtaining Access to an Openscapes Hub\n\nAccess via a GitHub Team\nAccess is controlled by the Openscapes Team, who oversee the management of the Hub and Cloud costs.\nThere is a GitHub organization for each Hub, and within each organization our JupyterHub users are managed in two (or more) GitHub Teams:\n\nLong-term access: This access is for Openscapes mentors and team, staff and others who request a longer-term engagement.\nOpenscapes Champions: This access is for teams that participate in the NASA or NOAA Openscapes Champions Program. These teams have access for up to a year as they experiment with migrating their workflows to the Cloud.\nWorkshops that teach GitHub workflows: We create additional GitHub teams to manage participants’ access. These teams have access for 3 months as they experiment with migrating their workflows to the Cloud.\n\nInstructions for admins on how to add people to the hub using GitHub\n\n\nAccess via a shared password\nAccess is provided on the day of the workshop with a common, global password. The password will be provided to participants at the start of the workshop, and participants will log in with their email address and the shared password. This access method allows us to ensure all workshop participants have easy access for the workshop, without having prior familiarity with GitHub. In general, access to the Hub with a workshop shared password will persist for seven days post-workshop.\nInstructions for admins on how to set up a shared-password workshop"
-  },
-  {
-    "objectID": "access-policies.html#allowable-uses-of-2i2c-hub",
-    "href": "access-policies.html#allowable-uses-of-2i2c-hub",
-    "title": "Access Policies",
-    "section": "Allowable Uses of 2i2c Hub",
-    "text": "Allowable Uses of 2i2c Hub\nUsers who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs).\nRunning large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the 2i2cAccessPolicies repository."
-  },
-  {
-    "objectID": "access-policies.html#removal-from-the-openscapes-hub",
-    "href": "access-policies.html#removal-from-the-openscapes-hub",
-    "title": "Access Policies",
-    "section": "Removal From the Openscapes Hub",
-    "text": "Removal From the Openscapes Hub\nThe Openscapes Hubs are a shared, limited resource that incur real costs. Users are granted access under the terms above and are removed at the end of those limits. Users that haven’t accessed the Hub in more than six months are also removed for security purposes.\nWe will do our best to alert users before they lose access to the Openscapes Hub. However, we reserve the right to remove users at any time for any reason. Users that violate the terms of access or incur large Cloud costs without prior permission from the Openscapes Team will be removed immediately."
-  },
-  {
-    "objectID": "access-policies.html#data-storage-policies",
-    "href": "access-policies.html#data-storage-policies",
-    "title": "Access Policies",
-    "section": "Data storage policies",
-    "text": "Data storage policies\nPolicies on data storage and use of the HOME directory can be found in the data policies page."
+    "text": "Openscapes JupyterHub Access \n\nOpenscapes supports organizations that are starting to explore cloud computing by partnering with 2i2c, who design and administer a global network of community hubs. The purpose of Openscapes JupyterHubs is to provide initial, exploratory experiences with cloud computing, and to provide a platform for running workshops. It is not meant to be a long-term solution to support on-going science work or software development. Work to date has been co-developed with the NASA Openscapes community via the Earthdata Cloud Cookbook.\nAccess the login page for your organization below:\n\n\n\n\n\n\n\n\n\nNASA-Openscapes Hub Login\n\n\n\n\n\nNMFS-Openscapes Hub Login"
   }
 ]
