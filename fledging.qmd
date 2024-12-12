@@ -13,6 +13,10 @@ considering is how to work with *data that is hosted in the cloud*.
 
 ![](images/data-compute-cloud-grid.png){width="400" fig-align="center"}
 
+It is also important to note the environmental costs of cloud computing - 
+it is carbon-intensive, and so it is worth taking this into consideration when
+thinking about "when to cloud".
+
 ### Skills learned for working with **cloud-hosted data**
 
 The JupyterHubs provide a shared computing environment for mentors to learn and teach
@@ -71,3 +75,7 @@ These may include:
     - Ran parallel compute jobs on big data in the cloud
 - See a [presentation on this fledging story](https://docs.google.com/presentation/d/1-TiPN8bfY6iDL5EVcEuCQSjqFMs3jPSX2MlNWA6no2E/edit#slide=id.g2ece79fddf8_3_73), 
 given at the Earth Science Information Partners (ESIP) conference in July, 2024.
+
+#### Vision for the future
+
+> People have skills and are empowered to do their science with cloud-hosted data efficiently and equitably, based on their computing needs and their values.
