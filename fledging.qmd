@@ -13,9 +13,11 @@ considering is how to work with *data that is hosted in the cloud*.
 
 ![](images/data-compute-cloud-grid.png){width="400" fig-align="center"}
 
-It is also important to note the environmental costs of cloud computing - 
-it is [carbon-intensive](https://mit-serc.pubpub.org/pub/the-cloud-is-material/release/2), and so it is worth taking this into consideration when
-thinking about "when to cloud".
+The proliferation of data centres to support cloud computing and data storage 
+has a [significant environmental cost](https://www.goclimate.com/knowledge/servers). 
+While most scientific workflows are small in comparison to other cloud uses 
+(e.g., AI and cryptocurrency mining), it is worth taking this into 
+consideration when thinking about "when to cloud".
 
 ### Skills learned for working with **cloud-hosted data**
 
@@ -23,7 +25,8 @@ The JupyterHubs provide a shared computing environment for mentors to learn and 
 workflows for accessing and analyzing cloud-based data. Some of the skills we learn include:
 
 - Conceptual understanding of data in the cloud, and cloud-native data sources
-- Finding and accessing data in Earthdata cloud with earthaccess (Python) and earthdatalogin (R)
+- Finding and accessing data in Earthdata cloud with earthaccess (Python) and 
+  earthdatalogin (R)
 - Streaming and subsetting cloud data with xarray (Python) and terra/rstac (R)
 - Authenticating with NASA Earthdata Login
 - Ability to ask questions, teach, and develop learning resources
@@ -44,14 +47,16 @@ These may include:
     - This is a good option for large compute jobs using Python that are easily 
       parallelized (see an example 
       [below](#an-example-path-for-computing-in-the-cloud)).
-- Compute locally with cloud-native workflows (example: streaming cloud data with earthaccess + xarray)
-    - For data that can fit within your laptop's resrouces (RAM and hard disk), 
-      working locally with the same tools and workflows learned from working in 
-      the hub is a great option. You can benefit greatly from the effiency of 
+- Compute locally with cloud-native workflows (example: streaming cloud data 
+  with earthaccess + xarray)
+    - For data and analysis jobs that can fit within your laptop's resrouces 
+      (RAM and hard disk), working locally with the same tools and workflows 
+      learned from working in the hub is a great option, and computing in the 
+      cloud is likely unnecessary. You can benefit greatly from the effiency of 
       cloud data access patterns (such as streaming and range requests) without 
-      worrying about cloud costs and administration, and keeping your carbon 
-      footprint lower.
-- Compute locally using a shared environment “container” (example: Docker, Codespaces)
+      worrying about cloud costs and administration.
+- Compute locally using a shared environment “container” (example: Docker, 
+  Codespaces)
     - One of the great benefits that the shared JupyterHub offers is a computing
       environment that is already set up, so you don't have to go through the pain
       of installing and configuring everything yourself. The images used in the 
