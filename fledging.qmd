@@ -6,6 +6,14 @@ Fledging is a goal of these JupyterHubs, so that users who have had success
 and want to continue their adventures in cloud computing, have the knowledge
 and resources to develop their own solutions.
 
+The Openscapes JupyterHubs aim to provide an analysis-ready computing environment,
+with all (or most) of the software dependencies required for working with 
+cloud-hosted spatial data. This is a big advantage for learning how to 
+access and work with the data, run workshops for many learners, and have early
+success in cloud computing. However, it does hide the complexities of setting up a
+computing environment, and most fledging paths will necessarily involve learning 
+some of these tools and processes.
+
 When thinking about cloud computing, we consider two components: where is our 
 data? And where is our compute? In general, if our data is already on our local
 computer, we will work with that data on our computer, so the scope we are 
@@ -43,6 +51,9 @@ These may include:
     - If your institution offers a JupyterHub instance, this is a great option 
       to seamlessly transfer your learnings from the Openscapes Hub to a Hub
       for "real science".
+    - Not all JupyterHubs will have the same environment (i.e., software and 
+      packages), so users will need to learn how to customize their new 
+      environment to suit their needs.
 - Send large compute jobs to the cloud (example: Coiled)
     - This is a good option for large compute jobs using Python that are easily 
       parallelized (see an example 
@@ -55,8 +66,7 @@ These may include:
       cloud is likely unnecessary. You can benefit greatly from the effiency of 
       cloud data access patterns (such as streaming and range requests) without 
       worrying about cloud costs and administration.
-- Compute locally using a shared environment “container” (example: Docker, 
-  Codespaces)
+- Compute locally using a shared environment “container” (example: Docker)
     - One of the great benefits that the shared JupyterHub offers is a computing
       environment that is already set up, so you don't have to go through the pain
       of installing and configuring everything yourself. The images used in the 
