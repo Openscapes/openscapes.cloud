@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -36,10 +36,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7ad02bab42d0c9ad626e56ea09fd113b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -138,8 +138,16 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-cloud-data-vs-compute" id="toc-the-cloud-data-vs-compute" class="nav-link active" data-scroll-target="#the-cloud-data-vs-compute">The Cloud: Data vs Compute</a></li>
+  <li><a href="#skills-learned-for-working-with-cloud-hosted-data" id="toc-skills-learned-for-working-with-cloud-hosted-data" class="nav-link" data-scroll-target="#skills-learned-for-working-with-cloud-hosted-data">Skills learned for working with <strong>cloud-hosted data</strong></a></li>
+  <li><a href="#what-are-fledging-paths-for-compute" id="toc-what-are-fledging-paths-for-compute" class="nav-link" data-scroll-target="#what-are-fledging-paths-for-compute">What are fledging paths for <strong>compute</strong>?</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/fledging.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/fledging.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -163,11 +171,82 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<p>Fledging is a goal of these JupyterHubs, so that users who have had success and want to continue their adventures in cloud computing, have the knowledge and resources to develop their own solutions.</p>
-<p>Here is a <a href="https://docs.google.com/presentation/d/1-TiPN8bfY6iDL5EVcEuCQSjqFMs3jPSX2MlNWA6no2E/edit#slide=id.g2ece79fddf8_3_73">presentation on fledging</a> given at the Earth Science Information Partners (ESIP) conference in July, 2024.</p>
-<p>More resources coming soon…</p>
+<p>Fledging is a goal of these JupyterHubs, so that users who have had success and want to continue their adventures in cloud computing, have the knowledge and resources to develop their own solutions. Fleding work to date has been co-developed with the NASA Openscapes Mentors community, and we continue to work with mentors in both NASA and NOAA to identify fledging paths and address challenges.</p>
+<p>The Openscapes JupyterHubs aim to provide an analysis-ready computing environment, with all (or most) of the software dependencies required for working with cloud-hosted spatial data. This is a big advantage for learning how to access and work with the data, run workshops for many learners, and have early success in cloud computing. However, it does hide some of the complexities of setting up your computing environment, and most fledging paths will necessarily involve learning some of these tools and processes.</p>
+<section id="the-cloud-data-vs-compute" class="level3">
+<h3 class="anchored" data-anchor-id="the-cloud-data-vs-compute">The Cloud: Data vs Compute</h3>
+<p>When thinking about cloud computing, we consider two components: where is our data? And where is our compute? In general, if our data is already on our local computer, we will work with that data on our computer, so the scope we are considering is how to work with <em>data that is hosted in the cloud</em>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/data-compute-cloud-grid.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
+</figure>
+</div>
+<p>The proliferation of data centres to support cloud computing and data storage has a <a href="https://www.goclimate.com/knowledge/servers">significant environmental cost</a>. While most scientific workflows are small in comparison to other cloud uses (e.g., AI and cryptocurrency mining), it is worth taking this into consideration when thinking about “when to cloud”.</p>
+</section>
+<section id="skills-learned-for-working-with-cloud-hosted-data" class="level3">
+<h3 class="anchored" data-anchor-id="skills-learned-for-working-with-cloud-hosted-data">Skills learned for working with <strong>cloud-hosted data</strong></h3>
+<p>The JupyterHubs provide a shared computing environment for mentors to learn and teach workflows for accessing and analyzing cloud-based data. Some of the skills we learn include:</p>
+<ul>
+<li>Conceptual understanding of data in the cloud, and cloud-native data sources</li>
+<li>Finding and accessing data in Earthdata cloud with earthaccess (Python) and earthdatalogin (R)</li>
+<li>Streaming and subsetting cloud data with xarray (Python) and terra/rstac (R)</li>
+<li>Authenticating with NASA Earthdata Login</li>
+<li>Ability to ask questions, teach, and develop learning resources</li>
+</ul>
+<p>These skills enable efficient use of cloud-hosted data using either <em>local</em> or <em>cloud</em> compute resources.</p>
+</section>
+<section id="what-are-fledging-paths-for-compute" class="level3">
+<h3 class="anchored" data-anchor-id="what-are-fledging-paths-for-compute">What are fledging paths for <strong>compute</strong>?</h3>
+<p>Depending on computing needs and data size, there are many options for fledging. These may include:</p>
+<ul>
+<li>Continue compute in the cloud using a shared environment (example: JupyterHub)
+<ul>
+<li>If your institution offers a JupyterHub instance, this is a great option to seamlessly transfer your learnings from the Openscapes Hub to a Hub for “real science”.</li>
+<li>Not all JupyterHubs will have the same environment (i.e., software and packages), so users will need to learn how to customize their new environment to suit their needs.</li>
+</ul></li>
+<li>Send large compute jobs to the cloud (example: Coiled)
+<ul>
+<li>This is a good option for large compute jobs using Python that are easily parallelized (see an example <a href="#an-example-path-for-computing-in-the-cloud">below</a>).</li>
+</ul></li>
+<li>Compute locally with cloud-native workflows (example: streaming cloud data with earthaccess + xarray)
+<ul>
+<li>For data and analysis jobs that can fit within your laptop’s resrouces (RAM and hard disk), working locally with the same tools and workflows learned from working in the hub is a great option, and computing in the cloud is likely unnecessary. You can benefit greatly from the effiency of cloud data access patterns (such as streaming and range requests) without worrying about cloud costs and administration.</li>
+</ul></li>
+<li>Compute locally using a shared environment “container” (example: Docker)
+<ul>
+<li>One of the great benefits that the shared JupyterHub offers is a computing environment that is already set up, so you don’t have to go through the pain of installing and configuring everything yourself. The images used in the JupyterHubs can often be used locally using tools like Docker. See some examples <a href="https://pangeo-docker-images.readthedocs.io/en/latest/howto/launch.html#how-to-launch-jupyterlab-locally-with-one-of-these-images">here</a>.</li>
+</ul></li>
+</ul>
+<section id="an-example-path-for-computing-in-the-cloud" class="level4">
+<h4 class="anchored" data-anchor-id="an-example-path-for-computing-in-the-cloud">An example path for computing in the cloud</h4>
+<p><em>from Aronne Merrelli, University of Michigan</em></p>
+<ul>
+<li>Learned when and how to cloud in 2i2c JupyterHub (managed by 2i2c &amp; Openscapes, using NASA credits)
+<ul>
+<li>Log into a computing environment in the Cloud. A single environment to teach and learn without having to know the complex setups</li>
+</ul></li>
+<li>Experimented with compute jobs in Coiled (managed by Coiled &amp; Openscapes, NASA credits)
+<ul>
+<li>Log into a computing environment in the Cloud</li>
+<li>Learned how to run code in parallel in the Cloud</li>
+</ul></li>
+<li>Did real science with University credit card (managed by Coiled &amp; University credit card)
+<ul>
+<li>UM’s institutional AWS account is a big help here</li>
+<li>Ran parallel compute jobs on big data in the cloud</li>
+</ul></li>
+<li>See a <a href="https://docs.google.com/presentation/d/1-TiPN8bfY6iDL5EVcEuCQSjqFMs3jPSX2MlNWA6no2E/edit#slide=id.g2ece79fddf8_3_73">presentation on this fledging story</a>, given at the Earth Science Information Partners (ESIP) conference in July, 2024.</li>
+</ul>
+</section>
+<section id="vision-for-the-future" class="level4">
+<h4 class="anchored" data-anchor-id="vision-for-the-future">Vision for the future</h4>
+<blockquote class="blockquote">
+<p>People have skills and are empowered to do their science with cloud-hosted data efficiently and equitably, based on their computing needs and their values.</p>
+</blockquote>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -252,8 +331,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -364,7 +441,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -598,7 +674,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/fledging.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/fledging.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/fledging.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/fledging.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
