@@ -97,4 +97,4 @@ given at the Earth Science Information Partners (ESIP) conference in July, 2024.
 
 #### Vision for the future
 
-> People have skills and are empowered to do their science with cloud-hosted data efficiently and equitably, based on their computing needs and their values.
+> People have skills and are empowered to do their science with cloud-hosted data efficiently and fairly, based on their computing needs and their values.
