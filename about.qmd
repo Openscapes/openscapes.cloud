@@ -37,7 +37,7 @@ users the [right to replicate](https://2i2c.org/right-to-replicate/)
 their infrastructure. This means that our Hubs could be replicated on
 GoogleEarthEngine or Microsoft Azure, or ported to another AWS region.
 
-With this setup, we have flexibility to support a diverse range of user
+With this setup, we have flexibility to support a broad range of user
 needs. The NASA Openscapes Hub has been used by the NASA Openscapes
 Mentors and other NASA data center (DAAC) staff internally as a testing
 ground for developing cloud tutorials and workflows, but also externally
@@ -86,7 +86,7 @@ movement that helps researchers and
 those supporting research find each other and feel empowered to conduct
 data-intensive science. Through a creative approach drawing inspiration
 and skills from many places, we provide structures for technical
-skill-building, collaborative teamwork, and inclusive community
+skill-building, collaborative teamwork, and community
 development. Our work builds from many others in the open movement.
 
 Learn more about Openscapes
