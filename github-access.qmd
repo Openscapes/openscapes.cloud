@@ -112,7 +112,7 @@ Subject: [NASA/NMFS] Openscapes Access to 2i2c Hub
 
 Hi \[FIRST NAME\],
 
-I have added you to the [NASA/NMFS] Openscapes 2i2c Jupyter Hub with the GitHub names you provided. You will have received an invitation from GitHub that you will need to accept. 
+I have added you to the [NASA/NMFS] Openscapes 2i2c Jupyter Hub with the GitHub name you provided. You will have received an invitation from GitHub via email that you will need to accept. 
 
 Here is the link to the hub: <https://openscapes.cloud/>
 
