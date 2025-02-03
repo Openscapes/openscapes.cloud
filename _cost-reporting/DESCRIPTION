@@ -1,0 +1,30 @@
+Package: OpenscapesHubUsageReport
+Title: Not a package, but generates a monthly qmd report of AWS usage. This
+    DESCRIPTION file is only used to document and install required packages to
+    render the report.
+Version: 0.0.0.9000
+Authors@R:
+    person("Andy", "Teucher", , "andy@andyteucher.ca", role = c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-7840-692X"))
+License: MIT + file LICENSE
+Imports:
+    dplyr,
+    kyber,
+    ggplot2,
+    forcats,
+    lubridate,
+    paws,
+    here,
+    glue,
+    patchwork,
+    paletteer,
+    ggpomological,
+    khroma,
+    sixtyfour,
+    ggtext,
+    jupycost
+Remotes:
+    openscapes/kyber,
+    openscapes/jupycost,
+    gadenbuie/ggpomological,
+    getwilds/sixtyfour

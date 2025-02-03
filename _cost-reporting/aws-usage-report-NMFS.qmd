@@ -1,0 +1,495 @@
+---
+title: "NMFS Openscapes 2i2c JupyterHub\nUsage and Costs"
+params:
+  year_month: "2025-01"
+subtitle: "Monthly report for `r format(lubridate::ym(params$year_month), '%B %Y')`"
+format: typst
+---
+
+<!--
+To render this using the quarto cli use:
+
+ym="2024-10" # set the year and month parameter
+quarto render aws-usage-report/aws-usage-report-NMFS.qmd -P year_month:$ym --output "aws-usage-report-NMFS_$ym.pdf"
+-->
+
+## Introduction
+
+A key objective of NMFS Openscapes is to minimize “the time to science” for researchers. Cloud infrastructure can facilitate shortening this time. We use a 2i2c-managed JupyterHub ("Hub"), which lets us work in the cloud with a shared computing environment. The purpose of the JupyterHub is to provide initial, exploratory experiences with cloud computing. It is not meant to be a long-term solution to support on-going science work or software development. For those users that decide working in the Cloud is advantageous and want to move there, we support a migration from the Hub to their own environment through Coiled.io, and are working on other "fledging" pathways.
+
+The main costs of running the JupyterHub come from two sources:
+
+1. Compute, using AWS EC2
+2. Storage using AWS EFS, via storage in users' home directories
+
+Compute costs scale up and down as the Hub is used, however storage costs are
+fixed - we pay for "data at rest", with
+[ongoing daily costs/GB](https://aws.amazon.com/efs/pricing/) even while the
+Hub is not running.
+
+Storing large amounts of data in the cloud can incur significant ongoing costs if not done optimally. We are developing [technical strategies and policies](https://openscapes.cloud/data-storage.html) to reduce storage costs that will keep the Openscapes 2i2c Hubs a shared resource for us all to use, while also providing reusable strategies for other admins.
+
+This report is intended to give a monthly summary of usage of the Hub and its
+resources, by tracking metrics on costs and usage of key components of storage (EFS)
+and compute (EC2).
+
+```{r setup}
+#| include: false
+
+library(dplyr)
+library(kyber)
+library(jupycost)
+library(ggplot2)
+library(forcats)
+library(lubridate)
+library(paws)
+library(here)
+library(glue)
+library(patchwork)
+library(sixtyfour)
+library(ggtext)
+
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE
+)
+
+here::i_am("_cost-reporting/aws-usage-report-NMFS.qmd")
+
+Sys.setenv(
+  "GRAFANA_TOKEN" = Sys.getenv("NMFS_GRAFANA_TOKEN"),
+  "AWS_ACCESS_KEY_ID" = Sys.getenv("NMFS_AWS_ACCESS_KEY_ID"),
+  "AWS_SECRET_ACCESS_KEY" = Sys.getenv("NMFS_AWS_SECRET_ACCESS_KEY")
+)
+
+if (interactive()) {
+  params <- list(year_month = format(Sys.Date() %m-% months(1), "%Y-%m"))
+}
+
+start_date <- ym(params$year_month)
+end_date <- ceiling_date(start_date, unit = "month") - days(1)
+
+reporting_month <- format(start_date, "%B")
+reporting_my <- format(start_date, "%B %Y")
+
+cost_explorer <- paws::costexplorer()
+
+theme_set(
+  theme_classic() +
+    theme(
+      plot.title = element_textbox_simple(margin = unit(c(5, 5, 5, 5), "pt")),
+      plot.subtitle = element_textbox_simple(
+        margin = unit(c(5, 5, 5, 5), "pt")
+      ),
+      plot.caption = element_textbox_simple(
+        halign = 1,
+        margin = unit(c(5, 0, 0, 0), "pt")
+      )
+    )
+)
+```
+
+## Month over month changes
+
+A comparison of monthly costs in the Hub can help us to compare usage over time
+and identify longer-term patterns. We can query the [AWS Cost Explorer API](https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_Operations_AWS_Cost_Explorer_Service.html) to explore these costs.
+
+### Total Costs
+
+The following plot shows the total monthly costs of all AWS services related to
+the Hub, as well as a breakdown of costs by service each month.
+
+```{r total-costs}
+
+# https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage/
+# https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
+all_daily_costs_six_months <- sixtyfour::aws_billing(
+  ceiling_date(end_date %m-% months(6), unit = "month"),
+  end_date,
+  filter = list(
+    Dimensions = list(
+      Key = "RECORD_TYPE",
+      Values = "Usage"
+    )
+  )
+)
+
+total_monthly_usage_costs <- all_daily_costs_six_months |>
+  filter(id == "unblended") |>
+  mutate(
+    date = ymd(date),
+    start_date = floor_date(date, unit = "month"),
+    end_date = ceiling_date(date, unit = "month")
+  ) |>
+  group_by(start_date, end_date) |>
+  summarise(cost = sum(cost))
+
+total_monthly_cost <- total_monthly_usage_costs$cost[
+  total_monthly_usage_costs$start_date == start_date
+]
+
+total_monthly_cost_plot <- ggplot(total_monthly_usage_costs) +
+  geom_line(aes(x = end_date, y = cost)) +
+  labs(
+    title = glue::glue(
+      "The total cost of all AWS Services for running the NMFS Openscapes 2i2c",
+      "Hub in {reporting_my} was ${round(total_monthly_cost)}"
+    ),
+    x = "Month",
+    y = "Monthly cost ($)"
+  )
+```
+
+```{r monthly-costs-by-service}
+#| fig-height: 7
+
+monthly_costs_by_service <- all_daily_costs_six_months |>
+  filter(id == "unblended") |>
+  mutate(
+    date = ymd(date),
+    start_date = floor_date(date, unit = "month"),
+    end_date = ceiling_date(date, unit = "month")
+  ) |>
+  group_by(start_date, end_date, service) |>
+  summarise(cost = sum(cost))
+
+monthly_cost_service_summary <- monthly_costs_by_service |>
+  ce_categories(cost_col = cost) |>
+  mutate(
+    service = fct_reorder(service, cost, .fun = mean)
+  )
+
+monthly_cost_by_service_plot <- ggplot(
+  monthly_cost_service_summary,
+  aes(x = end_date, y = cost, fill = service)
+) +
+  geom_col() +
+  scale_fill_discrete(
+    type = aws_ce_palette(n_distinct(monthly_cost_service_summary$service))
+  ) +
+  guides(fill = guide_legend(ncol = 2)) +
+  theme(
+    legend.position = "bottom",
+    legend.title.position = "top",
+    legend.text = element_text(size = 8)
+  ) +
+  labs(
+    title = "Monthly cost of AWS Services",
+    # subtitle = "Largest costs are EC2 compute (blue) and EFS (home directory) storage (red)",
+    caption = "*The top nine services are shown individually, with any remaining grouped into 'Other'",
+    x = "Month",
+    y = "Monthly cost ($)",
+    fill = "AWS Service"
+  )
+
+# Combine plots with patchwork
+total_monthly_cost_plot / monthly_cost_by_service_plot
+```
+
+### Storage
+
+Managing storage is an effective way to manage long-term costs in the Hub, as
+data-at-rest is an ongoing cost, much of which can be avoided by monitoring and
+reducing storage of data that is not required.
+
+User home directories are in an AWS ["Elastic File System" (EFS)](https://aws.amazon.com/efs/) mount, which is
+a relatively expensive option for long-term storage of large files. The
+following figure plots the daily total size of data storage in the user home
+directories in the Hub over the past six months. The size of the home drives
+is directly correlated with the costs for "Amazon Elastic File System" in the
+previous chart.
+
+```{r monthly-storage}
+monthly_size <- query_prometheus_range(
+  grafana_url = "https://grafana.nmfs-openscapes.2i2c.cloud",
+  query = "max(dirsize_total_size_bytes{namespace='prod'})",
+  start_time = floor_date(end_date, unit = "months") %m-% months(5),
+  end_time = end_date,
+  step = 60 * 60 * 24
+) |>
+  create_range_df(value_name = "size") |>
+  mutate(size = size * 1e-9)
+
+monthly_size |>
+  ggplot() +
+  geom_line(aes(x = date, y = size)) +
+  scale_x_datetime(date_breaks = "1 month", date_labels = "%B") +
+  labs(
+    title = "Total size of user home directories in AWS EFS in the main Hub",
+    x = "Month",
+    y = "Total Size (GB)"
+  )
+```
+
+## Detailed breakdown for the month of `r reporting_month`
+
+To understand more about usage and costs during the current month,
+we can look at daily usage metrics and costs.
+
+### Home directory sizes
+
+The following figure shows the total size of home directories in the NMFS Hub. Usage is broken
+out by the GitHub team by which they are granted access to the Hub (Long-Term Access and NMFS Champions 2024).
+
+```{r homedir-size-by-date}
+
+size_by_date <- query_prometheus_range(
+  grafana_url = "https://grafana.nmfs-openscapes.2i2c.cloud",
+  query = "max(dirsize_total_size_bytes) by (directory)",
+  start_time = start_date,
+  end_time = end_date,
+  step = 60 * 60 * 24
+) |>
+  create_range_df(value_name = "size") |>
+  mutate(
+    directory = unsanitize_dir_names(directory)
+  )
+
+# list_teams("nmfs-openscapes")
+
+team_names <- c(
+  "longterm-access-2i2c",
+  "2024-mentors",
+  "2024-science-teams",
+  "2024-nmfs-champions-cohort",
+  "2024-coastwatch"
+)
+
+teams <- lapply(team_names, \(x) {
+  members <- list_team_members(x, org = "nmfs-openscapes", names_only = TRUE)
+  data.frame(team = x, user = tolower(members))
+}) |>
+  bind_rows() |>
+  distinct(user, .keep_all = TRUE)
+
+# teams_df <- list_teams("nmfs-openscapes", names_only = FALSE)
+
+# setdiff(champions_members, unique(size_by_date$directory))
+
+size_by_date_by_team <- size_by_date |>
+  left_join(
+    teams,
+    by = join_by(directory == user)
+  ) |>
+  mutate(
+    team = case_when(
+      is.na(team) & directory %in% c("_shared", "deployment-service-check") ~
+        "shared",
+      is.na(team) ~ "No team",
+      .default = team
+    ),
+    directory = fct_reorder(directory, desc(size), .fun = max, .desc = TRUE)
+  )
+
+all_dirs_sum_by_date <- size_by_date_by_team |>
+  group_by(date, team) |>
+  summarize(total_size_gb = sum(size)) |>
+  mutate(
+    team = fct_reorder(team, desc(total_size_gb), .fun = max, .desc = TRUE)
+  )
+```
+
+
+```{r homedir-size-over-time}
+all_dirs_sum_by_date |>
+  ggplot(aes(x = date, y = total_size_gb)) +
+  geom_area(aes(fill = team)) +
+  theme(legend.position = "bottom", legend.title.position = "top") +
+  paletteer::scale_fill_paletteer_d(
+    "ggpomological::pomological_palette",
+    breaks = unique(all_dirs_sum_by_date$team)
+  ) +
+  labs(
+    title = "Total size of user home directories by access team",
+    x = "Date",
+    y = "Size (GiB)",
+    fill = "GitHub Team"
+  )
+```
+
+
+<!-- #### Champions cohort
+
+It is also helpful to look more deeply into the Champions cohort to see how
+they are using the Hub, and how much storage is being used. The following
+figure breaks down the home directory size of Champions by user - usernames
+are not displayed, but we can see if any users are using a disproportionate amount
+of space. When we see disproportionate amount of space used, we reach out to users 
+and work with them to reduce their storage, and update the [policies](https://openscapes.cloud/data-storage.html) as needed. 
+
+
+```{r homedir-size-champions}
+
+size_by_date_by_team |>
+  filter(team == "2024-nmfs-champions-cohort") |>
+  ggplot(aes(x = date, y = size, fill = directory)) +
+  geom_area() +
+  paletteer::scale_fill_paletteer_d(
+    "khroma::soil",
+    guide = "none",
+    direction = -1
+  ) +
+  labs(
+    title = "Size of home directories by user for 2024 Champions cohort",
+    x = "Date",
+    y = "Size (GiB)"
+  )
+``` 
+
+--->
+
+### Compute costs and usage
+
+When a user logs into the Hub, they can choose the amount of RAM and number of
+CPUs they would like to use, enabling them to scale computing power appropriate
+to the tasks they are running. More powerful compute resources have higher
+[hourly costs](https://aws.amazon.com/ec2/pricing/on-demand/), so it is
+important to not choose a powerful instance when it isn't required.
+
+Examining both the usage and the costs of the [EC2 instance types](https://aws.amazon.com/ec2/instance-types/) that users choose
+can help us understand users's needs as well as compute costs. This helps us
+develop policies and recommendations for Hub compute usage.
+
+```{r ec2-costs}
+
+# https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage/
+# https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
+
+# TODO: modify ce_to_df to deal with an arbitrary number of metrics so
+# we can do this in one call with
+# `Metrics <- list("UnblendedCost", "UsageQuantity")`
+# and pass it to ce_to_df() once, rather than joining
+ec2_instance_type_costs_usage_res <- cost_explorer$get_cost_and_usage(
+  TimePeriod = list(Start = start_date, End = end_date),
+  Granularity = "DAILY",
+  Filter = list(
+    Dimensions = list(
+      Key = "RECORD_TYPE",
+      Values = "Usage"
+    ),
+    Dimensions = list(
+      Key = "SERVICE",
+      Values = "Amazon Elastic Compute Cloud - Compute"
+    )
+  ),
+  Metrics = list("UnblendedCost", "UsageQuantity"),
+  GroupBy = list(
+    list(
+      Type = "DIMENSION",
+      Key = "SERVICE"
+    ),
+    list(
+      Type = "DIMENSION",
+      Key = "INSTANCE_TYPE"
+    )
+  )
+)
+
+# Join costs and usage hours
+ec2_instance_type_costs_usage <- ec2_instance_type_costs_usage_res |>
+  ce_to_df(metric = "UnblendedCost") |>
+  left_join(
+    ce_to_df(ec2_instance_type_costs_usage_res, metric = "UsageQuantity"),
+    by = c("start_date", "end_date", "service", "instance_type")
+  ) |>
+  filter(
+    instance_type != "NoInstanceType"
+  )
+```
+
+The following plots show the usage and costs broken down by [instance type](https://aws.amazon.com/ec2/instance-types/). The
+compute profiles that users can choose from run on `r5.xlarge` (4 CPUs, 32 GiB memory) or
+`r5.4xlarge` (16 CPUs, 128 GiB memory) instances.
+Note that during some large workshops, administrators will
+choose very large instance types (for example `r5.16xlarge`; 64 CPUs, 512 GiB memory) so they can
+provision a small number of nodes with many users per node. This is more
+efficient than launching many nodes at once. Other instance types, such as
+`m6i.xlarge` indicate usage of the AWS infrastructure outside of the Hub, mostly
+using [coiled](https://openscapes.org/blog/2023-11-07-coiled-openscapes/).
+
+```{r daily-usage-by-instance}
+ec2_usage_data <- ec2_instance_type_costs_usage |>
+  mutate(instance_type = fct_reorder(instance_type, UsageQuantity, .fun = sum))
+
+ec2_usage_plot <- ggplot(
+  ec2_usage_data,
+  aes(x = start_date, y = UsageQuantity, fill = instance_type)
+) +
+  geom_col() +
+  scale_fill_discrete(
+    type = aws_ce_palette(n_distinct(ec2_usage_data$instance_type))
+  ) +
+  labs(
+    title = "Daily EC2 usage by instance type*",
+    x = "Date",
+    y = "Usage (hours)",
+    fill = "EC2 Instance Type",
+    caption = "*Hub resource allocation options up to 3.7 CPUs run on 'r5.xlarge' instances, and those with up to 15.6 CPUs run on 'r5.4xlarge' instances."
+  )
+```
+
+```{r daily-cost-by-instance}
+ec2_cost_data <- ec2_instance_type_costs_usage |>
+  mutate(
+    instance_type = factor(
+      instance_type,
+      levels = levels(ec2_usage_data$instance_type)
+    )
+  )
+
+ec2_cost_plot <-
+  ggplot(
+    ec2_cost_data,
+    aes(x = start_date, y = UnblendedCost, fill = instance_type)
+  ) +
+  geom_col() +
+  scale_fill_discrete(
+    type = aws_ce_palette(n_distinct(ec2_cost_data$instance_type))
+  ) +
+  labs(
+    title = "Daily EC2 cost by instance type",
+    x = "Date",
+    y = "Daily Cost ($)",
+    fill = "EC2 Instance Type"
+  )
+```
+
+```{r patchwork-plot-ec2-usage-cost}
+ec2_usage_plot / ec2_cost_plot
+```
+
+Finally, it is useful to look at the relationship between compute hours and
+total cost by instance type, to understand both the highest cost and highest
+usage, as well as the cost-efficiency of the instance types.
+
+```{r total-usage-vs-cost-by-instance}
+ec2_instance_data <- ec2_instance_type_costs_usage |>
+  group_by(instance_type) |>
+  summarize(
+    total_hours = sum(UsageQuantity),
+    total_cost = sum(UnblendedCost)
+  ) |>
+  mutate(
+    instance_type = factor(
+      instance_type,
+      levels = levels(ec2_cost_data$instance_type)
+    )
+  )
+
+ggplot(
+  ec2_instance_data,
+  aes(x = total_hours, y = total_cost, colour = instance_type)
+) +
+  geom_point(size = 3) +
+  scale_colour_discrete(
+    type = aws_ce_palette(n_distinct(ec2_instance_data$instance_type))
+  ) +
+  labs(
+    title = glue::glue(
+      "Total cost vs hours on different EC2 instance types in {reporting_my}"
+    ),
+    x = "Total Hours",
+    y = "Total Cost ($)"
+  )
+```
