@@ -55,7 +55,7 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
-here::i_am("_cost-reporting/aws-usage-report-NMFS.qmd")
+here::i_am("_hub-usage-reporting/aws-usage-report-NMFS.qmd")
 
 Sys.setenv(
   "GRAFANA_TOKEN" = Sys.getenv("NMFS_GRAFANA_TOKEN"),

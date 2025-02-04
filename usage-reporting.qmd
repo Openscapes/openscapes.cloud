@@ -12,14 +12,14 @@ triggering the workflow manually, by visiting the
 ["Render and Save PDF" workflow page](https://github.com/openscapes/openscapes.cloud/actions/workflows/create-usage-report.yml), 
 and clicking the "Run Workflow" button in the upper right corner.
 
-Reports are stored in the [reports](_cost-reporting/reports/) directory.
+Reports are stored in the [reports](_hub-usage-reporting/reports/) directory.
 
 ## Monthly NASA reports
 
-- [Usage report for 2024-07](_cost-reporting/reports/aws-usage-report_2024-07.pdf)
-- [Usage report for 2024-08](_cost-reporting/reports/aws-usage-report_2024-08.pdf)
-- [Usage report for 2024-09](_cost-reporting/reports/aws-usage-report_2024-09.pdf)
-- [Usage report for 2024-10](_cost-reporting/reports/aws-usage-report_2024-10.pdf)
-- [Usage report for 2024-11](_cost-reporting/reports/aws-usage-report_2024-11.pdf)
-- [Usage report for 2024-12](_cost-reporting/reports/aws-usage-report_2024-12.pdf)
-- [Usage report for 2025-01](_cost-reporting/reports/aws-usage-report_2025-01.pdf)
+- [Usage report for 2024-07](_hub-usage-reporting/reports/aws-usage-report_2024-07.pdf)
+- [Usage report for 2024-08](_hub-usage-reporting/reports/aws-usage-report_2024-08.pdf)
+- [Usage report for 2024-09](_hub-usage-reporting/reports/aws-usage-report_2024-09.pdf)
+- [Usage report for 2024-10](_hub-usage-reporting/reports/aws-usage-report_2024-10.pdf)
+- [Usage report for 2024-11](_hub-usage-reporting/reports/aws-usage-report_2024-11.pdf)
+- [Usage report for 2024-12](_hub-usage-reporting/reports/aws-usage-report_2024-12.pdf)
+- [Usage report for 2025-01](_hub-usage-reporting/reports/aws-usage-report_2025-01.pdf)
