@@ -23,6 +23,8 @@ website:
           - github-access.qmd
           - password-access.qmd
       - fledging.qmd
+      - text: "JupyterHub Usage Reporting"
+        href: usage-reporting.qmd
 
 format:
   html:
