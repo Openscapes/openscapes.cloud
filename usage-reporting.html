@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Openscapes JupyterHubs</title>
+<title>Openscapes JupyterHub Usage Reports – Openscapes JupyterHubs</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -72,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -128,7 +128,7 @@ ul.task-list li input[type="checkbox"] {
 <span class="menu-text">Fledging</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./usage-reporting.html"> 
+    <a class="nav-link active" href="./usage-reporting.html" aria-current="page"> 
 <span class="menu-text">JupyterHub Usage Reporting</span></a>
   </li>  
 </ul>
@@ -142,43 +142,96 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#monthly-nasa-reports" id="toc-monthly-nasa-reports" class="nav-link active" data-scroll-target="#monthly-nasa-reports">Monthly NASA reports</a>
+  <ul class="collapse">
+  <li><a href="#aws-cost-explorer" id="toc-aws-cost-explorer" class="nav-link" data-scroll-target="#aws-cost-explorer">AWS Cost Explorer</a></li>
+  <li><a href="#aws-budgeting-alerts" id="toc-aws-budgeting-alerts" class="nav-link" data-scroll-target="#aws-budgeting-alerts">AWS Budgeting Alerts</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/usage-reporting.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/usage-reporting.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Openscapes JupyterHub Usage Reports</h1>
+</div>
 
 
 
+<div class="quarto-title-meta">
 
-<section id="openscapes-jupyterhub-access" class="level1 text-center" style="margin-bottom: 2em;">
-<h1><img src="images/openscapes_hex.png" class="inline img-fluid"> Openscapes JupyterHub Access <img src="images/2i2c-logo.png" class="inline img-fluid"></h1>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>We generate monthly reports of usage and costs of AWS resources in the NASA-Openscapes and NMFS-Openscapes JupyterHubs.</p>
+<p>The report is generated automatically on the first day of every month using a GitHub Actions <a href="https://github.com/Openscapes/openscapes.cloud/blob/main/.github/workflows/create-usage-report.yml">workflow</a>, summarizing usage for the preceding month. The report can also be created on demand by triggering the workflow manually, by visiting the <a href="https://github.com/openscapes/openscapes.cloud/actions/workflows/create-usage-report.yml">“Render and Save PDF” workflow page</a>, and clicking the “Run Workflow” button in the upper right corner.</p>
+<p>Reports are stored in the <a href="_hub-usage-reporting/reports/">reports</a> directory.</p>
+<section id="monthly-nasa-reports" class="level2">
+<h2 class="anchored" data-anchor-id="monthly-nasa-reports">Monthly NASA reports</h2>
+<ul>
+<li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-07.pdf">Usage report for 2024-07</a></li>
+<li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-08.pdf">Usage report for 2024-08</a></li>
+<li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-09.pdf">Usage report for 2024-09</a></li>
+<li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-10.pdf">Usage report for 2024-10</a></li>
+<li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-11.pdf">Usage report for 2024-11</a></li>
+<li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-12.pdf">Usage report for 2024-12</a></li>
+<li><a href="_hub-usage-reporting/reports/aws-usage-report_2025-01.pdf">Usage report for 2025-01</a></li>
+</ul>
+<section id="aws-cost-explorer" class="level3">
+<h3 class="anchored" data-anchor-id="aws-cost-explorer">AWS Cost Explorer</h3>
+<p><em>This is a work in progress, currently with minimal steps and screenshots that we will augment.</em></p>
+<p>AWS Cost Explorer lets you examine how much your usage costs. When using Credits, your usage does not immediately show up. Select Charge type as “Usage” from the right menu.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/cost-explorer-usage.png" class="img-fluid figure-img" width="437"></p>
+<figcaption>AWS Cost Explorer. Charge type == “Usage”</figcaption>
+</figure>
+</div>
 </section>
-<p>Welcome! <a href="https://openscapes.org"><strong>Openscapes</strong></a> supports organizations exploring cloud computing by partnering with <a href="https://2i2c.org"><strong>2i2c</strong></a>, who design and administer a global network of community hubs. Openscapes supports partners leading workshops to provide friendly first experiences with cloud computing, and this website is both for users to access JupyterHubs and for workshop leads to administer workshops. Work to date has been co-developed with the NASA Openscapes community via the <a href="https://nasa-openscapes.github.io/earthdata-cloud-cookbook/"><strong>Earthdata Cloud Cookbook</strong></a>.</p>
-<p>Access the login page for your organization below:</p>
-<hr>
-<div>
+<section id="aws-budgeting-alerts" class="level3">
+<h3 class="anchored" data-anchor-id="aws-budgeting-alerts">AWS Budgeting Alerts</h3>
+<p><em>This is a work in progress, currently with minimal steps and screenshots that we will augment.</em></p>
+<p>There are two types of alerts we set up.</p>
+<section id="budgeting-alerts" class="level4">
+<h4 class="anchored" data-anchor-id="budgeting-alerts">Budgeting alerts</h4>
+<p>When adding new Cloud credits to our AWS account, we also create a budget and alerts (received via email) as we spend our credits. These are some beginning notes (credit and thank you to Joe Kennedy!).</p>
+<p>Create an annual budget of the total Credits left (you may need to calculate this if credits rolled over at the beginning of the calendar year). In the Budget menu, create a Budget. Then select Customize and Cost budget.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/choose-budget-type.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="394"></p>
+</figure>
+</div>
+<p>Exclude Credits and Refunds, include Discounts. You can elect to receive emails with a regular cadence: weekly, monthly.</p>
+<p>We set these up at 50, 75, 90, 95% of the total budget, and we will receive emails at those percentages. The thinking is that we will need to request more credits starting at 50-75%, and then make sure we have them in hand by 90-95%.</p>
+</section>
+<section id="threshold-alerts" class="level4">
+<h4 class="anchored" data-anchor-id="threshold-alerts">Threshold alerts</h4>
+<p>We can also set up email alerts at certain dollar amounts.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/budget-threshold-alerts.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="426"></p>
+</figure>
+</div>
+<p>We receive emails when we spend $100, $200, $500 of our Credits, which show up in the system as $1000 intervals.</p>
 
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="margin-top: 3em;">
-<div class="quarto-layout-row">
-<div class="text-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="login-area">
-<p><img src="images/nasa-openscapes.png" class="login-logo img-fluid" alt="NASA logo to left of Openscapes logo"></p>
-<p><a href="https://openscapes.2i2c.cloud/" class="btn-login nasa btn btn-primary btn-lg" role="button">NASA-Openscapes Hub Login</a></p>
-</div>
-</div>
-<div class="text-center quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="login-area">
-<p><img src="images/nmfs-openscapes.png" class="login-logo img-fluid" alt="NMFS logo to left of Openscapes logo"></p>
-<p><a href="https://nmfs-openscapes.2i2c.cloud/" class="btn-login noaa btn btn-primary btn-lg" role="button">NMFS-Openscapes Hub Login</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="text-center">
-<p><img src="images/jupyterhub-logo.png" class="img-fluid" style="margin-top: 1em;"></p>
-</div>
 
-
+</section>
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -606,7 +659,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div>   
     <div class="nav-footer-center">
       &nbsp;
-    <div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/usage-reporting.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/usage-reporting.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
 </div>
