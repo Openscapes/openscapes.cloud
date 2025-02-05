@@ -53,7 +53,7 @@ workshop shared password will persist for seven days post-workshop.
 
 Users who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs). 
 
-Running large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the [2i2cAccessPolicies repository]( https://github.com/NASA-Openscapes/2i2cAccessPolicies).
+Running large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the [openscapes.cloud repository]( https://github.com/openscapes/openscapes.cloud).
 
 <!-- TODO: add/fix repo for access policies for NOAA -->
 
