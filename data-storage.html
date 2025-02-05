@@ -240,7 +240,7 @@ awsv2 s3 rm s3://openscapeshub-prod-homedirs-archive/archives/test123.txt</code>
 </section>
 <section id="setting-up-and-running-the-archive-script" class="level3">
 <h3 class="anchored" data-anchor-id="setting-up-and-running-the-archive-script">Setting up and running the archive script</h3>
-<p>We use a <a href="https://github.com/NASA-Openscapes/2i2cAccessPolicies/blob/main/scripts/archive-home-dirs.py">python script</a>, <a href="https://github.com/2i2c-org/features/issues/32">developed by <span class="citation" data-cites="yuvipanda">@yuvipanda</span></a>, that reproducibly archives a list of users’ directories into a specified S3 bucket.</p>
+<p>We use a <a href="https://github.com/openscapes/openscapes.cloud/blob/main/_scripts/archive-home-dirs.py">python script</a>, <a href="https://github.com/2i2c-org/features/issues/32">developed by <span class="citation" data-cites="yuvipanda">@yuvipanda</span></a>, that reproducibly archives a list of users’ directories into a specified S3 bucket.</p>
 <p>Copy the script into your home directory in the Hub.</p>
 <p>In the Hub as of 2024-05-17, a couple of dependencies for the script are missing; you can install them before running the script:</p>
 <pre><code>pip install escapism
