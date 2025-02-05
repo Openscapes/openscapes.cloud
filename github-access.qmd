@@ -120,7 +120,7 @@ There is a getting started guide in the NASA Earthdata Cloud Cookbook here: <htt
 You can see policies for hub use here: <https://openscapes.cloud/access-policies.html>, 
 and policies and best practices for data storage here <https://openscapes.cloud/data-storage.html>
 
-We'd love to know about the kind of work you are doing on the hub. Please add a brief description of your progress as you go at <https://github.com/NASA-Openscapes/2i2cAccessPolicies/discussions/2>. We will follow up in the next few months. 
+We'd love to know about the kind of work you are doing on the hub. Please add a brief description of your progress as you go at <https://github.com/openscapes/openscapes.cloud/discussions/42>. We will follow up in the next few months. 
 
 Best,
 
