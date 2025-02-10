@@ -15,7 +15,6 @@ jobs:
       NMFS_GRAFANA_TOKEN: ${{ secrets.NMFS_GRAFANA_TOKEN }}
       NMFS_AWS_ACCESS_KEY_ID: ${{ secrets.NMFS_AWS_ACCESS_KEY_ID }}
       NMFS_AWS_SECRET_ACCESS_KEY: ${{ secrets.NMFS_AWS_SECRET_ACCESS_KEY }}
-      AWS_REGION: ${{ secrets.AWS_REGION }}
       GITHUB_PAT: ${{ secrets.GH_PAT }}
       REPORT_DIR: _hub-usage-reporting
     
