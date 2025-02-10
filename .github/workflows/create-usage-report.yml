@@ -12,6 +12,9 @@ jobs:
       NASA_GRAFANA_TOKEN: ${{ secrets.NASA_GRAFANA_TOKEN }}
       NASA_AWS_ACCESS_KEY_ID: ${{ secrets.NASA_AWS_ACCESS_KEY_ID }}
       NASA_AWS_SECRET_ACCESS_KEY: ${{ secrets.NASA_AWS_SECRET_ACCESS_KEY }}
+      NMFS_GRAFANA_TOKEN: ${{ secrets.NMFS_GRAFANA_TOKEN }}
+      NMFS_AWS_ACCESS_KEY_ID: ${{ secrets.NMFS_AWS_ACCESS_KEY_ID }}
+      NMFS_AWS_SECRET_ACCESS_KEY: ${{ secrets.NMFS_AWS_SECRET_ACCESS_KEY }}
       AWS_REGION: ${{ secrets.AWS_REGION }}
       GITHUB_PAT: ${{ secrets.GH_PAT }}
       REPORT_DIR: _hub-usage-reporting
@@ -46,7 +49,7 @@ jobs:
               quarto render "$REPORT_DIR/aws-usage-report-${suffix}.qmd" -P "year_month:$ym" --output "$target_filename"
               mkdir -p "$outdir" && \
               mv "$target_filename" "$outdir" && \
-              Rscript _hub-usage-reporting/update-report-page.R --args "$ym" "$target_filename"
+              Rscript "$REPORT_DIR/update-report-page.R" --args "$ym" "$target_filename"
           done
 
           git config --local user.name "$GITHUB_ACTOR"
