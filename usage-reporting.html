@@ -147,7 +147,8 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#monthly-nasa-reports" id="toc-monthly-nasa-reports" class="nav-link active" data-scroll-target="#monthly-nasa-reports">Monthly NASA reports</a>
+  <li><a href="#monthly-nasa-reports" id="toc-monthly-nasa-reports" class="nav-link active" data-scroll-target="#monthly-nasa-reports">Monthly NASA reports</a></li>
+  <li><a href="#monthly-noaa-reports" id="toc-monthly-noaa-reports" class="nav-link" data-scroll-target="#monthly-noaa-reports">Monthly NOAA reports</a>
   <ul class="collapse">
   <li><a href="#aws-cost-explorer" id="toc-aws-cost-explorer" class="nav-link" data-scroll-target="#aws-cost-explorer">AWS Cost Explorer</a></li>
   <li><a href="#aws-budgeting-alerts" id="toc-aws-budgeting-alerts" class="nav-link" data-scroll-target="#aws-budgeting-alerts">AWS Budgeting Alerts</a></li>
@@ -178,7 +179,7 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>We generate monthly reports of usage and costs of AWS resources in the NASA-Openscapes and NMFS-Openscapes JupyterHubs.</p>
-<p>The report is generated automatically on the first day of every month using a GitHub Actions <a href="https://github.com/Openscapes/openscapes.cloud/blob/main/.github/workflows/create-usage-report.yml">workflow</a>, summarizing usage for the preceding month. The report can also be created on demand by triggering the workflow manually, by visiting the <a href="https://github.com/openscapes/openscapes.cloud/actions/workflows/create-usage-report.yml">“Render and Save PDF” workflow page</a>, and clicking the “Run Workflow” button in the upper right corner.</p>
+<p>These reports are generated automatically on the first day of every month using a GitHub Actions <a href="https://github.com/Openscapes/openscapes.cloud/blob/main/.github/workflows/create-usage-report.yml">workflow</a>, summarizing usage for the preceding month. The report can also be created on demand by triggering the workflow manually, by visiting the <a href="https://github.com/openscapes/openscapes.cloud/actions/workflows/create-usage-report.yml">“Render and Save PDF” workflow page</a>, and clicking the “Run Workflow” button in the upper right corner.</p>
 <p>Reports are stored in the <a href="_hub-usage-reporting/reports/">reports</a> directory.</p>
 <section id="monthly-nasa-reports" class="level2">
 <h2 class="anchored" data-anchor-id="monthly-nasa-reports">Monthly NASA reports</h2>
@@ -188,9 +189,12 @@ ul.task-list li input[type="checkbox"] {
 <li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-09.pdf">Usage report for 2024-09</a></li>
 <li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-10.pdf">Usage report for 2024-10</a></li>
 <li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-11.pdf">Usage report for 2024-11</a></li>
-<li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-12.pdf">Usage report for 2024-12</a></li>
-<li><a href="_hub-usage-reporting/reports/aws-usage-report_2025-01.pdf">Usage report for 2025-01</a></li>
+<li><a href="_hub-usage-reporting/reports/aws-usage-report_2024-12.pdf">Usage report for 2024-12</a> <!-- last-nasa-report --></li>
 </ul>
+</section>
+<section id="monthly-noaa-reports" class="level2">
+<h2 class="anchored" data-anchor-id="monthly-noaa-reports">Monthly NOAA reports</h2>
+<!-- last-noaa-report -->
 <section id="aws-cost-explorer" class="level3">
 <h3 class="anchored" data-anchor-id="aws-cost-explorer">AWS Cost Explorer</h3>
 <p><em>This is a work in progress, currently with minimal steps and screenshots that we will augment.</em></p>
