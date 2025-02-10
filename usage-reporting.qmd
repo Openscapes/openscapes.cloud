@@ -5,7 +5,7 @@ title: "Openscapes JupyterHub Usage Reports"
 We generate monthly reports of usage and costs of AWS resources in the 
 NASA-Openscapes and NMFS-Openscapes JupyterHubs.
 
-The report is generated automatically on the first day of every month using a 
+These reports are generated automatically on the first day of every month using a 
 GitHub Actions [workflow](https://github.com/Openscapes/openscapes.cloud/blob/main/.github/workflows/create-usage-report.yml), summarizing 
 usage for the preceding month. The report can also be created on demand by 
 triggering the workflow manually, by visiting the 
@@ -22,8 +22,11 @@ Reports are stored in the [reports](_hub-usage-reporting/reports/) directory.
 - [Usage report for 2024-10](_hub-usage-reporting/reports/aws-usage-report_2024-10.pdf)
 - [Usage report for 2024-11](_hub-usage-reporting/reports/aws-usage-report_2024-11.pdf)
 - [Usage report for 2024-12](_hub-usage-reporting/reports/aws-usage-report_2024-12.pdf)
-- [Usage report for 2025-01](_hub-usage-reporting/reports/aws-usage-report_2025-01.pdf)
 <!-- last-nasa-report -->
+
+## Monthly NOAA reports
+
+<!-- last-noaa-report -->
 
 ### AWS Cost Explorer
 

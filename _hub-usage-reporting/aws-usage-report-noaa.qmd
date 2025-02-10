@@ -55,7 +55,7 @@ knitr::opts_chunk$set(
   warning = FALSE
 )
 
-here::i_am("_hub-usage-reporting/aws-usage-report-NMFS.qmd")
+here::i_am("_hub-usage-reporting/aws-usage-report-noaa.qmd")
 
 Sys.setenv(
   "GRAFANA_TOKEN" = Sys.getenv("NMFS_GRAFANA_TOKEN"),
@@ -250,7 +250,7 @@ size_by_date <- query_prometheus_range(
 
 team_names <- c(
   "longterm-access-2i2c",
-  "2024-mentors",
+  "mentors",
   "2024-science-teams",
   "2024-nmfs-champions-cohort",
   "2024-coastwatch"

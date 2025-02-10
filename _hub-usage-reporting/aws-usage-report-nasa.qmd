@@ -61,7 +61,7 @@ Sys.setenv(
   "AWS_SECRET_ACCESS_KEY" = Sys.getenv("NASA_AWS_SECRET_ACCESS_KEY")
 )
 
-here::i_am("_hub-usage-reporting/aws-usage-report.qmd")
+here::i_am("_hub-usage-reporting/aws-usage-report-nasa.qmd")
 
 if (interactive()) {
   params <- list(year_month = format(Sys.Date() %m-% months(1), "%Y-%m"))
@@ -458,16 +458,16 @@ ec2_cost_plot <-
     ec2_cost_data,
     aes(x = start_date, y = UnblendedCost, fill = instance_type)
   ) +
-  geom_col() +
-  scale_fill_discrete(
-    type = aws_ce_palette(n_distinct(ec2_cost_data$instance_type))
-  ) +
-  labs(
-    title = "Daily EC2 cost by instance type",
-    x = "Date",
-    y = "Daily Cost ($)",
-    fill = "EC2 Instance Type"
-  )
+    geom_col() +
+    scale_fill_discrete(
+      type = aws_ce_palette(n_distinct(ec2_cost_data$instance_type))
+    ) +
+    labs(
+      title = "Daily EC2 cost by instance type",
+      x = "Date",
+      y = "Daily Cost ($)",
+      fill = "EC2 Instance Type"
+    )
 ```
 
 ```{r patchwork-plot-ec2-usage-cost}
