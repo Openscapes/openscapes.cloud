@@ -12,12 +12,12 @@ environment. The users are given access to the Hub by membership in a
 2. **Workshop participants** - Participants in workshops hosted by Mentors,
 Openscapes, or collaborators. The type of workshop will dictate the mode of
 access, depending on requirements determined by workshop leads:
-  a. Workshops where learners require access after the workshop (up to three months), 
-     and/or GitHub workflows are part of the curriculum. These workshops should use
-     [GitHub Team-based access](#access-via-a-github-team).
-  b. Workshops where learners do not require access to the hub after the workshop, 
-     and GitHub is not being taught as part of the lessons. These workshops should
-     use [shared password](#access-via-a-shared-password) access.
+    a. Workshops where learners require access after the workshop (up to three months), 
+       and/or GitHub workflows are part of the curriculum. These workshops should use
+       [GitHub Team-based access](#access-via-a-github-team).
+    b. Workshops where learners do not require access to the hub after the workshop, 
+       and GitHub is not being taught as part of the lessons. These workshops should
+       use [shared password](#access-via-a-shared-password) access.
 
 ## Obtaining Access to an Openscapes Hub
 
