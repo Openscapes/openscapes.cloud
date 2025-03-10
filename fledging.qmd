@@ -4,7 +4,7 @@ title: "Fledging"
 
 Fledging is a goal of these JupyterHubs, so that users who have had success
 and want to continue their adventures in cloud computing, have the knowledge
-and resources to develop their own solutions. Fleding work to date has been co-developed 
+and resources to develop their own solutions. Fledging work to date has been co-developed 
 with the NASA Openscapes Mentors community, and we continue to work with mentors
 in both NASA and NOAA to identify fledging paths and address challenges.
 
