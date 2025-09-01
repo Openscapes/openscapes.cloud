@@ -29,6 +29,7 @@ Reports are stored in the [reports](_hub-usage-reporting/reports/) directory.
 - [Usage report for 2025-05](_hub-usage-reporting/reports/aws-usage-report-nasa_2025-05.pdf)
 - [Usage report for 2025-06](_hub-usage-reporting/reports/aws-usage-report-nasa_2025-06.pdf)
 - [Usage report for 2025-07](_hub-usage-reporting/reports/aws-usage-report-nasa_2025-07.pdf)
+- [Usage report for 2025-08](_hub-usage-reporting/reports/aws-usage-report-nasa_2025-08.pdf)
 <!-- last-nasa-report -->
 
 ## Monthly NOAA reports
@@ -40,6 +41,7 @@ Reports are stored in the [reports](_hub-usage-reporting/reports/) directory.
 - [Usage report for 2025-05](_hub-usage-reporting/reports/aws-usage-report-noaa_2025-05.pdf)
 - [Usage report for 2025-06](_hub-usage-reporting/reports/aws-usage-report-noaa_2025-06.pdf)
 - [Usage report for 2025-07](_hub-usage-reporting/reports/aws-usage-report-noaa_2025-07.pdf)
+- [Usage report for 2025-08](_hub-usage-reporting/reports/aws-usage-report-noaa_2025-08.pdf)
 <!-- last-noaa-report -->
 
 ### AWS Cost Explorer
