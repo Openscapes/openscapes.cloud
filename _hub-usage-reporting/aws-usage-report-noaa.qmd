@@ -209,7 +209,7 @@ monthly_size <- query_prometheus_range(
   end_time = end_date,
   step = 60 * 60 * 24
 ) |>
-  create_range_df(value_name = "size") |>
+  format_prom_result(value_name = "size") |>
   mutate(size = size * 1e-9)
 
 monthly_size |>
@@ -242,7 +242,7 @@ size_by_date <- query_prometheus_range(
   end_time = end_date,
   step = 60 * 60 * 24
 ) |>
-  create_range_df(value_name = "size") |>
+  format_prom_result(value_name = "size") |>
   mutate(
     directory = unsanitize_dir_names(directory)
   )
@@ -326,8 +326,7 @@ size_by_date_by_team |>
   filter(team == "2024-nmfs-champions-cohort") |>
   ggplot(aes(x = date, y = size, fill = directory)) +
   geom_area() +
-  paletteer::scale_fill_paletteer_d(
-    "khroma::soil",
+  scale_fill_discrete(
     guide = "none",
     direction = -1
   ) +
@@ -444,16 +443,16 @@ ec2_cost_plot <-
     ec2_cost_data,
     aes(x = start_date, y = UnblendedCost, fill = instance_type)
   ) +
-    geom_col() +
-    scale_fill_discrete(
-      type = aws_ce_palette(n_distinct(ec2_cost_data$instance_type))
-    ) +
-    labs(
-      title = "Daily EC2 cost by instance type",
-      x = "Date",
-      y = "Daily Cost ($)",
-      fill = "EC2 Instance Type"
-    )
+  geom_col() +
+  scale_fill_discrete(
+    type = aws_ce_palette(n_distinct(ec2_cost_data$instance_type))
+  ) +
+  labs(
+    title = "Daily EC2 cost by instance type",
+    x = "Date",
+    y = "Daily Cost ($)",
+    fill = "EC2 Instance Type"
+  )
 ```
 
 ```{r patchwork-plot-ec2-usage-cost}
