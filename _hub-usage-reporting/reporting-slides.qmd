@@ -1,0 +1,560 @@
+---
+title: "NASA Openscapes JupyterHub Usage Report"
+format: revealjs
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(jupycost)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+library(patchwork)
+library(hrbrthemes)
+library(lubridate)
+library(duckplyr)
+library(readr)
+library(paws)
+
+db_exec("INSTALL httpfs")
+db_exec("LOAD httpfs")
+
+Sys.setenv(
+  "GRAFANA_TOKEN" = Sys.getenv("NASA_GRAFANA_TOKEN"),
+  "AWS_ACCESS_KEY_ID" = Sys.getenv("NASA_AWS_ACCESS_KEY_ID"),
+  "AWS_SECRET_ACCESS_KEY" = Sys.getenv("NASA_AWS_SECRET_ACCESS_KEY"),
+  "AWS_REGION" = "us-east-1"
+)
+
+# 'mode': used to to find the most common timestep, and use this
+# to find breaks so we can identify "sessions"
+num_mode <- function(x) {
+  ux <- unique(x)
+  ux[which.max(tabulate(match(x, ux)))]
+}
+```
+
+```{r}
+#| label: pricing
+#| include: false
+
+svc <- pricing()
+# Retrieves the service for the given Service Code.
+# svc$describe_services(
+#   FormatVersion = "aws_v1",
+#   ServiceCode = "AmazonEC2"
+# )
+
+ec2_price_lists <- svc$list_price_lists(
+  ServiceCode = "AmazonEC2",
+  EffectiveDate = Sys.time(),
+  CurrencyCode = "USD",
+  RegionCode = "us-west-2"
+)
+
+ec2_arn <- ec2_price_lists$PriceLists[[1]]$PriceListArn
+
+ec2_prices_url <- svc$get_price_list_file_url(
+  PriceListArn = ec2_arn,
+  FileFormat = "csv"
+)$Url
+
+# svc$describe_services(
+#   FormatVersion = "aws_v1",
+#   ServiceCode = "AmazonEFS"
+# )
+
+efs_price_lists <- svc$list_price_lists(
+  ServiceCode = "AmazonEFS",
+  EffectiveDate = Sys.time(),
+  CurrencyCode = "USD",
+  RegionCode = "us-west-2"
+)
+
+efs_arn <- efs_price_lists$PriceLists[[1]]$PriceListArn
+
+efs_prices_url <- svc$get_price_list_file_url(
+  PriceListArn = efs_arn,
+  FileFormat = "csv"
+)$Url
+
+efs_pricing <- read_csv_duckdb(efs_prices_url) |>
+  filter(
+    `Storage Class` %in% c("General Purpose", "Infrequent Access"),
+    Unit == "GB-Mo"
+  ) |>
+  collect()
+```
+
+## NASA-Openscapes JupyterHub Usage
+
+```{r}
+daily_users <- get_daily_users(start_time = "2024-01-01") |>
+  filter(namespace != "staging")
+
+mean_daily_users <- daily_users |>
+  filter(!weekdays(date) %in% c("Saturday", "Sunday"), namespace == "prod") |>
+  summarise(mdu = mean(n_users)) |>
+  pull(mdu) |>
+  round()
+
+ever <- dir_sizes(
+  start_time = "2023-01-01",
+  by_user = TRUE,
+  step = "24h0m0s"
+) |>
+  filter(
+    !directory %in% c(".ipynb_checkpoints", "_shared"),
+    namespace %in% c("prod", "workshop")
+  ) |>
+  group_by(namespace) |>
+  summarise(n_distinct_users = n_distinct(directory))
+
+ggplot(daily_users, aes(x = date, y = n_users, colour = namespace)) +
+  geom_line(linewidth = 1) +
+  labs(
+    title = "Number of daily users using the NASA Openscapes JupyterHub",
+    subtitle = glue::glue(
+      "Average {mean_daily_users} users/day. {ever$n_distinct_users[ever$namespace == 'prod']} users have used the 'prod' hub, and {ever$n_distinct_users[ever$namespace == 'workshop']} users have used the 'workshop' hub."
+    ),
+    colour = "Hub Namespace",
+    x = "Date",
+    y = "Number of users"
+  ) +
+  theme_ipsum() +
+  scale_color_ipsum()
+```
+
+## What does it cost for the hub with no users?
+
+```{r}
+usage_costs <- get_daily_usage_costs(end_date = Sys.Date(), 4, hub = "support")
+
+cost_plot_data <- usage_costs |>
+  filter(
+    date >= as.Date("2025-01-01"),
+    date <= as.Date("2025-04-05"),
+    service_component != "other"
+  ) |>
+  group_by(date, service_component) |>
+  summarise(cost = sum(cost), .groups = 'drop')
+
+mean_daily_cost <- cost_plot_data |>
+  group_by(date) |>
+  summarise(daily_cost = sum(cost)) |>
+  ungroup() |>
+  pull(daily_cost) |>
+  mean()
+
+ggplot(cost_plot_data) +
+  geom_area(
+    aes(x = date, y = cost, fill = reorder(service_component, -cost)),
+    position = "stack"
+  ) +
+  theme_ipsum() +
+  scale_fill_flexoki_light() +
+  labs(
+    title = "Cost of shared infrastructure",
+    subtitle = glue::glue("Mean daily cost: ${round(mean_daily_cost)}"),
+    x = "Date",
+    y = "Cost",
+    fill = "Service"
+  )
+```
+
+## What does it cost to run a workshop?
+
+```{r}
+
+wkp_date <- as.Date("2025-02-13")
+workshop_usage_costs <- get_daily_usage_costs(
+  end_date = wkp_date + 25,
+  2,
+  hub = "workshop"
+) 
+
+workshop_cost_plot_data <- workshop_usage_costs |>
+  filter(
+    date >= wkp_date - 5, 
+    service_component != "other"
+) |>
+  group_by(date, service_component) |>
+  summarise(cost = sum(cost), .groups = 'drop')
+
+workshop_cost_plot <- ggplot(workshop_cost_plot_data) +
+  geom_area(
+    aes(x = date, y = cost, fill = reorder(service_component, -cost)),
+    position = "stack"
+  ) +
+  theme_ipsum() + 
+  scale_fill_flexoki_light() +
+  labs(
+    title = "Component costs of the workshop",
+    x = "Date",
+    y = "Cost",
+    fill = "Service"
+  )
+
+workshop_mem <- user_mem_requests(
+  start_time = format(wkp_date - 2, "%Y-%m-%dT%H:%M:%SZ"),
+  end_time = format(wkp_date + 2, "%Y-%m-%dT%H:%M:%SZ"),
+  step = "0h10m0s"
+) |>
+  filter(namespace == "workshop")
+
+workshop_cpu <- user_cpu_requests(
+  start_time = format(wkp_date - 2, "%Y-%m-%dT%H:%M:%SZ"),
+  end_time = format(wkp_date + 2, "%Y-%m-%dT%H:%M:%SZ"),
+  step = "0h10m0s"
+) |>
+  filter(namespace == "workshop")
+
+workshop_main_interval <- num_mode(
+  as.numeric(workshop_mem$date - lag(workshop_mem$date), units = "secs")
+)
+
+workshop_cpu_mem_requests <- left_join(workshop_cpu, workshop_mem) |>
+  arrange(date) |>
+  # Fill in zeros for missing dates
+  complete(
+    date = full_seq(
+      c(min(workshop_mem$date), max(workshop_mem$date)),
+      period = workshop_main_interval
+    ),
+    fill = list(cpu_cores = 0, mem_mb = 0)
+  ) |>
+  arrange(date)
+
+wkp_cpu_mem_plot <- workshop_cpu_mem_requests |> 
+  group_by(date) |> 
+  summarise(
+    n_users = n_distinct(pod), 
+    n_nodes = n_distinct(node)
+    ) |> 
+      pivot_longer(cols = -date) |> 
+      ggplot(aes(x = date, y = value, colour = name)) + 
+      geom_line(linewidth = 1.2, alpha = 0.8) + 
+      theme_ipsum() + 
+      scale_color_ipsum(labels = c("Nodes", "Users")) + 
+      labs(
+       title = "Number of nodes and users", 
+        x = "Date", 
+        y = "Number", 
+        colour = "Count of:"
+        )
+
+workshop_cost_plot + wkp_cpu_mem_plot & theme(legend.position = "bottom")
+```
+  
+
+## Storage costs
+
+```{r}
+  #| label: efs-costs
+  #| include: false
+
+homedir_size <- dir_sizes(
+  start_time = "2025-01-01",
+  by_user = TRUE,
+  step = "24h0m0s"
+) |>
+  filter(
+    !directory %in% c(".ipynb_checkpoints", "_shared"),
+    namespace == "prod"
+  )
+
+top_users <- homedir_size |>
+  group_by(directory) |>
+  summarise(sum_dirsize = max(dirsize_mb)) |>
+  slice_max(sum_dirsize, n = 5) |>
+  pull(directory)
+
+homedir_size$directory[!homedir_size$directory %in% top_users] <- "Other"
+
+homedir_size_sum <- homedir_size |>
+  group_by(date, directory) |>
+  summarise(dirsize_mb = sum(dirsize_mb), .groups = "drop") |>
+  mutate(
+    price_gb_per_mo = weighted.mean(
+      sort(efs_pricing$PricePerUnit),
+      c(0.75, 0.25)
+    ),
+    price_gb_per_day = price_gb_per_mo / 30,
+    cost_per_day = dirsize_mb / 1024 * price_gb_per_day
+  ) |>
+  group_by(directory) |>
+  arrange(date) |>
+  mutate(cumulative_cost = cumsum(cost_per_day)) |>
+  ungroup()
+
+(ggplot(
+  homedir_size_sum,
+  aes(
+    x = date,
+    y = dirsize_mb / 1024,
+    fill = reorder(directory, dirsize_mb)
+  )
+) +
+  geom_area(position = "stack") +
+  labs(
+    title = "Home Directory Sizes",
+    subtitle = "Five largest home directories are separated out",
+    x = "Date",
+    y = "Size (GB)",
+    fill = "Directory"
+  ) +
+  theme_ipsum() +
+  theme(
+    legend.position = "none",
+    axis.title.x = element_blank(),
+    axis.text.x = element_blank()
+  ) +
+  scale_fill_flexoki_light()) +
+  (ggplot(
+    homedir_size_sum,
+    aes(
+      x = date,
+      y = cumulative_cost,
+      fill = reorder(directory, dirsize_mb)
+    )
+  ) +
+    geom_area(position = "stack") +
+    labs(
+      title = glue::glue(
+        "After four months storage costs\naccumulate to ~${round(sum(homedir_size_sum$cost_per_day), -2)} USD*"
+      ),
+      x = "Date",
+      y = "Cost",
+      fill = "Directory",
+      caption = "*Assuming 75% of data in 'Infrequent Access' storage (> 90 days since last access)"
+    ) +
+    theme_ipsum() +
+    theme(legend.position = "none") +
+    scale_fill_flexoki_light())
+
+```
+
+## Example OSL Workflow
+
+```{r}
+#| label: cpu-mem-requests
+#| include: false
+
+# alex_start_time <- as.POSIXct("2025-01-08 18:00:00", tz = "UCT")
+# alex_stop_time <- as.POSIXct("2025-01-09 22:00:00", tz = "UCT")
+
+alex_start_time <- as.POSIXct("2025-04-22 02:50:00", tz = "UCT")
+alex_stop_time <- as.POSIXct("2025-04-22 06:30:00", tz = "UCT")
+
+mem <- user_mem_requests(
+  start_time = alex_start_time,
+  end_time = alex_stop_time,
+  step = "0h0m10s"
+) |>
+  filter(grepl("alex-lewandowski", pod), namespace == "prod")
+
+cpu <- user_cpu_requests(
+  start_time = alex_start_time,
+  end_time = alex_stop_time,
+  step = "0h0m10s"
+) |>
+  filter(grepl("alex-lewandowski", pod), namespace == "prod")
+
+main_interval <- num_mode(
+  as.numeric(mem$date - lag(mem$date), units = "secs")
+)
+
+cpu_mem_requests <- left_join(cpu, mem) |>
+  arrange(date) |>
+  # Fill in zeros for missing dates
+  mutate(
+    diff = c(0, diff(date)),
+    session = cumsum(diff > main_interval)
+  ) |>
+  complete(
+    date = full_seq(
+      c(alex_start_time, alex_stop_time),
+      period = main_interval
+    ),
+    fill = list(cpu_cores = 0, mem_mb = 0)
+  ) |>
+  arrange(date)
+```
+
+```{r}
+#| label: ec2-pricing
+instance_type <- unique(
+  cpu_mem_requests$label_beta_kubernetes_io_instance_type
+)
+
+instance_type <- instance_type[!is.na(instance_type)]
+
+ec2_pricing <- duckplyr::read_csv_duckdb(ec2_prices_url, options = list(all_varchar = TRUE, skip = 5)) |>
+  filter(
+`Instance Type` == instance_type,
+    TermType == "OnDemand",
+    `Operating System` == "Linux",
+    Tenancy == "Shared",
+    CapacityStatus == "Used",
+    (`Pre Installed S/W` == "NA" | is.na(`Pre Installed S/W`))
+  ) |>
+  mutate(PricePerUnit = as.numeric(PricePerUnit)) |>
+  collect()
+```
+
+```{r}
+#| label: ec2-costs
+#| include: false
+
+ec2_costs <- cpu_mem_requests |>
+  filter(!is.na(session)) |>
+  group_by(session, instance_type = label_beta_kubernetes_io_instance_type) |>
+  summarise(
+    start_time = min(date),
+    end_time = max(date),
+    total_time_hrs = as.numeric(difftime(end_time, start_time), units = "hours")
+  ) |>
+  left_join(
+    ec2_pricing |>
+      select(instance_type = `Instance Type`, PricePerUnit),
+    by = "instance_type"
+  ) |>
+  mutate(
+    cost = total_time_hrs * PricePerUnit
+  )
+
+total_ec2_cost <- sum(ec2_costs$cost)
+```
+
+
+```{r}
+#| label: EC2-costs
+#| echo: false
+
+cpu_plot <- ggplot(cpu_mem_requests, aes(x = date)) +
+  geom_line(aes(y = cpu_cores, colour = "Requested"), linewidth = 1) +
+  labs(
+    x = "Time",
+    y = "CPU cores",
+    title = "CPU & Memory Requests for OSL workflow in NASA Openscapes",
+    subtitle = sprintf(
+      "Data size: ~28GB\nInstance type: %s ($%.3f per hour); Total cost: $%.2f",
+      instance_type,
+      ec2_pricing$PricePerUnit,
+      total_ec2_cost
+    )
+  ) +
+  theme_ipsum()
+
+mem_plot <- ggplot(cpu_mem_requests, aes(x = date)) +
+  geom_line(aes(y = mem_mb / 1024, colour = "Requested"), linewidth = 1) +
+  labs(
+    x = "Time",
+    y = "Memory (GB)"
+  ) +
+  geom_text(
+    data = ec2_costs |> filter(cost > 0),
+    aes(
+      x = end_time,
+      y = max(cpu_mem_requests$mem_mb / 1024),
+      label = sprintf("$%.2f", cost)
+    ),
+    size = 4,
+    hjust = 1,
+    vjust = -1
+  ) +
+  scale_y_continuous(limits = c(0, 18.5)) +
+  theme_ipsum()
+
+```
+
+
+
+```{r}
+#| label: mem-cpu-usage
+
+mem_usage <- user_mem_usage(
+  start_time = alex_start_time,
+  end_time = alex_stop_time,
+  step = "0h0m10s"
+) |>
+  filter(grepl("alex-lewandowski", pod), namespace == "prod")
+
+cpu_usage <- user_cpu_usage(
+  start_time = alex_start_time,
+  end_time = alex_stop_time,
+  step = "0h0m10s"
+) |>
+  filter(grepl("alex-lewandowski", pod), namespace == "prod")
+
+main_interval <- num_mode(
+  as.numeric(mem_usage$date - lag(mem_usage$date), units = "secs")
+)
+
+cpu_mem_usage <- left_join(cpu_usage, mem_usage) |>
+  arrange(date) |>
+  # Fill in zeros for missing dates
+  mutate(
+    diff = c(0, diff(date)),
+    session = cumsum(diff > main_interval)
+  ) |>
+  complete(
+    date = full_seq(
+      c(alex_start_time, alex_stop_time),
+      period = main_interval
+    ),
+    fill = list(cpu_percent = 0, mem_mb = 0)
+  ) |>
+  arrange(date)
+
+cpu_plot_with_usage <- cpu_plot +
+  geom_line(
+    data = cpu_mem_usage,
+    aes(y = cpu_percent * 1e6, colour = "Used"),
+    linewidth = 1
+  ) +
+  scale_colour_manual(values = c("Requested" = "#E69F00", "Used" = "#56B4E9")) +
+  theme(legend.position = "none")
+
+mem_plot_with_usage <- mem_plot +
+  geom_line(
+    data = cpu_mem_usage,
+    aes(y = mem_mb / 1000, colour = "Used"),
+    linewidth = 1
+  ) +
+  scale_colour_manual(values = c("Requested" = "#E69F00", "Used" = "#56B4E9")) +
+  theme(legend.position = "none")
+
+```
+
+```{r}
+#| label: mem-cpu-usage-show-plot
+
+(cpu_plot_with_usage +
+  theme(
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank(),
+    axis.title.y = element_text(size = 14)
+  )) /
+  (mem_plot_with_usage +
+    theme(
+      axis.title.y = element_text(size = 14)
+    )) +
+  plot_layout(guides = "collect") &
+  plot_annotation(
+    caption = sprintf(
+      "* Memory: %s, vCPU: %s, Clock Speed: %s",
+      ec2_pricing$Memory,
+      ec2_pricing$vCPU,
+      ec2_pricing$`Clock Speed`
+    )
+  ) &
+  theme(
+    legend.position = "top",
+    legend.justification = "left",
+    legend.title = element_blank(),
+    plot.margin = unit(c(0.5, 0.5, 0, 0.5), "cm")
+  )
+```
