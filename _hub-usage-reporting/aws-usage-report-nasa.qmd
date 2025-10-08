@@ -1,7 +1,7 @@
 ---
 title: "NASA Openscapes 2i2c JupyterHub\nUsage and Costs"
 params:
-  year_month: "2025-01"
+  year_month: "2025-02"
 subtitle: "Monthly report for `r format(lubridate::ym(params$year_month), '%B %Y')`"
 format: typst
 ---
@@ -105,21 +105,14 @@ the Hub, as well as a breakdown of costs by service each month.
 
 # https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage/
 # https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
-all_daily_costs_six_months <- sixtyfour::aws_billing(
-  ceiling_date(end_date %m-% months(6), unit = "month"),
+all_daily_costs_six_months <- get_daily_usage_costs(
   end_date,
-  filter = list(
-    Dimensions = list(
-      Key = "RECORD_TYPE",
-      Values = "Usage"
-    )
-  )
+  months_back = 6,
+  cost_type = "unblended"
 )
 
 total_monthly_usage_costs <- all_daily_costs_six_months |>
-  filter(id == "unblended") |>
   mutate(
-    date = ymd(date),
     start_date = floor_date(date, unit = "month"),
     end_date = ceiling_date(date, unit = "month")
   ) |>
@@ -202,18 +195,17 @@ is directly correlated with the costs for "Amazon Elastic File System" in the
 previous chart.
 
 ```{r monthly-storage}
-monthly_size <- query_prometheus_range(
-  query = "max(dirsize_total_size_bytes{namespace='prod'})",
+monthly_size <- dir_sizes(
   start_time = floor_date(end_date, unit = "months") %m-% months(5),
   end_time = end_date,
-  step = 60 * 60 * 24
+  step = 60 * 60 * 24 # daily
 ) |>
-  create_range_df(value_name = "size") |>
-  mutate(size = size * 1e-9)
+  filter(namespace == "prod") |>
+  mutate(dirsize_gb = dirsize_mb * 1e-3)
 
 monthly_size |>
   ggplot() +
-  geom_line(aes(x = date, y = size)) +
+  geom_line(aes(x = date, y = dirsize_gb)) +
   scale_x_datetime(date_breaks = "1 month", date_labels = "%B") +
   labs(
     title = "Total size of user home directories in AWS EFS in the main Hub",
@@ -247,17 +239,13 @@ the different y axis scales in each panel. The "prod" namespace panel is broken
 out by the GitHub team by which they are granted access to the Hub (Long-Term Access and NASA Champions 2024).
 
 ```{r homedir-size-by-date}
-size_by_date <- query_prometheus_range(
-  query = "max(dirsize_total_size_bytes) by (directory, namespace)",
-  start_time = start_date,
+size_by_date <- dir_sizes(
+  start_time = floor_date(end_date, unit = "months") %m-% months(5),
   end_time = end_date,
-  step = 60 * 60 * 24
+  by_user = TRUE,
+  step = 60 * 60 * 24 # daily
 ) |>
-  create_range_df(value_name = "size") |>
-  mutate(
-    directory = unsanitize_dir_names(directory),
-    size = size * 1e-9
-  )
+  mutate(dirsize_gb = dirsize_mb * 1e-3)
 
 # list_teams("nasa-openscapes")
 # list_teams("nasa-openscapes-workshops")
@@ -297,13 +285,28 @@ size_by_date_by_team <- size_by_date |>
   ) |>
   mutate(
     team = ifelse(namespace == "workshop", "workshop", team),
-    directory = fct_reorder(directory, desc(size), .fun = max, .desc = TRUE)
+    directory = fct_reorder(
+      directory,
+      desc(dirsize_gb),
+      .fun = max,
+      .desc = TRUE
+    )
   )
 
 all_dirs_sum_by_date <- size_by_date_by_team |>
   filter(namespace %in% c("prod", "workshop")) |>
   group_by(namespace, date, team) |>
-  summarize(total_size_gb = sum(size)) |>
+  summarize(total_size_gb = sum(dirsize_gb)) |>
+  # Add a dummy row - this is temporary to work around the bug at:
+  # https://github.com/tidyverse/ggplot2/issues/6680
+  bind_rows(
+    tibble::tibble(
+      namespace = "workshop",
+      date = start_date,
+      team = "Other",
+      total_size_gb = 0
+    )
+  ) |>
   mutate(
     team = ifelse(is.na(team) & namespace == "prod", "Other", team),
     team = fct_reorder(team, desc(total_size_gb), .fun = max, .desc = TRUE)
@@ -318,8 +321,7 @@ all_dirs_sum_by_date |>
   facet_grid(vars(namespace), scales = "free_y") +
   theme(legend.position = "bottom", legend.title.position = "top") +
   paletteer::scale_fill_paletteer_d(
-    "ggpomological::pomological_palette",
-    breaks = setdiff(unique(all_dirs_sum_by_date$team), "workshop")
+    "ggpomological::pomological_palette"
   ) +
   labs(
     title = "Total size of user home directories by access team and Hub namespace",
@@ -340,7 +342,7 @@ of space. When we see disproportionate amount of space used, we reach out to use
 ```{r homedir-size-champions}
 size_by_date_by_team |>
   filter(team == "NASA Champions 2024") |>
-  ggplot(aes(x = date, y = size, fill = directory)) +
+  ggplot(aes(x = date, y = dirsize_gb, fill = directory)) +
   geom_area() +
   paletteer::scale_fill_paletteer_d(
     "khroma::soil",
