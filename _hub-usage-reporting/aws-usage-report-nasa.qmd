@@ -372,9 +372,11 @@ develop policies and recommendations for Hub compute usage.
 # https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage/
 # https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
 
-# TODO: modify ce_to_df to deal with an arbitrary number of metrics so
-# we can do this in one call with `Metrics = list("UnblendedCost", "UsageQuantity")
-# and pass it to ce_to_df() once, rather than joining
+# TODO: modify jupycost::get_daily_usage_costs() to allow grouping by instance type.
+# Currently group_by is hardcoded to SERVICE and LINKED_ACCOUNT in sixtyfour::aws_billing(),
+# and can only group by two variables, so would need to modify that function too.
+# https://github.com/Openscapes/jupycost/issues/4
+
 ec2_instance_type_costs_usage_res <- cost_explorer$get_cost_and_usage(
   TimePeriod = list(Start = start_date, End = end_date),
   Granularity = "DAILY",
