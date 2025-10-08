@@ -327,7 +327,7 @@ all_dirs_sum_by_date |>
     title = "Total size of user home directories by access team and Hub namespace",
     x = "Date",
     y = "Size (GB)",
-    fill = "GitHub Team (production hub only)"
+    fill = "GitHub Team"
   )
 ```
 
