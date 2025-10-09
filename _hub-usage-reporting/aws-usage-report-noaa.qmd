@@ -1,7 +1,7 @@
 ---
 title: "NMFS Openscapes 2i2c JupyterHub\nUsage and Costs"
 params:
-  year_month: "2025-01"
+  year_month: "2025-09"
 subtitle: "Monthly report for `r format(lubridate::ym(params$year_month), '%B %Y')`"
 format: typst
 ---
@@ -319,10 +319,11 @@ and work with them to reduce their storage, and update the [policies](https://op
 
 
 ```{r homedir-size-champions}
+#| eval: false
 
 size_by_date_by_team |>
   filter(team == "2024-nmfs-champions-cohort") |>
-  ggplot(aes(x = date, y = size, fill = directory)) +
+  ggplot(aes(x = date, y = total_size_gb, fill = directory)) +
   geom_area() +
   scale_fill_discrete(
     guide = "none",
