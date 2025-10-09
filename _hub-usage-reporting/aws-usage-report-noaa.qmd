@@ -105,21 +105,15 @@ the Hub, as well as a breakdown of costs by service each month.
 
 # https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage/
 # https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
-all_daily_costs_six_months <- sixtyfour::aws_billing(
-  ceiling_date(end_date %m-% months(6), unit = "month"),
+all_daily_costs_six_months <- get_daily_usage_costs(
   end_date,
-  filter = list(
-    Dimensions = list(
-      Key = "RECORD_TYPE",
-      Values = "Usage"
-    )
-  )
+  months_back = 6,
+  cost_type = "unblended",
+  cluster = "nmfs-openscapes"
 )
 
 total_monthly_usage_costs <- all_daily_costs_six_months |>
-  filter(id == "unblended") |>
   mutate(
-    date = ymd(date),
     start_date = floor_date(date, unit = "month"),
     end_date = ceiling_date(date, unit = "month")
   ) |>
@@ -131,7 +125,7 @@ total_monthly_cost <- total_monthly_usage_costs$cost[
 ]
 
 total_monthly_cost_plot <- ggplot(total_monthly_usage_costs) +
-  geom_line(aes(x = end_date, y = cost)) +
+  geom_line(aes(x = start_date, y = cost)) +
   labs(
     title = glue::glue(
       "The total cost of all AWS Services for running the NMFS Openscapes 2i2c",
@@ -202,19 +196,18 @@ is directly correlated with the costs for "Amazon Elastic File System" in the
 previous chart.
 
 ```{r monthly-storage}
-monthly_size <- query_prometheus_range(
+monthly_size <- dir_sizes(
   grafana_url = "https://grafana.nmfs-openscapes.2i2c.cloud",
-  query = "max(dirsize_total_size_bytes{namespace='prod'})",
   start_time = floor_date(end_date, unit = "months") %m-% months(5),
   end_time = end_date,
-  step = 60 * 60 * 24
+  step = 60 * 60 * 24 # daily
 ) |>
-  format_prom_result(value_name = "size") |>
-  mutate(size = size * 1e-9)
+  filter(namespace == "prod") |>
+  mutate(dirsize_gb = dirsize_mb * 1e-3)
 
 monthly_size |>
   ggplot() +
-  geom_line(aes(x = date, y = size)) +
+  geom_line(aes(x = date, y = dirsize_gb)) +
   scale_x_datetime(date_breaks = "1 month", date_labels = "%B") +
   labs(
     title = "Total size of user home directories in AWS EFS in the main Hub",
@@ -235,17 +228,14 @@ out by the GitHub team by which they are granted access to the Hub (Long-Term Ac
 
 ```{r homedir-size-by-date}
 
-size_by_date <- query_prometheus_range(
+size_by_date <- dir_sizes(
   grafana_url = "https://grafana.nmfs-openscapes.2i2c.cloud",
-  query = "max(dirsize_total_size_bytes) by (directory)",
-  start_time = start_date,
+  start_time = floor_date(end_date, unit = "months") %m-% months(5),
   end_time = end_date,
-  step = 60 * 60 * 24
+  by_user = TRUE,
+  step = 60 * 60 * 24 # daily
 ) |>
-  format_prom_result(value_name = "size") |>
-  mutate(
-    directory = unsanitize_dir_names(directory)
-  )
+  mutate(dirsize_gb = dirsize_mb * 1e-3)
 
 # list_teams("nmfs-openscapes")
 
@@ -273,19 +263,26 @@ size_by_date_by_team <- size_by_date |>
     teams,
     by = join_by(directory == user)
   ) |>
+  filter(namespace %in% c("prod", "workshop")) |>
   mutate(
     team = case_when(
       is.na(team) & directory %in% c("_shared", "deployment-service-check") ~
         "shared",
+      namespace == "workshop" ~ "workshop",
       is.na(team) ~ "No team",
       .default = team
     ),
-    directory = fct_reorder(directory, desc(size), .fun = max, .desc = TRUE)
+    directory = fct_reorder(
+      directory,
+      desc(dirsize_gb),
+      .fun = max,
+      .desc = TRUE
+    )
   )
 
 all_dirs_sum_by_date <- size_by_date_by_team |>
-  group_by(date, team) |>
-  summarize(total_size_gb = sum(size)) |>
+  group_by(namespace, date, team) |>
+  summarize(total_size_gb = sum(dirsize_gb)) |>
   mutate(
     team = fct_reorder(team, desc(total_size_gb), .fun = max, .desc = TRUE)
   )
@@ -296,6 +293,7 @@ all_dirs_sum_by_date <- size_by_date_by_team |>
 all_dirs_sum_by_date |>
   ggplot(aes(x = date, y = total_size_gb)) +
   geom_area(aes(fill = team)) +
+  facet_grid(rows = vars(namespace), scales = "free_y") +
   theme(legend.position = "bottom", legend.title.position = "top") +
   paletteer::scale_fill_paletteer_d(
     "ggpomological::pomological_palette",

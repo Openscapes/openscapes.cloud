@@ -2,3 +2,6 @@
 /_site/
 *.psd
 .Rproj.user
+
+# Local Netlify folder
+.netlify

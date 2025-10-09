@@ -22,7 +22,7 @@ Imports:
     khroma,
     sixtyfour,
     ggtext,
-    jupycost
+    jupycost (>= 0.1.0)
 Remotes:
     openscapes/kyber,
     openscapes/jupycost,
