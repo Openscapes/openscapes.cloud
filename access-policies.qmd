@@ -49,6 +49,10 @@ workshop shared password will persist for seven days post-workshop.
 
 **[Instructions for admins on how to set up a shared-password workshop](password-access.qmd)**
 
+## Reporting after a workshop
+
+Please open a new issue using our [issue template](url here).
+
 ## Allowable Uses of 2i2c Hub 
 
 Users who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs). 
