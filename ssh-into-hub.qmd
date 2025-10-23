@@ -182,7 +182,7 @@ You need to put ssh public keys in `~/.ssh/authorized_keys` after you start your
 The simplest way to do this is to rely on your [GitHub public keys](#gh-public-keys):
 
 1. After you start your JupyterHub server, open a terminal in JupyterLab
-2. Run the following commands:
+2. Run the following commands in the JupyterLab terminal:
 
    ```bash
    mkdir -p ~/.ssh
@@ -194,7 +194,7 @@ The simplest way to do this is to rely on your [GitHub public keys](#gh-public-k
 
 If you didn't add your public ssh key to your GitHub account, you can manually add it to the `authorized_keys` file instead:
 1. After you start your JupyterHub server, open a terminal in JupyterLab
-2. Run the following commands:
+2. Run the following commands  in the JupyterLab terminal:
 
    ```bash
    mkdir -p ~/.ssh
