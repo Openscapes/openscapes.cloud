@@ -74,6 +74,12 @@ Open a new command prompt or PowerShell window and run:
 websocat --version
 ```
 
+If you weren't able to add websocat to your PATH, you can still use it by providing the full path to the `websocat.exe`. For example:
+
+```shell
+C:/Users/YourUsername/AppData/Roaming/websocat/websocat --version
+```
+
 If installed correctly, you should see the version information.
 
 *Note: You must open a new terminal window after modifying the PATH for the changes to take effect.*
