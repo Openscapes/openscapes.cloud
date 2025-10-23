@@ -4,6 +4,8 @@ title: "Remote login using SSH"
 
 It is possible to remotely log in to the NASA-Openscapes and NMFS-Openscapes JupyterHubs using SSH (Secure Shell). This allows you to access the JupyterHub server from your local machine, either in the terminal or from your IDE (such as VSCode or Positron).
 
+SSH is a secure protocol that allows you to connect to a remote server and run commands as if you were logged in directly. It uses a "key pair", with a private key stored on your local machine and a public key stored on the remote server, to authenticate the connection.
+
 This functionality is enabled with the use of [`jupyter-sshd-proxy`](https://github.com/yuvipanda/jupyter-sshd-proxy), which is pre-installed in the NASA-Openscapes default environment. Much of this documentation 
 is adapted from the `jupyter-sshd-proxy` documentation.
 
