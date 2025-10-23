@@ -95,8 +95,13 @@ First, read [about SSH keys here](https://docs.github.com/en/authentication/conn
 
 2. If you don't already have an SSH key, follow the operating system-specific instructions on GitHub to generate a [new SSH key pair](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
 
+::: {.callout-tip collapse="true"}
+## Windows users: Start the ssh-agent
+The instructions to use a Powershell command to start the ssh agent didn't work for me. I ran `eval $(ssh-agent -s)` in git bash instead and that worked.
+:::
+
 ::: {id="gh-public-keys"}
-3. (Optional but recommended) Add your public SSH key to your GitHub account by following the instructions on [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+1. (Optional but recommended) Add your public SSH key to your GitHub account by following the instructions on [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account). When prompted while adding your key to GitHub, set it as an *authentication key* (not commit signing).
 :::
 
 ### 3. Set up your local SSH config file
