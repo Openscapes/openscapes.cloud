@@ -128,6 +128,13 @@ Host <YOUR-JUPYTERHUB-DOMAIN>
     ProxyCommand websocat --binary -H="Authorization: token <YOUR-JUPYTERHUB-TOKEN>" asyncstdio: wss://%h/user/<YOUR-JUPYTERHUB-USERNAME>/sshd/
 ```
 
+On Windows, the `asyncstdio:` argument will not work. You can simply omit it and use:
+
+```Host <YOUR-JUPYTERHUB-DOMAIN>
+    User jovyan
+    ProxyCommand websocat --binary -H="Authorization: token <YOUR-JUPYTERHUB-TOKEN>" wss://%h/user/<YOUR-JUPYTERHUB-USERNAME>/sshd/
+```
+
 replace:
 
  - `<YOUR-JUPYTERHUB-DOMAIN>` with your hub domain (NASA: `openscapes.2i2c.cloud`, NMFS: `nmfs-openscapes.2i2c.cloud`))
@@ -142,10 +149,15 @@ Host openscapes.2i2c.cloud
     ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" asyncstdio: wss://%h/user/ateucher/sshd/
 ```
 
-*Note that if you are connecting to your JupyterHub in a VSCode fork that uses the 
-[open-remote-ssh](https://github.com/jeanp413/open-remote-ssh) extension, such as VSCodium, Cursor, or Positron,
-you need to make sure the value of the -H argument (`"Authorization: token xxxx"`) is enclosed in double 
-quotes and not single quotes, or the connection will fail.*
+On Windows, it would look like this:
+
+```
+Host openscapes.2i2c.cloud
+    User jovyan
+    ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/
+```
+
+*Note that if you are connecting to your JupyterHub in a VSCode fork such as VSCodium, Cursor, or Positron, or any other IDE that uses the [open-remote-ssh](https://github.com/jeanp413/open-remote-ssh) extension, you need to make sure the value of the -H argument (`"Authorization: token xxxx"`) is enclosed in double quotes and not single quotes, or the connection will fail.*
 
 ::: {.callout-tip collapse="true"}
 
