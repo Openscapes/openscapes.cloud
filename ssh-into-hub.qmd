@@ -1,0 +1,216 @@
+---
+title: "Remote login using SSH"
+---
+
+It is possible to remotely log in to the NASA-Openscapes and NMFS-Openscapes JupyterHubs using SSH (Secure Shell). This allows you to access the JupyterHub server from your local machine, either in the terminal or from your IDE (such as VSCode or Positron).
+
+This functionality is enabled with the use of [`jupyter-sshd-proxy`](https://github.com/yuvipanda/jupyter-sshd-proxy), which is pre-installed in the NASA-Openscapes default environment. Much of this documentation 
+is adapted from the `jupyter-sshd-proxy` documentation.
+
+There are several steps that you need to do once only to set this up. Once you have completed the [setup](#setup), you can [connect](#connect-to-jupyterhub-via-ssh) whenever your JupyterHub server is running.
+
+## Setup
+
+### 1: Install websocat on your computer
+
+Install [websocat](https://github.com/vi/websocat) on your local machine: Follow the instructions for your operating system on the [websocat GitHub page](https://github.com/vi/websocat?tab=readme-ov-file#installation).
+
+- For macOS, you can use Homebrew:
+
+    ```bash
+    brew install websocat
+    ```
+
+- For Windows and most Linux distributions, you can download the latest precompiled binary from the [releases page](https://github.com/vi/websocat/releases).
+
+::: {.callout-note collapse="true"}
+
+## Installing websocat on Windows
+
+#### 1. Download websocat
+
+1. Go to the [websocat](https://github.com/vi/websocat) releases page: <https://github.com/vi/websocat/releases>
+2. Download the latest Windows binary - look for a file named something like `websocat_win64.exe` or
+`websocat.x86_64-pc-windows-gnu.exe`
+3. Create a directory for the executable (e.g., `C:/Program Files/websocat/` or `C:/Users/YourUsername/AppData/Roaming/websocat/`)
+4. Move the downloaded `.exe` file to this directory
+5. Rename the file to `websocat.exe`
+
+#### 2. Add to PATH (optional but recommended)
+
+To make websocat accessible from any command prompt or PowerShell window:
+
+**Option A: Using Windows Settings (Windows 10/11)**
+This is different depending on your version of Windows, but generally:
+1. Open the Start Menu and search for "Environment Variables"
+2. Select "Edit the system environment variables"
+3. In the System Properties window, click on the "Environment Variables..." button
+4. In the "System variables" or "User variables" section (depending on your permissions), find and select the `Path` variable,
+5. Click "Edit..."
+6. Click "New" and add the path to the directory where you placed `websocat.exe` (e.g., `C:\Path\To\Websocat\`)
+7. Click "OK" to close all dialog boxes
+
+**Option B: Using CMD prompt**
+
+1. Open a Command Prompt
+2. Run the following command, replacing `C:\Path\To\Websocat\` with the actual path where you placed `websocat.exe`:
+
+```
+setx PATH "%PATH%;C:\Path\To\Websocat\"
+```
+3. Verify Installation
+
+Open a new command prompt or PowerShell window and run:
+
+```shell
+websocat --version
+```
+
+If installed correctly, you should see the version information.
+
+*Note: You must open a new terminal window after modifying the PATH for the changes to take effect.*
+:::
+
+### 2. Set up SSH keys on your local machine
+
+To securely connect to the JupyterHub server, you need to generate an SSH key pair (if you don't already have one) _on your local computer_.
+
+First, read [about SSH keys here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh)
+
+1. Check if you already have an SSH key pair: Follow the operating system-specific instructions on [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys).
+
+2. If you don't already have an SSH key, follow the operating system-specific instructions on GitHub to generate a [new SSH key pair](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+::: {id="gh-public-keys"}
+3. (Optional but recommended) Add your public SSH key to your GitHub account by following the instructions on [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account).
+:::
+
+### 3. Set up your local SSH config file
+
+#### Create a JupyterHub Token
+
+We will need to create a JupyterHub token for authentication.
+
+1. Go to the JupyterHub control panel: [NASA](https://openscapes.2i2c.cloud/hub/home) or [NOAA](https://nmfs-openscapes.2i2c.cloud/hub/home).
+
+2. In the top bar, select **Token**.
+
+3. Create a new Token, and keep it safe. **Treat this like you would treat a password to your JupyterHub instance**! It is recommended you set an expiry date for this.
+
+#### Setup your local `~/.ssh/config` file
+
+We will set up our ssh config file to tell `ssh` how to connect to our JupyterHub. Add
+an entry that looks like this to the end of your `~/.ssh/config` file (create it if it
+does not exist).
+
+```
+Host <YOUR-JUPYTERHUB-DOMAIN>
+    User jovyan
+    ProxyCommand websocat --binary -H="Authorization: token <YOUR-JUPYTERHUB-TOKEN>" asyncstdio: wss://%h/user/<YOUR-JUPYTERHUB-USERNAME>/sshd/
+```
+
+replace:
+
+ - `<YOUR-JUPYTERHUB-DOMAIN>` with your hub domain (NASA: `openscapes.2i2c.cloud`, NMFS: `nmfs-openscapes.2i2c.cloud`))
+ - `<YOUR-JUPYTERHUB-TOKEN>` with the token you generated earlier
+ - `<YOUR-JUPYTERHUB-USERNAME>` with your jupyterhub username that you log in to the hub with (usually your github username)
+
+Here's an example:
+
+```
+Host openscapes.2i2c.cloud
+    User jovyan
+    ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" asyncstdio: wss://%h/user/ateucher/sshd/
+```
+
+*Note that if you are connecting to your JupyterHub in a VSCode fork that uses the 
+[open-remote-ssh](https://github.com/jeanp413/open-remote-ssh) extension, such as VSCodium, Cursor, or Positron,
+you need to make sure the value of the -H argument (`"Authorization: token xxxx"`) is enclosed in double 
+quotes and not single quotes, or the connection will fail.*
+
+::: {.callout-tip collapse="true"}
+
+## If you were not able to add `websocat` to your PATH...
+
+You will need to provide the full path to the `websocat` executable in the `ProxyCommand` line above (e.g., `C:/path/to/websocat` instead of just `websocat`).
+
+For example, if you placed `websocat.exe` in `C:/Program Files/websocat/`, your `~/.ssh/config` entry would look like this:
+
+```
+Host openscapes.2i2c.cloud
+    User jovyan
+    ProxyCommand C:/Program Files/websocat/websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" asyncstdio: wss://%h/user/ateucher/sshd/
+```
+
+:::
+
+### 4. Add public ssh key to your JupyterHub server
+
+You need to put ssh public keys in `~/.ssh/authorized_keys` after you start your JupyterHub server, and have the private keys available in your ssh client machine.
+
+The simplest way to do this is to rely on your [GitHub public keys](#gh-public-keys):
+
+1. After you start your JupyterHub server, open a terminal in JupyterLab
+2. Run the following commands:
+
+   ```bash
+   mkdir -p ~/.ssh
+   wget https://github.com/<YOUR-GITHUB-USERNAME>.keys -O ~/.ssh/authorized_keys
+   chmod 0600 ~/.ssh/authorized_keys
+   ```
+
+   replacing `<YOUR-GITHUB-USERNAME>` with your github username.
+
+If you didn't add your public ssh key to your GitHub account, you can manually add it to the `authorized_keys` file instead:
+1. After you start your JupyterHub server, open a terminal in JupyterLab
+2. Run the following commands:
+
+   ```bash
+   mkdir -p ~/.ssh
+   echo "<YOUR-PUBLIC-SSH-KEY>" >> ~/.ssh/authorized_keys
+   chmod 0600 ~/.ssh/authorized_keys
+   ```
+   
+   replacing `<YOUR-PUBLIC-SSH-KEY>` with the contents of your public ssh key (usually found in `~/.ssh/id_rsa.pub` or `~/.ssh/id_ed25519.pub` on your local machine).
+
+## Connect to JupyterHub via SSH
+
+Having completed the above [setup](#setup) steps once, you should be able to connect to your JupyterHub server via SSH from your local machine.
+
+### Connecting in the terminal
+
+The simplest way is to make sure your JupyterHub server is running, open a terminal and then run:
+
+```bash
+ssh openscapes.2i2c.cloud
+```
+for NASA-Openscapes, or:
+
+```bash
+ssh nmfs-openscapes.2i2c.cloud
+```
+for NMFS-Openscapes.
+
+If everything is set up correctly, you should be logged into your JupyterHub server via SSH, and you will have a new prompt in your terminal that looks something like this:
+
+```
+(notebook) $
+```
+
+If you type `whoami`, you should see `jovyan` printed to the terminal.
+
+In that terminal, you can now run commands as if you were in a terminal inside JupyterLab.
+
+### Connecting from VSCode, Positron, etc.
+
+You can also connect to your JupyterHub server via SSH from an IDE such as VSCode or Positron.
+
+1. Make sure your JupyterHub server is running.
+1. Open your IDE.
+2. Open the command palette (e.g., `Ctrl+Shift+P` in VSCode).
+3. Search for and select `Remote-SSH: Connect to Host...`
+4. Type or select the name of the host you set up in your `~/.ssh/config` file (e.g., `openscapes.2i2c.cloud` or `nmfs-openscapes.2i2c.cloud`) and press Enter.
+
+![](img/ssh-connect-positron.png)
+
+5. A new IDE window will open, and you can open a folder or workspace on your JupyterHub server, and work there as if you were working locally.
