@@ -5,3 +5,5 @@
 
 # Local Netlify folder
 .netlify
+
+**/*.quarto_ipynb
