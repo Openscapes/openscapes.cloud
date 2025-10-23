@@ -11,6 +11,14 @@ There are several steps that you need to do once only to set this up. Once you h
 
 ## Setup
 
+::: {.callout-tip collapse="true"}
+
+## Note: Git bash for Windows users
+
+If you are using Windows, it is recommended to use [Git for Windows](https://gitforwindows.org/) to get a bash terminal with ssh capabilities. If you use Git already, you probably have this installed already.
+
+:::
+
 ### 1: Install websocat on your computer
 
 Install [websocat](https://github.com/vi/websocat) on your local machine: Follow the instructions for your operating system on the [websocat GitHub page](https://github.com/vi/websocat?tab=readme-ov-file#installation).
