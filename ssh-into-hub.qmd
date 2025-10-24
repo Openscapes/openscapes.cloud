@@ -6,8 +6,7 @@ It is possible to remotely log in to the NASA-Openscapes and NMFS-Openscapes Jup
 
 SSH is a secure protocol that allows you to connect to a remote server and run commands as if you were logged in directly. It uses a "key pair", with a private key stored on your local machine and a public key stored on the remote server, to authenticate the connection.
 
-This functionality is enabled with the use of [`jupyter-sshd-proxy`](https://github.com/yuvipanda/jupyter-sshd-proxy), which is pre-installed in the NASA-Openscapes default environment. Much of this documentation 
-is adapted from the `jupyter-sshd-proxy` documentation.
+This functionality is enabled with the use of [`jupyter-sshd-proxy`](https://github.com/yuvipanda/jupyter-sshd-proxy), which is pre-installed in the NASA-Openscapes default environment. Much of this documentation is adapted from the `jupyter-sshd-proxy` documentation.
 
 There are several steps that you need to do once only to set this up. Once you have completed the [setup](#setup), you can [connect](#connect-to-jupyterhub-via-ssh) whenever your JupyterHub server is running.
 
