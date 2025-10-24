@@ -240,6 +240,8 @@ If you type `whoami`, you should see `jovyan` printed to the terminal.
 
 In that terminal, you can now run commands as if you were in a terminal inside JupyterLab.
 
+To exit the SSH session, simply type `exit` and press Enter.
+
 ### Connecting from VSCode, Positron, etc.
 
 You can also connect to your JupyterHub server via SSH from an IDE such as VSCode or Positron.
@@ -253,3 +255,5 @@ You can also connect to your JupyterHub server via SSH from an IDE such as VSCod
 ![](img/ssh-connect-positron.png)
 
 5. A new IDE window will open, and you can open a folder or workspace on your JupyterHub server, and work there as if you were working locally. In the explorer pane, you should see buttons giving you the option to "Open Folder" or "Clone Repository". You can use "Open Folder" to open an existing folder on the JupyterHub server, or "Clone Repository" to clone a git repository directly into your JupyterHub server.
+
+To close the remote connection, click on the box in the bottom-left corner of the IDE window and select "Close Remote Connection".
