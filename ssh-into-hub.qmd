@@ -185,9 +185,7 @@ Host openscapes.2i2c.cloud
 
 ### 4. Add public ssh key to your JupyterHub server
 
-You need to put ssh public keys in `~/.ssh/authorized_keys` after you start your JupyterHub server, and have the private keys available in your ssh client machine.
-
-When you are logged into your JupyterHub server via SSH or in a terminal in JupyterLab, `~` refers to your home directory on the JupyterHub server.
+Now that you have have _private_ SSH keys available in your local machine, and your configuration set up, you need to put SSH _public_ keys in `~/.ssh/authorized_keys` on your JupyterHub server. 
 
 The simplest way to do this is to rely on your [GitHub public keys](#gh-public-keys):
 
@@ -211,7 +209,7 @@ If you didn't add your public ssh key to your GitHub account, you can manually a
    echo "<YOUR-PUBLIC-SSH-KEY>" >> ~/.ssh/authorized_keys
    chmod 0600 ~/.ssh/authorized_keys
    ```
-   
+
    replacing `<YOUR-PUBLIC-SSH-KEY>` with the contents of your public ssh key (usually found in `~/.ssh/id_rsa.pub` or `~/.ssh/id_ed25519.pub` on your local machine).
 
 ## Connect to JupyterHub via SSH
@@ -254,4 +252,4 @@ You can also connect to your JupyterHub server via SSH from an IDE such as VSCod
 
 ![](img/ssh-connect-positron.png)
 
-5. A new IDE window will open, and you can open a folder or workspace on your JupyterHub server, and work there as if you were working locally.
+5. A new IDE window will open, and you can open a folder or workspace on your JupyterHub server, and work there as if you were working locally. In the explorer pane, you should see buttons giving you the option to "Open Folder" or "Clone Repository". You can use "Open Folder" to open an existing folder on the JupyterHub server, or "Clone Repository" to clone a git repository directly into your JupyterHub server.
