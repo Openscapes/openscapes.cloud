@@ -17,13 +17,13 @@ There are several steps that you need to do once only to set this up. Once you h
 
 ## Note: Git bash for Windows users
 
-If you are using Windows, it is recommended to use [Git for Windows](https://gitforwindows.org/) to get a bash terminal with ssh capabilities. If you use Git already, you probably have this installed already.
+If you are using Windows, it is recommended to use [Git for Windows](https://gitforwindows.org/) to get a bash terminal with ssh capabilities. If you use Git, you probably have this installed already. We recommend using Git Bash for the terminal-based setup steps below, as well as for connecting via SSH in the terminal later.
 
 :::
 
 ### 1: Install websocat on your computer
 
-Install [websocat](https://github.com/vi/websocat) on your local machine: Follow the instructions for your operating system on the [websocat GitHub page](https://github.com/vi/websocat?tab=readme-ov-file#installation).
+[`websocat`](https://github.com/vi/websocat) is a a tool that enables secure communication between your computer and the JupyterHub server. [Install `websocat`](https://github.com/vi/websocat?tab=readme-ov-file#installation) on your local machine.
 
 - For macOS, you can use Homebrew:
 
@@ -91,28 +91,29 @@ If installed correctly, you should see the version information.
 
 To securely connect to the JupyterHub server, you need to generate an SSH key pair (if you don't already have one) _on your local computer_.
 
-First, read [about SSH keys here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh)
+First, read [about SSH keys here](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh), then follow these steps:
 
 1. Check if you already have an SSH key pair: Follow the operating system-specific instructions on [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys).
 
-2. If you don't already have an SSH key, follow the operating system-specific instructions on GitHub to generate a [new SSH key pair](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+2. If you don't already have an SSH key, follow the operating system-specific instructions on GitHub to generate a [new SSH key pair](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent). If you already have an SSH key pair, you can skip this step.
 
 ::: {.callout-tip collapse="true"}
-## Windows users: Start the ssh-agent
+## Windows users: Starting the ssh-agent
 The instructions to use a Powershell command to start the ssh agent didn't work for me. I ran `eval $(ssh-agent -s)` in git bash instead and that worked.
 :::
 
 ::: {id="gh-public-keys"}
-1. (Optional but recommended) Add your public SSH key to your GitHub account by following the instructions on [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account). When prompted while adding your key to GitHub, set it as an *authentication key* (not commit signing).
+1. (Optional but recommended) Add your public SSH key to your GitHub account by following the instructions on [GitHub](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account). When prompted while adding your key to GitHub, set it as an *authentication key* (not "commit signing").
 :::
 
 ### 3. Set up your local SSH config file
 
 #### Create a JupyterHub Token
 
-We will need to create a JupyterHub token for authentication.
+We will need to create a JupyterHub token for authentication. 
+We will add this token to our SSH configuration, and it will be sent to the JupyterHub server to authenticate when we connect via SSH.
 
-1. Go to the JupyterHub control panel: [NASA](https://openscapes.2i2c.cloud/hub/home) or [NOAA](https://nmfs-openscapes.2i2c.cloud/hub/home).
+1. Go to the JupyterHub control panel: [NASA](https://openscapes.2i2c.cloud/hub/home) or [NOAA](https://nmfs-openscapes.2i2c.cloud/hub/home), or if you are in the JupyterHub already, click File -> Hub Control Panel.
 
 2. In the top bar, select **Token**.
 
@@ -120,9 +121,15 @@ We will need to create a JupyterHub token for authentication.
 
 #### Setup your local `~/.ssh/config` file
 
+::: {.callout-note collapse="true"}
+## A note about `~`
+
+`~` is a shortcut that refers to your user home directory. On Mac this will usually be `/Users/your-username/`, and on Linux it will usually be `/home/your-username/`. On Windows, this will usually be `C:/Users/your-username/`. The `~` as a shortcut works in most terminal applications, including Git Bash, WSL, and PowerShell on Windows. If you are using the Windows Command Prompt, you will need to use the full path or the environment variable `%USERPROFILE%` to refer to your home directory instead of `~`.
+:::
+
 We will set up our ssh config file to tell `ssh` how to connect to our JupyterHub. Add
-an entry that looks like this to the end of your `~/.ssh/config` file (create it if it
-does not exist).
+an entry that looks like this to the end of your `~/.ssh/config` file. 
+If the file does not exist, create it, then open it in a text editor.
 
 ```
 Host <YOUR-JUPYTERHUB-DOMAIN>
@@ -180,6 +187,8 @@ Host openscapes.2i2c.cloud
 ### 4. Add public ssh key to your JupyterHub server
 
 You need to put ssh public keys in `~/.ssh/authorized_keys` after you start your JupyterHub server, and have the private keys available in your ssh client machine.
+
+When you are logged into your JupyterHub server via SSH or in a terminal in JupyterLab, `~` refers to your home directory on the JupyterHub server.
 
 The simplest way to do this is to rely on your [GitHub public keys](#gh-public-keys):
 
