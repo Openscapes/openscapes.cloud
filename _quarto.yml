@@ -22,6 +22,7 @@ website:
         menu:
           - github-access.qmd
           - password-access.qmd
+          - ssh-into-hub.qmd
       - fledging.qmd
       - text: "JupyterHub Usage Reporting"
         href: usage-reporting.qmd
