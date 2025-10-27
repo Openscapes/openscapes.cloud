@@ -2,11 +2,10 @@
 title: "Remote login using SSH"
 ---
 
-It is possible to remotely log in to the NASA-Openscapes and NMFS-Openscapes JupyterHubs using SSH (Secure Shell). This allows you to access the JupyterHub server from your local machine, either in the terminal or from your IDE (such as VSCode or Positron).
+It is possible to remotely log in to the NASA-Openscapes and NMFS-Openscapes JupyterHubs using SSH (Secure Shell). This allows you to access the JupyterHub server from your local machine, either in the terminal or from your Interactive Development Environment (IDE). 
+This page is written primarily for workshop leads and researchers experimenting with cloud-based workflows who want to access the cloud environment and work using familiar tools. This can include your local terminal, [VSCode](https://code.visualstudio.com/), [Positron](https://positron.posit.co), or other IDE's that support remote development via SSH. It is also useful for hub administrators doing maintenance tasks.
 
-SSH is a secure protocol that allows you to connect to a remote server and run commands as if you were logged in directly. It uses a "key pair", with a private key stored on your local machine and a public key stored on the remote server, to authenticate the connection.
-
-This functionality is enabled with the use of [`jupyter-sshd-proxy`](https://github.com/yuvipanda/jupyter-sshd-proxy), which is pre-installed in the NASA-Openscapes default environment. Much of this documentation is adapted from the `jupyter-sshd-proxy` documentation.
+This functionality is enabled on our [2i2c](https://2i2c.org/)-managed JupyterHubs thanks to 2i2c's amazing infrastructure, and with the use of [`jupyter-sshd-proxy`](https://github.com/yuvipanda/jupyter-sshd-proxy), which is pre-installed in the [NASA-Openscapes default environment](https://hub.docker.com/r/openscapes/python/tags) ([source](https://github.com/nasa-openscapes/corn)). Much of this documentation is adapted from the `jupyter-sshd-proxy` documentation. If you want to SSH into a hub using a different image, see the `jupyter-sshd-proxy` [server pre-requisites](https://github.com/yuvipanda/jupyter-sshd-proxy?tab=readme-ov-file#server-pre-requisities).
 
 There are several steps that you need to do once only to set this up. Once you have completed the [setup](#setup), you can [connect](#connect-to-jupyterhub-via-ssh) whenever your JupyterHub server is running.
 
@@ -87,6 +86,8 @@ If installed correctly, you should see the version information.
 :::
 
 ### 2. Set up SSH keys on your local machine
+
+SSH is a secure protocol that allows you to connect to a remote server and run commands as if you were logged in directly. It uses a "key pair", with a private key stored on your local machine and a public key stored on the remote server, to authenticate the connection.
 
 To securely connect to the JupyterHub server, you need to generate an SSH key pair (if you don't already have one) _on your local computer_.
 
