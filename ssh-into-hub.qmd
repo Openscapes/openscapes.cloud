@@ -7,7 +7,7 @@ This page is written primarily for workshop leads and researchers experimenting 
 
 This functionality is enabled on our [2i2c](https://2i2c.org/)-managed JupyterHubs thanks to 2i2c's amazing infrastructure and support, with the use of [`jupyter-sshd-proxy`](https://github.com/yuvipanda/jupyter-sshd-proxy). Much of this documentation is adapted from the `jupyter-sshd-proxy` documentation. `jupyter-sshd-proxy` is pre-installed in the [NASA-Openscapes default environment](https://hub.docker.com/r/openscapes/python/tags) ([source](https://github.com/nasa-openscapes/corn)). If you want to SSH into a hub using a different image, see the [server pre-requisites](https://github.com/yuvipanda/jupyter-sshd-proxy?tab=readme-ov-file#server-pre-requisities) for instructions for installing on your image.
 
-There are several steps that you need to do once only to set this up. Once you have completed the [setup](#setup), you can [connect](#connect-to-jupyterhub-via-ssh) whenever your JupyterHub server is running.
+There are several steps that you need to do _once only_ to set this up. Once you have completed the [setup](#setup), you can [connect](#connect-to-jupyterhub-via-ssh) whenever your JupyterHub server is running.
 
 ## Setup
 
