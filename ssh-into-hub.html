@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Remote login using SSH – Openscapes JupyterHubs</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./images/openscapes_hex.png" rel="icon" type="image/png">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-a9bbf5534de4e5effaa5856894474c06.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="./index.html" class="navbar-brand navbar-brand-logo">
+    </a>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Openscapes JupyterHubs</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-policies" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Policies</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-policies">    
+        <li>
+    <a class="dropdown-item" href="./access-policies.html">
+ <span class="dropdown-text">Access Policies</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./data-storage.html">
+ <span class="dropdown-text">Data Storage Policies</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-access-instructions" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Access Instructions</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-access-instructions">    
+        <li>
+    <a class="dropdown-item" href="./github-access.html">
+ <span class="dropdown-text">GitHub-based Access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./password-access.html">
+ <span class="dropdown-text">Password-based Access</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./ssh-into-hub.html">
+ <span class="dropdown-text">Remote login using SSH</span></a>
+  </li>  
+    </ul>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="./fledging.html"> 
+<span class="menu-text">Fledging</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./usage-reporting.html"> 
+<span class="menu-text">JupyterHub Usage Reporting</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#setup" id="toc-setup" class="nav-link active" data-scroll-target="#setup">Setup</a>
+  <ul class="collapse">
+  <li><a href="#install-websocat-on-your-computer" id="toc-install-websocat-on-your-computer" class="nav-link" data-scroll-target="#install-websocat-on-your-computer">1: Install websocat on your computer</a></li>
+  <li><a href="#set-up-ssh-keys-on-your-local-machine" id="toc-set-up-ssh-keys-on-your-local-machine" class="nav-link" data-scroll-target="#set-up-ssh-keys-on-your-local-machine">2. Set up SSH keys on your local machine</a></li>
+  <li><a href="#set-up-your-local-ssh-config-file" id="toc-set-up-your-local-ssh-config-file" class="nav-link" data-scroll-target="#set-up-your-local-ssh-config-file">3. Set up your local SSH config file</a></li>
+  <li><a href="#add-public-ssh-key-to-your-jupyterhub-server" id="toc-add-public-ssh-key-to-your-jupyterhub-server" class="nav-link" data-scroll-target="#add-public-ssh-key-to-your-jupyterhub-server">4. Add public ssh key to your JupyterHub server</a></li>
+  </ul></li>
+  <li><a href="#connect-to-jupyterhub-via-ssh" id="toc-connect-to-jupyterhub-via-ssh" class="nav-link" data-scroll-target="#connect-to-jupyterhub-via-ssh">Connect to JupyterHub via SSH</a>
+  <ul class="collapse">
+  <li><a href="#connecting-in-the-terminal" id="toc-connecting-in-the-terminal" class="nav-link" data-scroll-target="#connecting-in-the-terminal">Connecting in the terminal</a></li>
+  <li><a href="#connecting-from-vscode-positron-etc." id="toc-connecting-from-vscode-positron-etc." class="nav-link" data-scroll-target="#connecting-from-vscode-positron-etc.">Connecting from VSCode, Positron, etc.</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/ssh-into-hub.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/ssh-into-hub.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Remote login using SSH</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>It is possible to remotely log in to the NASA-Openscapes and NMFS-Openscapes JupyterHubs using SSH (Secure Shell). This allows you to access the JupyterHub server from your local machine, either in the terminal or from your Interactive Development Environment (IDE). This page is written primarily for workshop leads and researchers experimenting with cloud-based workflows who want to access the cloud environment and work using familiar tools. This can include your local terminal, <a href="https://code.visualstudio.com/">VSCode</a>, <a href="https://positron.posit.co">Positron</a>, or other IDE’s that support remote development via SSH. It is also useful for hub administrators doing maintenance tasks.</p>
+<p>This functionality is enabled on our <a href="https://2i2c.org/">2i2c</a>-managed JupyterHubs thanks to 2i2c’s amazing infrastructure and support, with the use of <a href="https://github.com/yuvipanda/jupyter-sshd-proxy"><code>jupyter-sshd-proxy</code></a>. Much of this documentation is adapted from the <code>jupyter-sshd-proxy</code> documentation. <code>jupyter-sshd-proxy</code> is pre-installed in the <a href="https://hub.docker.com/r/openscapes/python/tags">NASA-Openscapes default environment</a> (<a href="https://github.com/nasa-openscapes/corn">source</a>). If you want to SSH into a hub using a different image, see the <a href="https://github.com/yuvipanda/jupyter-sshd-proxy?tab=readme-ov-file#server-pre-requisities">server pre-requisites</a> for instructions for installing on your image.</p>
+<p>There are several steps that you need to do <em>once only</em> to set this up. Once you have completed the <a href="#setup">setup</a>, you can <a href="#connect-to-jupyterhub-via-ssh">connect</a> whenever your JupyterHub server is running.</p>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Note: Git bash for Windows users
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>If you are using Windows, it is recommended to use <a href="https://gitforwindows.org/">Git for Windows</a> to get a bash terminal with ssh capabilities. If you use Git, you probably have this installed already. We recommend using Git Bash for the terminal-based setup steps below, as well as for connecting via SSH in the terminal later.</p>
+</div>
+</div>
+</div>
+<section id="install-websocat-on-your-computer" class="level3">
+<h3 class="anchored" data-anchor-id="install-websocat-on-your-computer">1: Install websocat on your computer</h3>
+<p><a href="https://github.com/vi/websocat"><code>websocat</code></a> is a a tool that enables secure communication between your computer and the JupyterHub server. <a href="https://github.com/vi/websocat?tab=readme-ov-file#installation">Install <code>websocat</code></a> on your local machine.</p>
+<ul>
+<li><p>For macOS, you can use Homebrew:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">brew</span> install websocat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>For Windows and most Linux distributions, you can download the latest precompiled binary from the <a href="https://github.com/vi/websocat/releases">releases page</a>.</p></li>
+</ul>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Installing websocat on Windows
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<section id="download-websocat" class="level4">
+<h4 class="anchored" data-anchor-id="download-websocat">1. Download websocat</h4>
+<ol type="1">
+<li>Go to the <a href="https://github.com/vi/websocat">websocat</a> releases page: <a href="https://github.com/vi/websocat/releases" class="uri">https://github.com/vi/websocat/releases</a></li>
+<li>Download the latest Windows binary - look for a file named something like <code>websocat_win64.exe</code> or <code>websocat.x86_64-pc-windows-gnu.exe</code></li>
+<li>Create a directory for the executable (e.g., <code>C:/Program Files/websocat/</code> or <code>C:/Users/YourUsername/AppData/Roaming/websocat/</code>)</li>
+<li>Move the downloaded <code>.exe</code> file to this directory</li>
+<li>Rename the file to <code>websocat.exe</code></li>
+</ol>
+</section>
+<section id="add-to-path-optional-but-recommended" class="level4">
+<h4 class="anchored" data-anchor-id="add-to-path-optional-but-recommended">2. Add to PATH (optional but recommended)</h4>
+<p>To make websocat accessible from any command prompt or PowerShell window:</p>
+<p><strong>Option A: Using Windows Settings (Windows 10/11)</strong> This is different depending on your version of Windows, but generally: 1. Open the Start Menu and search for “Environment Variables” 2. Select “Edit the system environment variables” 3. In the System Properties window, click on the “Environment Variables…” button 4. In the “System variables” or “User variables” section (depending on your permissions), find and select the <code>Path</code> variable, 5. Click “Edit…” 6. Click “New” and add the path to the directory where you placed <code>websocat.exe</code> (e.g., <code>C:\Path\To\Websocat\</code>) 7. Click “OK” to close all dialog boxes</p>
+<p><strong>Option B: Using CMD prompt</strong></p>
+<ol type="1">
+<li>Open a Command Prompt</li>
+<li>Run the following command, replacing <code>C:\Path\To\Websocat\</code> with the actual path where you placed <code>websocat.exe</code>:</li>
+</ol>
+<pre><code>setx PATH "%PATH%;C:\Path\To\Websocat\"</code></pre>
+<ol start="3" type="1">
+<li>Verify Installation</li>
+</ol>
+<p>Open a new command prompt or PowerShell window and run:</p>
+<pre class="shell"><code>websocat --version</code></pre>
+<p>If you weren’t able to add websocat to your PATH, you can still use it by providing the full path to the <code>websocat.exe</code>. For example:</p>
+<pre class="shell"><code>C:/Users/YourUsername/AppData/Roaming/websocat/websocat --version</code></pre>
+<p>If installed correctly, you should see the version information.</p>
+<p><em>Note: You must open a new terminal window after modifying the PATH for the changes to take effect.</em></p>
+</section>
+</div>
+</div>
+</div>
+</section>
+<section id="set-up-ssh-keys-on-your-local-machine" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-ssh-keys-on-your-local-machine">2. Set up SSH keys on your local machine</h3>
+<p>SSH is a secure protocol that allows you to connect to a remote server and run commands as if you were logged in directly. It uses a “key pair”, with a private key stored on your local machine and a public key stored on the remote server, to authenticate the connection.</p>
+<p>To securely connect to the JupyterHub server, you need to generate an SSH key pair (if you don’t already have one) <em>on your local computer</em>.</p>
+<p>First, read <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/about-ssh">about SSH keys here</a>, then follow these steps:</p>
+<ol type="1">
+<li><p>Check if you already have an SSH key pair: Follow the operating system-specific instructions on <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/checking-for-existing-ssh-keys">GitHub</a>.</p></li>
+<li><p>If you don’t already have an SSH key, follow the operating system-specific instructions on GitHub to generate a <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent">new SSH key pair</a>. If you already have an SSH key pair, you can skip this step.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Windows users: Starting the ssh-agent
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The instructions to use a Powershell command to start the ssh agent didn’t work for me. I ran <code>eval $(ssh-agent -s)</code> in git bash instead and that worked.</p>
+</div>
+</div>
+</div>
+<div id="gh-public-keys">
+<ol type="1">
+<li>(Optional but recommended) Add your public SSH key to your GitHub account by following the instructions on <a href="https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account">GitHub</a>. When prompted while adding your key to GitHub, set it as an <em>authentication key</em> (not “commit signing”).</li>
+</ol>
+</div>
+</section>
+<section id="set-up-your-local-ssh-config-file" class="level3">
+<h3 class="anchored" data-anchor-id="set-up-your-local-ssh-config-file">3. Set up your local SSH config file</h3>
+<section id="create-a-jupyterhub-token" class="level4">
+<h4 class="anchored" data-anchor-id="create-a-jupyterhub-token">Create a JupyterHub Token</h4>
+<p>We will need to create a JupyterHub token for authentication. We will add this token to our SSH configuration, and it will be sent to the JupyterHub server to authenticate when we connect via SSH.</p>
+<ol type="1">
+<li><p>Go to the JupyterHub control panel: <a href="https://openscapes.2i2c.cloud/hub/home">NASA</a> or <a href="https://nmfs-openscapes.2i2c.cloud/hub/home">NOAA</a>, or if you are in the JupyterHub already, click File -&gt; Hub Control Panel.</p></li>
+<li><p>In the top bar, select <strong>Token</strong>.</p></li>
+<li><p>Create a new Token, and keep it safe. <strong>Treat this like you would treat a password to your JupyterHub instance</strong>! It is recommended you set an expiry date for this.</p></li>
+</ol>
+</section>
+<section id="setup-your-local-.sshconfig-file" class="level4">
+<h4 class="anchored" data-anchor-id="setup-your-local-.sshconfig-file">Setup your local <code>~/.ssh/config</code> file</h4>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-4-contents" aria-controls="callout-4" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>A note about <code>~</code>
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-4" class="callout-4-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>~</code> is a shortcut that refers to your user home directory. On Mac this will usually be <code>/Users/your-username/</code>, and on Linux it will usually be <code>/home/your-username/</code>. On Windows, this will usually be <code>C:/Users/your-username/</code>. The <code>~</code> as a shortcut works in most terminal applications, including Git Bash, WSL, and PowerShell on Windows. If you are using the Windows Command Prompt, you will need to use the full path or the environment variable <code>%USERPROFILE%</code> to refer to your home directory instead of <code>~</code>.</p>
+</div>
+</div>
+</div>
+<p>We will set up our ssh config file to tell <code>ssh</code> how to connect to our JupyterHub. Add an entry that looks like this to the end of your <code>~/.ssh/config</code> file. If the file does not exist, create it, then open it in a text editor.</p>
+<pre><code>Host &lt;YOUR-JUPYTERHUB-DOMAIN&gt;
+    User jovyan
+    ProxyCommand websocat --binary -H="Authorization: token &lt;YOUR-JUPYTERHUB-TOKEN&gt;" asyncstdio: wss://%h/user/&lt;YOUR-JUPYTERHUB-USERNAME&gt;/sshd/</code></pre>
+<p>On Windows, the <code>asyncstdio:</code> argument will not work. You can simply omit it and use:</p>
+<p><code>Host &lt;YOUR-JUPYTERHUB-DOMAIN&gt;     User jovyan     ProxyCommand websocat --binary -H="Authorization: token &lt;YOUR-JUPYTERHUB-TOKEN&gt;" wss://%h/user/&lt;YOUR-JUPYTERHUB-USERNAME&gt;/sshd/</code></p>
+<p>replace:</p>
+<ul>
+<li><code>&lt;YOUR-JUPYTERHUB-DOMAIN&gt;</code> with your hub domain (NASA: <code>openscapes.2i2c.cloud</code>, NMFS: <code>nmfs-openscapes.2i2c.cloud</code>))</li>
+<li><code>&lt;YOUR-JUPYTERHUB-TOKEN&gt;</code> with the token you generated earlier</li>
+<li><code>&lt;YOUR-JUPYTERHUB-USERNAME&gt;</code> with your jupyterhub username that you log in to the hub with (usually your github username)</li>
+</ul>
+<p>Here’s an example:</p>
+<pre><code>Host openscapes.2i2c.cloud
+    User jovyan
+    ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" asyncstdio: wss://%h/user/ateucher/sshd/</code></pre>
+<p>On Windows, it would look like this:</p>
+<pre><code>Host openscapes.2i2c.cloud
+    User jovyan
+    ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/</code></pre>
+<p><em>Note that if you are connecting to your JupyterHub in a VSCode fork such as VSCodium, Cursor, or Positron, or any other IDE that uses the <a href="https://github.com/jeanp413/open-remote-ssh">open-remote-ssh</a> extension, you need to make sure the value of the -H argument (<code>"Authorization: token xxxx"</code>) is enclosed in double quotes and not single quotes, or the connection will fail.</em></p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>If you were not able to add <code>websocat</code> to your PATH…
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-5" class="callout-5-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>You will need to provide the full path to the <code>websocat</code> executable in the <code>ProxyCommand</code> line above (e.g., <code>C:/path/to/websocat</code> instead of just <code>websocat</code>).</p>
+<p>For example, if you placed <code>websocat.exe</code> in <code>C:/Users/andy/AppData/Roaming/websocat/</code>, your <code>~/.ssh/config</code> entry would look like this:</p>
+<pre><code>Host openscapes.2i2c.cloud
+    User jovyan
+    ProxyCommand C:/Users/andy/AppData/Roaming/websocat/websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/</code></pre>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="add-public-ssh-key-to-your-jupyterhub-server" class="level3">
+<h3 class="anchored" data-anchor-id="add-public-ssh-key-to-your-jupyterhub-server">4. Add public ssh key to your JupyterHub server</h3>
+<p>Now that you have have <em>private</em> SSH keys available in your local machine, and your configuration set up, you need to put SSH <em>public</em> keys in <code>~/.ssh/authorized_keys</code> on your JupyterHub server.</p>
+<p>The simplest way to do this is to rely on your <a href="#gh-public-keys">GitHub public keys</a>:</p>
+<ol type="1">
+<li><p>After you start your JupyterHub server, open a terminal in JupyterLab</p></li>
+<li><p>Run the following commands in the JupyterLab terminal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.ssh</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/<span class="op">&lt;</span>YOUR-GITHUB-USERNAME<span class="op">&gt;</span>.keys <span class="at">-O</span> ~/.ssh/authorized_keys</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 ~/.ssh/authorized_keys</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>replacing <code>&lt;YOUR-GITHUB-USERNAME&gt;</code> with your github username.</p></li>
+</ol>
+<p>If you didn’t add your public ssh key to your GitHub account, you can manually add it to the <code>authorized_keys</code> file instead: 1. After you start your JupyterHub server, open a terminal in JupyterLab 2. Run the following commands in the JupyterLab terminal:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.ssh</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"&lt;YOUR-PUBLIC-SSH-KEY&gt;"</span> <span class="op">&gt;&gt;</span> ~/.ssh/authorized_keys</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 ~/.ssh/authorized_keys</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>replacing <code>&lt;YOUR-PUBLIC-SSH-KEY&gt;</code> with the contents of your public ssh key (usually found in <code>~/.ssh/id_rsa.pub</code> or <code>~/.ssh/id_ed25519.pub</code> on your local machine).</p>
+</section>
+</section>
+<section id="connect-to-jupyterhub-via-ssh" class="level2">
+<h2 class="anchored" data-anchor-id="connect-to-jupyterhub-via-ssh">Connect to JupyterHub via SSH</h2>
+<p>Having completed the above <a href="#setup">setup</a> steps once, you should be able to connect to your JupyterHub server via SSH from your local machine.</p>
+<section id="connecting-in-the-terminal" class="level3">
+<h3 class="anchored" data-anchor-id="connecting-in-the-terminal">Connecting in the terminal</h3>
+<p>The simplest way is to make sure your JupyterHub server is running, open a terminal and then run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> openscapes.2i2c.cloud</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>for NASA-Openscapes, or:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> nmfs-openscapes.2i2c.cloud</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>for NMFS-Openscapes.</p>
+<p>If everything is set up correctly, you should be logged into your JupyterHub server via SSH, and you will have a new prompt in your terminal that looks something like this:</p>
+<pre><code>(notebook) $</code></pre>
+<p>If you type <code>whoami</code>, you should see <code>jovyan</code> printed to the terminal.</p>
+<p>In that terminal, you can now run commands as if you were in a terminal inside JupyterLab.</p>
+<p>To exit the SSH session, simply type <code>exit</code> and press Enter.</p>
+</section>
+<section id="connecting-from-vscode-positron-etc." class="level3">
+<h3 class="anchored" data-anchor-id="connecting-from-vscode-positron-etc.">Connecting from VSCode, Positron, etc.</h3>
+<p>You can also connect to your JupyterHub server via SSH from an IDE such as VSCode or Positron.</p>
+<ol type="1">
+<li>Make sure your JupyterHub server is running.</li>
+<li>Open your IDE.</li>
+<li>Open the command palette (e.g., <code>Ctrl+Shift+P</code> in VSCode).</li>
+<li>Search for and select <code>Remote-SSH: Connect to Host...</code></li>
+<li>Type or select the name of the host you set up in your <code>~/.ssh/config</code> file (e.g., <code>openscapes.2i2c.cloud</code> or <code>nmfs-openscapes.2i2c.cloud</code>) and press Enter.</li>
+</ol>
+<p><img src="img/ssh-connect-positron.png" class="img-fluid"></p>
+<ol start="5" type="1">
+<li>A new IDE window will open, and you can open a folder or workspace on your JupyterHub server, and work there as if you were working locally. In the explorer pane, you should see buttons giving you the option to “Open Folder” or “Clone Repository”. You can use “Open Folder” to open an existing folder on the JupyterHub server, or “Clone Repository” to clone a git repository directly into your JupyterHub server.</li>
+</ol>
+<p>To close the remote connection, click on the box in the bottom-left corner of the IDE window and select “Close Remote Connection”.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/openscapes\.cloud\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>© CC-By Openscapes, 2024</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/Openscapes/openscapes.cloud/edit/main/ssh-into-hub.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/blob/main/ssh-into-hub.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/Openscapes/openscapes.cloud/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p>This page is built with ❤️ and <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
