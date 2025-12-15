@@ -360,7 +360,10 @@ develop policies and recommendations for Hub compute usage.
 # `Metrics <- list("UnblendedCost", "UsageQuantity")`
 # and pass it to ce_to_df() once, rather than joining
 ec2_instance_type_costs_usage_res <- cost_explorer$get_cost_and_usage(
-  TimePeriod = list(Start = start_date, End = end_date),
+  TimePeriod = list(
+    Start = format(start_date, "%Y-%m-%d"),
+    End = format(end_date, "%Y-%m-%d")
+  ),
   Granularity = "DAILY",
   Filter = list(
     Dimensions = list(
