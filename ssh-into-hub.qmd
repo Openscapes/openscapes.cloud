@@ -135,6 +135,7 @@ If the file does not exist, create it, then open it in a text editor.
 Host <YOUR-JUPYTERHUB-DOMAIN>
     User jovyan
     ProxyCommand websocat --binary -H="Authorization: token <YOUR-JUPYTERHUB-TOKEN>" asyncstdio: wss://%h/user/<YOUR-JUPYTERHUB-USERNAME>/sshd/
+    IdentitiesOnly yes # Don't use password auth
 ```
 
 On Windows, the `asyncstdio:` argument will not work. You can simply omit it and use:
@@ -142,6 +143,7 @@ On Windows, the `asyncstdio:` argument will not work. You can simply omit it and
 ```Host <YOUR-JUPYTERHUB-DOMAIN>
     User jovyan
     ProxyCommand websocat --binary -H="Authorization: token <YOUR-JUPYTERHUB-TOKEN>" wss://%h/user/<YOUR-JUPYTERHUB-USERNAME>/sshd/
+    IdentitiesOnly yes
 ```
 
 replace:
@@ -156,6 +158,7 @@ Here's an example:
 Host openscapes.2i2c.cloud
     User jovyan
     ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" asyncstdio: wss://%h/user/ateucher/sshd/
+    IdentitiesOnly yes
 ```
 
 On Windows, it would look like this:
@@ -164,6 +167,7 @@ On Windows, it would look like this:
 Host openscapes.2i2c.cloud
     User jovyan
     ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/
+    IdentitiesOnly yes
 ```
 
 *Note that if you are connecting to your JupyterHub in a VSCode fork such as VSCodium, Cursor, or Positron, or any other IDE that uses the [open-remote-ssh](https://github.com/jeanp413/open-remote-ssh) extension, you need to make sure the value of the -H argument (`"Authorization: token xxxx"`) is enclosed in double quotes and not single quotes, or the connection will fail.*
