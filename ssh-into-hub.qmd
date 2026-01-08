@@ -151,7 +151,9 @@ Host <YOUR-JUPYTERHUB-DOMAIN>
 
 replace:
 
- - `<YOUR-JUPYTERHUB-DOMAIN>` with your hub domain (NASA: `openscapes.2i2c.cloud`, NMFS: `nmfs-openscapes.2i2c.cloud`))
+ - `<YOUR-JUPYTERHUB-DOMAIN>` with your hub domain
+    - NASA: `openscapes.2i2c.cloud`, 
+    - NMFS: `nmfs-openscapes.2i2c.cloud`
  - `<YOUR-JUPYTERHUB-TOKEN>` with the token you generated earlier
  - `<YOUR-JUPYTERHUB-USERNAME>` with your jupyterhub username that you log in to the hub with (usually your github username)
 
