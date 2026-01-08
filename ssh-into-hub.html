@@ -279,20 +279,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="add-to-path-optional-but-recommended" class="level4">
 <h4 class="anchored" data-anchor-id="add-to-path-optional-but-recommended">2. Add to PATH (optional but recommended)</h4>
 <p>To make websocat accessible from any command prompt or PowerShell window:</p>
-<p><strong>Option A: Using Windows Settings (Windows 10/11)</strong> This is different depending on your version of Windows, but generally: 1. Open the Start Menu and search for “Environment Variables” 2. Select “Edit the system environment variables” 3. In the System Properties window, click on the “Environment Variables…” button 4. In the “System variables” or “User variables” section (depending on your permissions), find and select the <code>Path</code> variable, 5. Click “Edit…” 6. Click “New” and add the path to the directory where you placed <code>websocat.exe</code> (e.g., <code>C:\Path\To\Websocat\</code>) 7. Click “OK” to close all dialog boxes</p>
+<p><strong>Option A: Using Windows Settings (Windows 10/11)</strong></p>
+<p>This is different depending on your version of Windows, but generally:</p>
+<ol type="1">
+<li>Open the Start Menu and search for “Environment Variables”</li>
+<li>Select “Edit the system environment variables”</li>
+<li>In the System Properties window, click on the “Environment Variables…” button</li>
+<li>In the “System variables” or “User variables” section (depending on your permissions), find and select the <code>Path</code> variable,</li>
+<li>Click “Edit…”</li>
+<li>Click “New” and add the path to the directory where you placed <code>websocat.exe</code> (e.g., <code>C:\Path\To\Websocat\</code>)</li>
+<li>Click “OK” to close all dialog boxes</li>
+</ol>
 <p><strong>Option B: Using CMD prompt</strong></p>
 <ol type="1">
 <li>Open a Command Prompt</li>
 <li>Run the following command, replacing <code>C:\Path\To\Websocat\</code> with the actual path where you placed <code>websocat.exe</code>:</li>
 </ol>
-<pre><code>setx PATH "%PATH%;C:\Path\To\Websocat\"</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>setx PATH "%PATH%;C:\Path\To\Websocat\"</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol start="3" type="1">
 <li>Verify Installation</li>
 </ol>
 <p>Open a new command prompt or PowerShell window and run:</p>
-<pre class="shell"><code>websocat --version</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>websocat --version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you weren’t able to add websocat to your PATH, you can still use it by providing the full path to the <code>websocat.exe</code>. For example:</p>
-<pre class="shell"><code>C:/Users/YourUsername/AppData/Roaming/websocat/websocat --version</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>C:/Users/YourUsername/AppData/Roaming/websocat/websocat --version</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If installed correctly, you should see the version information.</p>
 <p><em>Note: You must open a new terminal window after modifying the PATH for the changes to take effect.</em></p>
 </section>
@@ -361,25 +371,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>We will set up our ssh config file to tell <code>ssh</code> how to connect to our JupyterHub. Add an entry that looks like this to the end of your <code>~/.ssh/config</code> file. If the file does not exist, create it, then open it in a text editor.</p>
-<pre><code>Host &lt;YOUR-JUPYTERHUB-DOMAIN&gt;
-    User jovyan
-    ProxyCommand websocat --binary -H="Authorization: token &lt;YOUR-JUPYTERHUB-TOKEN&gt;" asyncstdio: wss://%h/user/&lt;YOUR-JUPYTERHUB-USERNAME&gt;/sshd/</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Host &lt;YOUR-JUPYTERHUB-DOMAIN&gt;</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    User jovyan</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    ProxyCommand websocat --binary -H="Authorization: token &lt;YOUR-JUPYTERHUB-TOKEN&gt;" asyncstdio: wss://%h/user/&lt;YOUR-JUPYTERHUB-USERNAME&gt;/sshd/</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    IdentitiesOnly yes # Don't use password auth</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>On Windows, the <code>asyncstdio:</code> argument will not work. You can simply omit it and use:</p>
-<p><code>Host &lt;YOUR-JUPYTERHUB-DOMAIN&gt;     User jovyan     ProxyCommand websocat --binary -H="Authorization: token &lt;YOUR-JUPYTERHUB-TOKEN&gt;" wss://%h/user/&lt;YOUR-JUPYTERHUB-USERNAME&gt;/sshd/</code></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>Host &lt;YOUR-JUPYTERHUB-DOMAIN&gt;</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    User jovyan</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    ProxyCommand websocat --binary -H="Authorization: token &lt;YOUR-JUPYTERHUB-TOKEN&gt;" wss://%h/user/&lt;YOUR-JUPYTERHUB-USERNAME&gt;/sshd/</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    IdentitiesOnly yes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>replace:</p>
 <ul>
-<li><code>&lt;YOUR-JUPYTERHUB-DOMAIN&gt;</code> with your hub domain (NASA: <code>openscapes.2i2c.cloud</code>, NMFS: <code>nmfs-openscapes.2i2c.cloud</code>))</li>
+<li><code>&lt;YOUR-JUPYTERHUB-DOMAIN&gt;</code> with your hub domain
+<ul>
+<li>NASA: <code>openscapes.2i2c.cloud</code>,</li>
+<li>NMFS: <code>nmfs-openscapes.2i2c.cloud</code></li>
+</ul></li>
 <li><code>&lt;YOUR-JUPYTERHUB-TOKEN&gt;</code> with the token you generated earlier</li>
 <li><code>&lt;YOUR-JUPYTERHUB-USERNAME&gt;</code> with your jupyterhub username that you log in to the hub with (usually your github username)</li>
 </ul>
 <p>Here’s an example:</p>
-<pre><code>Host openscapes.2i2c.cloud
-    User jovyan
-    ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" asyncstdio: wss://%h/user/ateucher/sshd/</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Host openscapes.2i2c.cloud</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    User jovyan</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" asyncstdio: wss://%h/user/ateucher/sshd/</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    IdentitiesOnly yes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>On Windows, it would look like this:</p>
-<pre><code>Host openscapes.2i2c.cloud
-    User jovyan
-    ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>Host openscapes.2i2c.cloud</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    User jovyan</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    IdentitiesOnly yes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><em>Note that if you are connecting to your JupyterHub in a VSCode fork such as VSCodium, Cursor, or Positron, or any other IDE that uses the <a href="https://github.com/jeanp413/open-remote-ssh">open-remote-ssh</a> extension, you need to make sure the value of the -H argument (<code>"Authorization: token xxxx"</code>) is enclosed in double quotes and not single quotes, or the connection will fail.</em></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-5-contents" aria-controls="callout-5" aria-expanded="false" aria-label="Toggle callout">
@@ -395,9 +415,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="callout-body-container callout-body">
 <p>You will need to provide the full path to the <code>websocat</code> executable in the <code>ProxyCommand</code> line above (e.g., <code>C:/path/to/websocat</code> instead of just <code>websocat</code>).</p>
 <p>For example, if you placed <code>websocat.exe</code> in <code>C:/Users/andy/AppData/Roaming/websocat/</code>, your <code>~/.ssh/config</code> entry would look like this:</p>
-<pre><code>Host openscapes.2i2c.cloud
-    User jovyan
-    ProxyCommand C:/Users/andy/AppData/Roaming/websocat/websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>Host openscapes.2i2c.cloud</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    User jovyan</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    ProxyCommand C:/Users/andy/AppData/Roaming/websocat/websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    IdentitiesOnly yes</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
 </div>
@@ -410,15 +431,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ol type="1">
 <li><p>After you start your JupyterHub server, open a terminal in JupyterLab</p></li>
 <li><p>Run the following commands in the JupyterLab terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.ssh</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/<span class="op">&lt;</span>YOUR-GITHUB-USERNAME<span class="op">&gt;</span>.keys <span class="at">-O</span> ~/.ssh/authorized_keys</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 ~/.ssh/authorized_keys</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.ssh</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/<span class="op">&lt;</span>YOUR-GITHUB-USERNAME<span class="op">&gt;</span>.keys <span class="at">-O</span> ~/.ssh/authorized_keys</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 ~/.ssh/authorized_keys</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>replacing <code>&lt;YOUR-GITHUB-USERNAME&gt;</code> with your github username.</p></li>
 </ol>
 <p>If you didn’t add your public ssh key to your GitHub account, you can manually add it to the <code>authorized_keys</code> file instead: 1. After you start your JupyterHub server, open a terminal in JupyterLab 2. Run the following commands in the JupyterLab terminal:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.ssh</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"&lt;YOUR-PUBLIC-SSH-KEY&gt;"</span> <span class="op">&gt;&gt;</span> ~/.ssh/authorized_keys</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 ~/.ssh/authorized_keys</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/.ssh</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"&lt;YOUR-PUBLIC-SSH-KEY&gt;"</span> <span class="op">&gt;&gt;</span> ~/.ssh/authorized_keys</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">chmod</span> 0600 ~/.ssh/authorized_keys</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>replacing <code>&lt;YOUR-PUBLIC-SSH-KEY&gt;</code> with the contents of your public ssh key (usually found in <code>~/.ssh/id_rsa.pub</code> or <code>~/.ssh/id_ed25519.pub</code> on your local machine).</p>
 </section>
 </section>
@@ -428,12 +449,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="connecting-in-the-terminal" class="level3">
 <h3 class="anchored" data-anchor-id="connecting-in-the-terminal">Connecting in the terminal</h3>
 <p>The simplest way is to make sure your JupyterHub server is running, open a terminal and then run:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> openscapes.2i2c.cloud</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> openscapes.2i2c.cloud</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>for NASA-Openscapes, or:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> nmfs-openscapes.2i2c.cloud</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ssh</span> nmfs-openscapes.2i2c.cloud</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>for NMFS-Openscapes.</p>
 <p>If everything is set up correctly, you should be logged into your JupyterHub server via SSH, and you will have a new prompt in your terminal that looks something like this:</p>
-<pre><code>(notebook) $</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14"><pre class="sourceCode default code-with-copy"><code class="sourceCode default"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>(notebook) $</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If you type <code>whoami</code>, you should see <code>jovyan</code> printed to the terminal.</p>
 <p>In that terminal, you can now run commands as if you were in a terminal inside JupyterLab.</p>
 <p>To exit the SSH session, simply type <code>exit</code> and press Enter.</p>
@@ -449,7 +470,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Type or select the name of the host you set up in your <code>~/.ssh/config</code> file (e.g., <code>openscapes.2i2c.cloud</code> or <code>nmfs-openscapes.2i2c.cloud</code>) and press Enter.</li>
 </ol>
 <p><img src="img/ssh-connect-positron.png" class="img-fluid"></p>
-<ol start="5" type="1">
+<ol start="6" type="1">
 <li>A new IDE window will open, and you can open a folder or workspace on your JupyterHub server, and work there as if you were working locally. In the explorer pane, you should see buttons giving you the option to “Open Folder” or “Clone Repository”. You can use “Open Folder” to open an existing folder on the JupyterHub server, or “Clone Repository” to clone a git repository directly into your JupyterHub server.</li>
 </ol>
 <p>To close the remote connection, click on the box in the bottom-left corner of the IDE window and select “Close Remote Connection”.</p>
