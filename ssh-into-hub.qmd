@@ -49,7 +49,9 @@ If you are using Windows, it is recommended to use [Git for Windows](https://git
 To make websocat accessible from any command prompt or PowerShell window:
 
 **Option A: Using Windows Settings (Windows 10/11)**
+
 This is different depending on your version of Windows, but generally:
+
 1. Open the Start Menu and search for "Environment Variables"
 2. Select "Edit the system environment variables"
 3. In the System Properties window, click on the "Environment Variables..." button
@@ -63,20 +65,20 @@ This is different depending on your version of Windows, but generally:
 1. Open a Command Prompt
 2. Run the following command, replacing `C:\Path\To\Websocat\` with the actual path where you placed `websocat.exe`:
 
-```
+```default
 setx PATH "%PATH%;C:\Path\To\Websocat\"
 ```
 3. Verify Installation
 
 Open a new command prompt or PowerShell window and run:
 
-```shell
+```default
 websocat --version
 ```
 
 If you weren't able to add websocat to your PATH, you can still use it by providing the full path to the `websocat.exe`. For example:
 
-```shell
+```default
 C:/Users/YourUsername/AppData/Roaming/websocat/websocat --version
 ```
 
@@ -131,39 +133,46 @@ We will set up our ssh config file to tell `ssh` how to connect to our JupyterHu
 an entry that looks like this to the end of your `~/.ssh/config` file. 
 If the file does not exist, create it, then open it in a text editor.
 
-```
+```default
 Host <YOUR-JUPYTERHUB-DOMAIN>
     User jovyan
     ProxyCommand websocat --binary -H="Authorization: token <YOUR-JUPYTERHUB-TOKEN>" asyncstdio: wss://%h/user/<YOUR-JUPYTERHUB-USERNAME>/sshd/
+    IdentitiesOnly yes # Don't use password auth
 ```
 
 On Windows, the `asyncstdio:` argument will not work. You can simply omit it and use:
 
-```Host <YOUR-JUPYTERHUB-DOMAIN>
+```default
+Host <YOUR-JUPYTERHUB-DOMAIN>
     User jovyan
     ProxyCommand websocat --binary -H="Authorization: token <YOUR-JUPYTERHUB-TOKEN>" wss://%h/user/<YOUR-JUPYTERHUB-USERNAME>/sshd/
+    IdentitiesOnly yes
 ```
 
 replace:
 
- - `<YOUR-JUPYTERHUB-DOMAIN>` with your hub domain (NASA: `openscapes.2i2c.cloud`, NMFS: `nmfs-openscapes.2i2c.cloud`))
+ - `<YOUR-JUPYTERHUB-DOMAIN>` with your hub domain
+    - NASA: `openscapes.2i2c.cloud`, 
+    - NMFS: `nmfs-openscapes.2i2c.cloud`
  - `<YOUR-JUPYTERHUB-TOKEN>` with the token you generated earlier
  - `<YOUR-JUPYTERHUB-USERNAME>` with your jupyterhub username that you log in to the hub with (usually your github username)
 
 Here's an example:
 
-```
+```default
 Host openscapes.2i2c.cloud
     User jovyan
     ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" asyncstdio: wss://%h/user/ateucher/sshd/
+    IdentitiesOnly yes
 ```
 
 On Windows, it would look like this:
 
-```
+```default
 Host openscapes.2i2c.cloud
     User jovyan
     ProxyCommand websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/
+    IdentitiesOnly yes
 ```
 
 *Note that if you are connecting to your JupyterHub in a VSCode fork such as VSCodium, Cursor, or Positron, or any other IDE that uses the [open-remote-ssh](https://github.com/jeanp413/open-remote-ssh) extension, you need to make sure the value of the -H argument (`"Authorization: token xxxx"`) is enclosed in double quotes and not single quotes, or the connection will fail.*
@@ -176,10 +185,11 @@ You will need to provide the full path to the `websocat` executable in the `Prox
 
 For example, if you placed `websocat.exe` in `C:/Users/andy/AppData/Roaming/websocat/`, your `~/.ssh/config` entry would look like this:
 
-```
+```default
 Host openscapes.2i2c.cloud
     User jovyan
     ProxyCommand C:/Users/andy/AppData/Roaming/websocat/websocat --binary -H="Authorization: token ajklhdkfs989dfsbuw89983bf89se" wss://%h/user/ateucher/sshd/
+    IdentitiesOnly yes
 ```
 
 :::
@@ -233,7 +243,7 @@ for NMFS-Openscapes.
 
 If everything is set up correctly, you should be logged into your JupyterHub server via SSH, and you will have a new prompt in your terminal that looks something like this:
 
-```
+```default
 (notebook) $
 ```
 
@@ -248,13 +258,13 @@ To exit the SSH session, simply type `exit` and press Enter.
 You can also connect to your JupyterHub server via SSH from an IDE such as VSCode or Positron.
 
 1. Make sure your JupyterHub server is running.
-1. Open your IDE.
-2. Open the command palette (e.g., `Ctrl+Shift+P` in VSCode).
-3. Search for and select `Remote-SSH: Connect to Host...`
-4. Type or select the name of the host you set up in your `~/.ssh/config` file (e.g., `openscapes.2i2c.cloud` or `nmfs-openscapes.2i2c.cloud`) and press Enter.
+2. Open your IDE.
+3. Open the command palette (e.g., `Ctrl+Shift+P` in VSCode).
+4. Search for and select `Remote-SSH: Connect to Host...`
+5. Type or select the name of the host you set up in your `~/.ssh/config` file (e.g., `openscapes.2i2c.cloud` or `nmfs-openscapes.2i2c.cloud`) and press Enter.
 
 ![](img/ssh-connect-positron.png)
 
-5. A new IDE window will open, and you can open a folder or workspace on your JupyterHub server, and work there as if you were working locally. In the explorer pane, you should see buttons giving you the option to "Open Folder" or "Clone Repository". You can use "Open Folder" to open an existing folder on the JupyterHub server, or "Clone Repository" to clone a git repository directly into your JupyterHub server.
+6. A new IDE window will open, and you can open a folder or workspace on your JupyterHub server, and work there as if you were working locally. In the explorer pane, you should see buttons giving you the option to "Open Folder" or "Clone Repository". You can use "Open Folder" to open an existing folder on the JupyterHub server, or "Clone Repository" to clone a git repository directly into your JupyterHub server.
 
 To close the remote connection, click on the box in the bottom-left corner of the IDE window and select "Close Remote Connection".
