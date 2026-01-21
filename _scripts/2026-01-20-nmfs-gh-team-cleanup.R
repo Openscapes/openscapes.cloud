@@ -15,13 +15,14 @@ prod_teams_hub_access <- read_yaml(
     "GitHubOAuthenticator",
     "allowed_organizations"
   ) |>
-  str_remove("^nmfs-openscapes:")
+  str_remove("^nmfs-openscapes:") |>
+  tolower()
 
 # Get all NMFS teams and add users
 nmfs_teams <- list_teams("nmfs-openscapes", names_only = FALSE) |>
-  mutate(team = tolower(name), .keep = "unused") |>
+  rename(team = slug) |>
   mutate(
-    name = map(slug, \(x) tolower(list_team_members(x, "nmfs-openscapes")))
+    name = map(team, \(x) tolower(list_team_members(x, "nmfs-openscapes")))
   ) |>
   # join access teams so that we know if/how they are getting access to the hub
   left_join(
