@@ -242,9 +242,8 @@ size_by_date <- dir_sizes(
 team_names <- c(
   "longterm-access-2i2c",
   "mentors",
-  "2024-science-teams",
   "2024-nmfs-champions-cohort",
-  "2024-coastwatch"
+  "2025-nmfs-champions-cohort"
 )
 
 teams <- lapply(team_names, \(x) {
