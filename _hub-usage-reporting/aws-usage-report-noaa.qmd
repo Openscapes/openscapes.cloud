@@ -243,7 +243,8 @@ team_names <- c(
   "longterm-access-2i2c",
   "mentors",
   "2024-nmfs-champions-cohort",
-  "2025-nmfs-champions-cohort"
+  "2026-jupyterhub",
+  "gpu-access-2i2c"
 )
 
 teams <- lapply(team_names, \(x) {
