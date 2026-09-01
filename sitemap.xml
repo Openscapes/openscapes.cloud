@@ -1,39 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://openscapes.cloud/ssh-into-hub.html</loc>
-    <lastmod>2026-08-01T02:45:53.464Z</lastmod>
-  </url>
-  <url>
     <loc>https://openscapes.cloud/github-access.html</loc>
-    <lastmod>2026-08-01T02:45:53.451Z</lastmod>
+    <lastmod>2026-09-01T02:04:54.391Z</lastmod>
   </url>
   <url>
     <loc>https://openscapes.cloud/index.html</loc>
-    <lastmod>2026-08-01T02:45:53.464Z</lastmod>
-  </url>
-  <url>
-    <loc>https://openscapes.cloud/usage-reporting.html</loc>
-    <lastmod>2026-08-01T02:45:53.464Z</lastmod>
-  </url>
-  <url>
-    <loc>https://openscapes.cloud/about.html</loc>
-    <lastmod>2026-08-01T02:45:53.451Z</lastmod>
+    <lastmod>2026-09-01T02:04:54.407Z</lastmod>
   </url>
   <url>
     <loc>https://openscapes.cloud/fledging.html</loc>
-    <lastmod>2026-08-01T02:45:53.451Z</lastmod>
+    <lastmod>2026-09-01T02:04:54.391Z</lastmod>
   </url>
   <url>
-    <loc>https://openscapes.cloud/access-policies.html</loc>
-    <lastmod>2026-08-01T02:45:53.451Z</lastmod>
+    <loc>https://openscapes.cloud/about.html</loc>
+    <lastmod>2026-09-01T02:04:54.391Z</lastmod>
   </url>
   <url>
-    <loc>https://openscapes.cloud/password-access.html</loc>
-    <lastmod>2026-08-01T02:45:53.464Z</lastmod>
+    <loc>https://openscapes.cloud/ssh-into-hub.html</loc>
+    <lastmod>2026-09-01T02:04:54.407Z</lastmod>
   </url>
   <url>
     <loc>https://openscapes.cloud/data-storage.html</loc>
-    <lastmod>2026-08-01T02:45:53.451Z</lastmod>
+    <lastmod>2026-09-01T02:04:54.391Z</lastmod>
+  </url>
+  <url>
+    <loc>https://openscapes.cloud/access-policies.html</loc>
+    <lastmod>2026-09-01T02:04:54.391Z</lastmod>
+  </url>
+  <url>
+    <loc>https://openscapes.cloud/password-access.html</loc>
+    <lastmod>2026-09-01T02:04:54.407Z</lastmod>
+  </url>
+  <url>
+    <loc>https://openscapes.cloud/usage-reporting.html</loc>
+    <lastmod>2026-09-01T02:04:54.407Z</lastmod>
   </url>
 </urlset>
