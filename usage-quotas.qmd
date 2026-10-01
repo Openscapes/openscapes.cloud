@@ -10,9 +10,9 @@ To keep the Hubs sustainable for everyone, we use [usage quotas](https://2i2c.or
 
 ## Home directory storage
 
-Your `$HOME` directory has a fixed size limit.
+Your home directory in the hub has a fixed size limit (see below for specific size quotas).
 Your home directory is meant for code, notebooks, and small files; where possible data should be streamed for analysis, or stored in an S3 bucket instead.
-See our [Data Storage Policies](data-storage.qmd) for how to use `$SCRATCH_BUCKET` and `$PERSISTENT_BUCKET`, and the 2i2c documentation on [storage quotas](https://docs.2i2c.org/user/data/filesystem#filesystem-storage-quotas).
+See our [Data Storage Policies](data-storage.qmd) for tips on managing your storage, and the 2i2c documentation on [storage quotas](https://docs.2i2c.org/user/data/filesystem#filesystem-storage-quotas).
 
 ## Compute
 
