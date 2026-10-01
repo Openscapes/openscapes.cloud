@@ -51,7 +51,7 @@ workshop shared password will persist for seven days post-workshop.
 
 ## Allowable Uses of 2i2c Hub 
 
-Users who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (1.9GB RAM and up to 3.75 CPUs). 
+Users who access the Openscapes Hubs agree to use the Hub only for work on activities related to the collaboration with Openscapes. Generally, recommended instance size is the smallest instance (~2 GB RAM and up to ~4 CPUs). Storage and compute are subject to [usage quotas](usage-quotas.qmd); see that page for tips on [choosing the right server size](usage-quotas.qmd#choosing-the-right-server-size). 
 
 Running large or parallel jobs over large geographic areas or over long temporal extents should be cleared with the Openscapes Team by submitting an issue to the [openscapes.cloud repository]( https://github.com/openscapes/openscapes.cloud).
 
