@@ -116,9 +116,9 @@ I have added you to the [NASA/NMFS] Openscapes 2i2c Jupyter Hub with the GitHub 
 
 Here is the link to the hub: <https://openscapes.cloud/>
 
-There is a getting started guide in the NASA Earthdata Cloud Cookbook here: <https://nasa-openscapes.github.io/earthdata-cloud-cookbook/>. 
-You can see policies for hub use here: <https://openscapes.cloud/access-policies.html>, 
-and policies and best practices for data storage here <https://openscapes.cloud/data-storage.html>
+There is a getting started guide in the NASA Earthdata Cloud Cookbook here: <https://nasa-openscapes.github.io/earthdata-cloud-cookbook/>.
+You can see policies for hub use here: <https://openscapes.cloud/access-policies.html> and policies and best practices for data storage here <https://openscapes.cloud/data-storage.html>.
+We have implemented storage and compute quotas for users, which you can see here: <https://openscapes.cloud/usage-quotas.html> - this gives you information on the quotas, as well as tips to help you manage your storage and compute resources effectively.
 
 We'd love to know about the kind of work you are doing on the hub. Please add a brief description of your progress as you go at <https://github.com/openscapes/openscapes.cloud/discussions/42>. We will follow up in the next few months. 
 

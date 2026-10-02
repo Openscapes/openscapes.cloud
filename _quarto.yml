@@ -18,6 +18,7 @@ website:
         menu:
           - access-policies.qmd
           - data-storage.qmd
+          - usage-quotas.qmd
       - text: "Access Instructions"
         menu:
           - github-access.qmd
