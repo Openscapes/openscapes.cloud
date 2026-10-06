@@ -35,8 +35,13 @@ If you use up your compute quota, you will not be able to start a new server unt
 
 You can see your current storage and compute usage at any time in the usage dashboard:
 
-1. Go to the Hub Control Panel: [NASA](https://openscapes.2i2c.cloud/hub/home) or [NMFS](https://nmfs-openscapes.2i2c.cloud/hub/home).
-   If you are already in JupyterLab, select **File > Hub Control Panel**.
+1. Go to the Hub Control Panel:
+
+    - [NASA](https://openscapes.2i2c.cloud/hub/home) / [NASA Workshop](https://workshop.openscapes.2i2c.cloud/hub/home)
+    - [NMFS](https://nmfs-openscapes.2i2c.cloud/hub/home) / [NMFS Workshop](https://workshop.nmfs-openscapes.2i2c.cloud/hub/home)
+
+      If you are already in JupyterLab, select **File > Hub Control Panel**.
+
 2. Open the **Services** menu in the top navigation bar and select **usage-quota**.
 
 The dashboard shows how much of each quota you have used and how much remains.
