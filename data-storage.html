@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.10.18">
+<meta name="generator" content="quarto-1.10.19">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -43,7 +43,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-2619255492ec2d6e18914fd7760fe86e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -112,6 +112,10 @@ ul.task-list li input[type="checkbox"] {
         <li>
     <a class="dropdown-item" href="./data-storage.html">
  <span class="dropdown-text">Data Storage Policies</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./usage-quotas.html">
+ <span class="dropdown-text">Usage Quotas</span></a>
   </li>  
     </ul>
   </li>
@@ -196,13 +200,13 @@ ul.task-list li input[type="checkbox"] {
 
 
 <p>Storing large amounts of data in the cloud can incur significant ongoing costs if not done optimally. We are charged daily for data stored in our Hub. We are developing technical strategies and policies to reduce storage costs that will keep the Openscapes 2i2c Hub a shared resource for us all to use, while also providing reusable strategies for other admins.</p>
-<p>The Hub uses an <a href="https://aws.amazon.com/ec2/">EC2</a> compute instance, with the <code>$HOME</code> directory (<code>/users/jovyan/</code> in python images and <code>/users/rstudio/</code> in R images) mounted to <a href="https://aws.amazon.com/efs/">AWS Elastic File System (EFS)</a> storage. This drive is really handy because it is persistent across server restarts and is a great place to store your code. However the <code>$HOME</code> directory should not be used to store data, as it is very expensive, and can also be quite slow to read from and write to.</p>
+<p>The Hub uses an <a href="https://aws.amazon.com/ec2/">EC2</a> compute instance, with the <code>$HOME</code> directory (<code>/users/jovyan/</code> in python images and <code>/users/rstudio/</code> in R images) mounted to <a href="https://aws.amazon.com/efs/">AWS Elastic File System (EFS)</a> storage. This drive is really handy because it is persistent across server restarts and is a great place to store your code. However the <code>$HOME</code> directory should not be used to store data, as it is very expensive, and can also be quite slow to read from and write to. There are limits as to how much you can store in your <code>$HOME</code> directory - please see <a href="./usage-quotas.html">Usage Quotas</a> for more details.</p>
 <p>To that end, the Hub provides every user access to two <a href="https://aws.amazon.com/s3/">AWS S3</a> buckets - a “scratch” bucket for short-term storage, and a “persistent” bucket for longer-term storage. AWS S3 buckets are like online storage containers, available through the internet, where you can store and retrieve files. S3 buckets have fast read/write, and storage costs are relatively inexpensive compared to storing in your <code>$HOME</code> directory. All major cloud providers provide a similar storage service - S3 is Amazon’s version, while Google provides “Google Cloud Storage”, and Microsoft provides “Azure Blob Storage”.</p>
 <p>These buckets are available only when you are working inside the Hub; you can access them using the environment variables:</p>
 <ul>
 <li><code>$SCRATCH_BUCKET</code> pointing to <code>s3://openscapeshub-scratch/[your-username]</code>
 <ul>
-<li>Scratch buckets are designed for storage of temporary files, e.g. intermediate results. Objects stored in a scratch bucket are removed after 7 days from their creation.</li>
+<li>Scratch buckets are designed for storage of temporary files, e.g.&nbsp;intermediate results. Objects stored in a scratch bucket are removed after 7 days from their creation.</li>
 </ul></li>
 <li><code>$PERSISTENT_BUCKET</code> pointing to <code>s3://openscapeshub-persistent/[your-username]</code>
 <ul>
@@ -217,7 +221,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="data-retention-and-archiving-policy">Data retention and archiving policy</h2>
 <p>User <code>$HOME</code> directories will be retained for six months after their last use. After a home directory has been idle for six months, it will be <a href="#how-to-archive-old-home-dir">archived to our “archive” S3 bucket, and removed</a>. If a user requests their archive back, an admin can restore it for them.</p>
 <p>Once a user’s home directory archive has been sitting in the archive for an additional six months, it will be permanently removed from the archive. After this it can no longer be retrieved. <!-- TODO make this automatic policy in S3 console --></p>
-<p>In addition to these policies, admins will keep an eye on the <a href="https://grafana.openscapes.2i2c.cloud/d/bd232539-52d0-4435-8a62-fe637dc822be/home-directory-usage-dashboard?orgId=1">Home Directory Usage Dashboard</a> in Grafana. When a user’s home directory increases in size to over 100GB, we will contact them and work with them to reduce the size of their home directory - by removing large unnecessary files, and moving the rest to the appropriate S3 bucket (e.g., <code>$PERSISTENT_BUCKET</code>).</p>
+<p>In addition to these policies, admins will keep an eye on the <a href="https://grafana.openscapes.2i2c.cloud/d/bd232539-52d0-4435-8a62-fe637dc822be/home-directory-usage-dashboard?orgId=1">Home Directory Usage Dashboard</a> in Grafana. When a user’s home directory grows too large, we will contact them and work with them to reduce the size of their home directory - by removing large unnecessary files, and moving the rest to the appropriate S3 bucket (e.g., <code>$PERSISTENT_BUCKET</code>).</p>
 <section id="the-_shared-directory" class="level3">
 <h3 class="anchored" data-anchor-id="the-_shared-directory">The <code>_shared</code> directory</h3>
 <p><a href="https://infrastructure.2i2c.org/topic/infrastructure/storage-layer/#shared-directories">The <code>_shared</code> directory</a> is a place where instructors can put workshop materials for participants to access. It is mounted as <code>/home/jovyan/shared</code>, and is <em>read only</em> for all users. For those with admin access to the Hub, it is also mounted as a writeable directory as <code>/home/jovyan/shared-readwrite</code>.</p>
