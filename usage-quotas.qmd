@@ -54,7 +54,9 @@ See the 2i2c [usage and quota dashboard documentation](https://docs.2i2c.org/use
 
 When you start your server, you choose a server size (for example, "~4 GB RAM, ~0.5 CPUs").
 **We are charged for the size you select, not for what you actually use.** For example, a ~15 GB server counts as ~15 GB for every hour it runs, even if your notebook only uses 2 GB of it.
-Choosing a server that is larger than you need wastes money and uses up your quota faster.
+Choosing a server that is larger than you need wastes money and uses up your quota faster. See the screenshot below for an example of the options:
+
+![](images/resource-selection-screenshot.png)
 
 As a guide, here is roughly what each server size costs, and how long it can run before using the full 5,000 GiB-hour quota in a 30-day window:
 
@@ -146,7 +148,7 @@ Using your full compute quota costs roughly \$`r round(mean(sizes$cost_per_hour 
 Tips for choosing the right size:
 
 - **Start small.** The smallest server is enough for most work, including workshops, writing code, and exploring data.
-  Only move up if you run out of memory.
+  If you run out of memory, choose a larger instance - you will need to shut down your server (File > Hub Control Panel > Stop My Server) and launch a new one by choosing an option with more resources in the dropdown menu.
 - **Watch your memory use.** The memory indicator at the bottom of JupyterLab shows how much memory you are using.
   If you are consistently using under half of your server's memory, try choosing a smaller size.
   ![](images/jupyterlab-memory.png){fig-alt="JupyterLab memory usage indicator showing 287 MB of 2 GB used."}
