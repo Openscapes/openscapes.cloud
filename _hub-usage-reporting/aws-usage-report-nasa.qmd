@@ -1,7 +1,7 @@
 ---
 title: "NASA Openscapes 2i2c JupyterHub\nUsage and Costs"
 params:
-  year_month: "2025-02"
+  year_month: !expr format(lubridate::floor_date(Sys.Date(), "month") - 1, "%Y-%m")
 subtitle: "Monthly report for `r format(lubridate::ym(params$year_month), '%B %Y')`"
 format: typst
 ---
@@ -20,17 +20,17 @@ A key objective of NASA Openscapes is to minimize “the time to science” for 
 The main costs of running the JupyterHub come from two sources:
 
 1. Compute, using AWS EC2
-2. Storage using AWS EFS, via storage in users' home directories
+2. Storage using AWS EBS volumes and snapshots, via storage in users' home directories
 
 Compute costs scale up and down as the Hub is used, however storage costs are
 fixed - we pay for "data at rest", with
-[ongoing daily costs/GB](https://aws.amazon.com/efs/pricing/) even while the
+[ongoing daily costs/GB](https://aws.amazon.com/ebs/pricing/) even while the
 Hub is not running.
 
 Storing large amounts of data in the cloud can incur significant ongoing costs if not done optimally. We are developing [technical strategies and policies](https://openscapes.cloud/data-storage.html) in the Earthdata Cloud Cookbook to reduce storage costs that will keep the Openscapes 2i2c Hub a shared resource for us all to use, while also providing reusable strategies for other admins.
 
 This report is intended to give a monthly summary of usage of the Hub and its
-resources, by tracking metrics on costs and usage of key components of storage (EFS)
+resources, by tracking metrics on costs and usage of key components of storage (EBS)
 and compute (EC2).
 
 ```{r setup}
@@ -102,7 +102,6 @@ The following plot shows the total monthly costs of all AWS services related to
 the Hub, as well as a breakdown of costs by service each month.
 
 ```{r total-costs}
-
 # https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage/
 # https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
 all_daily_costs_six_months <- get_daily_usage_costs(
@@ -125,9 +124,10 @@ total_monthly_cost <- total_monthly_usage_costs$cost[
 
 total_monthly_cost_plot <- ggplot(total_monthly_usage_costs) +
   geom_line(aes(x = start_date, y = cost)) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   labs(
     title = glue::glue(
-      "The total cost of all AWS Services for running the NASA Openscapes 2i2c",
+      "The total cost of all AWS Services for running the NASA Openscapes 2i2c ",
       "Hub in {reporting_my} was ${round(total_monthly_cost)}"
     ),
     x = "Month",
@@ -139,7 +139,6 @@ total_monthly_cost_plot <- ggplot(total_monthly_usage_costs) +
 #| fig-height: 7
 
 monthly_costs_by_service <- all_daily_costs_six_months |>
-  filter(id == "unblended") |>
   mutate(
     date = ymd(date),
     start_date = floor_date(date, unit = "month"),
@@ -159,6 +158,7 @@ monthly_cost_by_service_plot <- ggplot(
   aes(x = start_date, y = cost, fill = service)
 ) +
   geom_col() +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
   scale_fill_discrete(
     type = aws_ce_palette(n_distinct(monthly_cost_service_summary$service))
   ) +
@@ -170,8 +170,8 @@ monthly_cost_by_service_plot <- ggplot(
   ) +
   labs(
     title = "Monthly cost of AWS Services",
-    subtitle = "Largest costs are EC2 compute (blue) and EFS (home directory) storage (red)",
-    caption = "*The top nine services are shown individually, with any remaining grouped into 'Other'",
+    subtitle = "Largest costs are EC2 compute (blue) and EBS (home directory) storage (red)",
+    # caption = "*The top services are shown individually, with any remaining grouped into 'Other'",
     x = "Month",
     y = "Monthly cost ($)",
     fill = "AWS Service"
@@ -181,18 +181,49 @@ monthly_cost_by_service_plot <- ggplot(
 total_monthly_cost_plot / monthly_cost_by_service_plot
 ```
 
+The same costs can be grouped by category, following cost allocation tags
+created by 2i2c, which offer a more intuitive categorization of hub costs:
+
+- "core" (always-on infrastructure that is needed whether or not the
+Hub is used)
+- "compute" (user sessions)
+- "home storage" (volumes and snapshots for user home directories)
+- networking and object storage
+
+```{r monthly-costs-by-component}
+#| fig-height: 4
+
+monthly_cost_by_component_plot <- all_daily_costs_six_months |>
+  mutate(start_date = floor_date(date, unit = "month")) |>
+  summarise(cost = sum(cost), .by = c(start_date, service_component)) |>
+  mutate(
+    service_component = fct_reorder(service_component, cost, .fun = sum)
+  ) |>
+  ggplot(aes(x = start_date, y = cost, fill = service_component)) +
+  geom_col() +
+  scale_x_date(date_breaks = "1 month", date_labels = "%b") +
+  scale_fill_brewer(palette = "Set2") +
+  theme(legend.position = "bottom") +
+  labs(
+    title = "Monthly cost by category",
+    x = "Month",
+    y = "Monthly cost ($)",
+    fill = "Category"
+  )
+
+monthly_cost_by_component_plot
+```
+
 ### Storage
 
 Managing storage is an effective way to manage long-term costs in the Hub, as
 data-at-rest is an ongoing cost, much of which can be avoided by monitoring and
 reducing storage of data that is not required.
 
-User home directories are in an AWS ["Elastic File System" (EFS)](https://aws.amazon.com/efs/) mount, which is
-a relatively expensive option for long-term storage of large files. The
+User home directories are stored on AWS [Elastic Block Store (EBS)](https://aws.amazon.com/ebs/) volumes, which
+are backed up with snapshots. The
 following figure plots the daily total size of data storage in the user home
-directories in the Hub over the past six months. The size of the home drives
-is directly correlated with the costs for "Amazon Elastic File System" in the
-previous chart.
+directories in the Hub over the past six months.
 
 ```{r monthly-storage}
 monthly_size <- dir_sizes(
@@ -208,7 +239,7 @@ monthly_size |>
   geom_line(aes(x = date, y = dirsize_gb)) +
   scale_x_datetime(date_breaks = "1 month", date_labels = "%B") +
   labs(
-    title = "Total size of user home directories in AWS EFS in the main Hub",
+    title = "Total size of user home directories in AWS EBS in the main Hub",
     x = "Month",
     y = "Total Size (GB)"
   )
@@ -218,6 +249,38 @@ monthly_size |>
 
 To understand more about usage and costs during the current month,
 we can look at daily usage metrics and costs.
+
+### Daily costs by category
+
+The following figure shows the daily costs for `r reporting_month`, grouped by
+the same cost categories as above.
+
+```{r daily-costs-by-category}
+#| fig-height: 3
+
+daily_cost_by_category_plot <- all_daily_costs_six_months |>
+  filter(month(date) == month(end_date)) |>
+  summarise(cost = sum(cost), .by = c(date, service_component)) |>
+  mutate(
+    service_component = fct_reorder(service_component, cost, .fun = sum)
+  ) |>
+  ggplot(aes(x = date, y = cost, fill = service_component)) +
+  geom_col() +
+  scale_x_date(
+    breaks = seq(start_date, end_date, by = "week"),
+    date_labels = "%b %d"
+  ) +
+  scale_fill_brewer(palette = "Set2") +
+  theme(legend.position = "bottom") +
+  labs(
+    title = glue("Daily cost by category for {reporting_my}"),
+    x = "Date",
+    y = "Daily cost ($)",
+    fill = "Category"
+  )
+
+daily_cost_by_category_plot
+```
 
 ### Home directory sizes
 
@@ -236,7 +299,7 @@ the workshop, at which point users' home directories are removed.
 
 The following figure shows the total size of home directories by namespace. Note
 the different y axis scales in each panel. The "prod" namespace panel is broken
-out by the GitHub team by which they are granted access to the Hub (Long-Term Access and NASA Champions 2024).
+out by the GitHub team by which they are granted access to the Hub. Only teams with >= 5GB total home storage are included.
 
 ```{r homedir-size-by-date}
 size_by_date <- dir_sizes(
@@ -247,44 +310,57 @@ size_by_date <- dir_sizes(
 ) |>
   mutate(dirsize_gb = dirsize_mb * 1e-3)
 
-# list_teams("nasa-openscapes")
-# list_teams("nasa-openscapes-workshops")
-
-lt_access_members <- list_team_members(
-  team = "LongtermAccess-2i2c",
-  org = "nasa-openscapes",
-  names_only = TRUE
-) |>
-  tolower()
-
-champions_members <- list_team_members(
-  team = "nasa-champions-2024",
-  org = "nasa-openscapes-workshops",
-  names_only = TRUE
-) |>
-  tolower() |>
-  setdiff(lt_access_members)
-
-teams <- data.frame(
-  team = "NASA Champions 2024",
-  user = champions_members
-) |>
-  bind_rows(
-    data.frame(
-      team = "Long Term Access",
-      user = lt_access_members
-    )
+# Teams allowed access in the hub's GitHubOAuthenticator.allowed_organizations,
+# in priority order for users who are in more than one team.
+access_teams <- data.frame(
+  org = c(
+    rep("nasa-openscapes", 4),
+    rep("nasa-openscapes-workshops", 5)
+  ),
+  team = c(
+    "longtermaccess-2i2c",
+    "championsaccess-2i2c",
+    "defined-term-access-2i2c",
+    "workshopaccess-2i2c",
+    "nasa-champions-2024",
+    "championsaccess-2i2c",
+    "workshopaccess-2i2c",
+    "emit-methane-plume-2024-03-14",
+    "adminteam"
   )
+)
 
-# setdiff(champions_members, unique(size_by_date$directory))
+teams <- lapply(seq_len(nrow(access_teams)), \(i) {
+  members <- list_team_members(
+    access_teams$team[i],
+    org = access_teams$org[i],
+    names_only = TRUE
+  )
+  data.frame(team = access_teams$team[i], user = tolower(members))
+}) |>
+  bind_rows() |>
+  distinct(user, .keep_all = TRUE)
 
 size_by_date_by_team <- size_by_date |>
   left_join(
     teams,
     by = join_by(directory == user)
   ) |>
+  filter(namespace %in% c("prod", "workshop")) |>
   mutate(
-    team = ifelse(namespace == "workshop", "workshop", team),
+    team = case_when(
+      is.na(team) &
+        directory %in%
+          c(
+            "_shared",
+            "_shared-public",
+            "deployment-service-check"
+          ) ~
+        "shared",
+      namespace == "workshop" ~ "workshop",
+      is.na(team) ~ "No team",
+      .default = team
+    ),
     directory = fct_reorder(
       directory,
       desc(dirsize_gb),
@@ -294,44 +370,46 @@ size_by_date_by_team <- size_by_date |>
   )
 
 all_dirs_sum_by_date <- size_by_date_by_team |>
-  filter(namespace %in% c("prod", "workshop")) |>
   group_by(namespace, date, team) |>
   summarize(total_size_gb = sum(dirsize_gb)) |>
-  # Add a dummy row - this is temporary to work around the bug at:
-  # https://github.com/tidyverse/ggplot2/issues/6680
-  bind_rows(
-    tibble::tibble(
-      namespace = "workshop",
-      date = start_date,
-      team = "Other",
-      total_size_gb = 0
-    )
-  ) |>
   mutate(
-    team = ifelse(is.na(team) & namespace == "prod", "Other", team),
     team = fct_reorder(team, desc(total_size_gb), .fun = max, .desc = TRUE)
   )
+
+small_teams <- all_dirs_sum_by_date |>
+  ungroup() |>
+  filter(date == max(date), total_size_gb < 5)
+
+all_dirs_sum_by_date <- all_dirs_sum_by_date |>
+  anti_join(small_teams, by = "team")
 ```
 
 
 ```{r homedir-size-over-time}
+#| fig-width: 6
+#| fig-height: 5.5
+
 all_dirs_sum_by_date |>
   ggplot(aes(x = date, y = total_size_gb)) +
   geom_area(aes(fill = team)) +
-  facet_grid(vars(namespace), scales = "free_y") +
+  facet_grid(rows = vars(namespace), scales = "free_y") +
   theme(legend.position = "bottom", legend.title.position = "top") +
-  paletteer::scale_fill_paletteer_d(
-    "ggpomological::pomological_palette"
+  scale_fill_manual(
+    values = colorRampPalette(
+      as.character(paletteer::paletteer_d("ggpomological::pomological_palette"))
+    )(nlevels(all_dirs_sum_by_date$team)),
+    breaks = unique(all_dirs_sum_by_date$team)
   ) +
   labs(
     title = "Total size of user home directories by access team and Hub namespace",
     x = "Date",
-    y = "Size (GB)",
+    y = "Size (GiB)",
     fill = "GitHub Team"
-  )
+  ) +
+  guides(fill = guide_legend(ncol = 2))
 ```
 
-#### Champions cohort
+<!-- #### Champions cohort
 
 It is also helpful to look more deeply into the Champions cohort to see how
 they are using the Hub, and how much storage is being used. The following
@@ -340,6 +418,8 @@ are not displayed, but we can see if any users are using a disproportionate amou
 of space. When we see disproportionate amount of space used, we reach out to users and work with them to reduce their storage, and update the [Cookbook tutorials](https://nasa-openscapes.github.io/earthdata-cloud-cookbook/policies-admin/data-policies.html) as needed.
 
 ```{r homedir-size-champions}
+#| eval: false
+
 size_by_date_by_team |>
   filter(team == "NASA Champions 2024") |>
   ggplot(aes(x = date, y = dirsize_gb, fill = directory)) +
@@ -355,6 +435,8 @@ size_by_date_by_team |>
     y = "Size (GB)"
   )
 ```
+
+-->
 
 ### Compute costs and usage
 
