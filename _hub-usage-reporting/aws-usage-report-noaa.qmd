@@ -102,7 +102,6 @@ The following plot shows the total monthly costs of all AWS services related to
 the Hub, as well as a breakdown of costs by service each month.
 
 ```{r total-costs}
-
 # https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage/
 # https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
 all_daily_costs_six_months <- get_daily_usage_costs(
@@ -141,7 +140,6 @@ total_monthly_cost_plot <- ggplot(total_monthly_usage_costs) +
 #| fig-height: 7
 
 monthly_costs_by_service <- all_daily_costs_six_months |>
-  filter(id == "unblended") |>
   mutate(
     date = ymd(date),
     start_date = floor_date(date, unit = "month"),
@@ -174,7 +172,7 @@ monthly_cost_by_service_plot <- ggplot(
   labs(
     title = "Monthly cost of AWS Services",
     # subtitle = "Largest costs are EC2 compute (blue) and EBS (home directory) storage (red)",
-    caption = "*The top nine services are shown individually, with any remaining grouped into 'Other'",
+    # caption = "*The top services are shown individually, with any remaining grouped into 'Other'",
     x = "Month",
     y = "Monthly cost ($)",
     fill = "AWS Service"
@@ -184,10 +182,14 @@ monthly_cost_by_service_plot <- ggplot(
 total_monthly_cost_plot / monthly_cost_by_service_plot
 ```
 
-The same costs can be grouped by category, following the cost allocation tags
-used by 2i2c: "core" (always-on infrastructure that is needed whether or not the
-Hub is used), "compute" (user sessions), and "home storage" (volumes and
-snapshots for user home directories), as well as networking and object storage.
+The same costs can be grouped by category, following cost allocation tags
+created by 2i2c, which offer a more intuitive categorization of hub costs: 
+
+- "core" (always-on infrastructure that is needed whether or not the
+Hub is used)
+- "compute" (user sessions)
+- "home storage" (volumes and snapshots for user home directories)
+- networking and object storage
 
 ```{r monthly-costs-by-component}
 #| fig-height: 4
@@ -195,7 +197,9 @@ snapshots for user home directories), as well as networking and object storage.
 monthly_cost_by_component_plot <- all_daily_costs_six_months |>
   mutate(start_date = floor_date(date, unit = "month")) |>
   summarise(cost = sum(cost), .by = c(start_date, service_component)) |>
-  mutate(service_component = fct_reorder(service_component, cost, .fun = sum)) |>
+  mutate(
+    service_component = fct_reorder(service_component, cost, .fun = sum)
+  ) |>
   ggplot(aes(x = start_date, y = cost, fill = service_component)) +
   geom_col() +
   scale_x_date(date_breaks = "1 month", date_labels = "%b") +
@@ -218,11 +222,9 @@ data-at-rest is an ongoing cost, much of which can be avoided by monitoring and
 reducing storage of data that is not required.
 
 User home directories are stored on AWS [Elastic Block Store (EBS)](https://aws.amazon.com/ebs/) volumes, which
-are backed up with snapshots. This is a relatively expensive option for long-term storage of large files. The
+are backed up with snapshots. The
 following figure plots the daily total size of data storage in the user home
-directories in the Hub over the past six months. The size of the home drives
-is related to the EBS volume and snapshot costs, which appear under "EC2 - Other" in the
-previous chart.
+directories in the Hub over the past six months.
 
 ```{r monthly-storage}
 monthly_size <- dir_sizes(
@@ -253,17 +255,18 @@ we can look at daily usage metrics and costs.
 ### Daily costs by category
 
 The following figure shows the daily costs for `r reporting_month`, grouped by
-the same categories as above.
+the same cost categories as above.
 
-```{r daily-costs-by-component}
+```{r daily-costs-by-category}
 #| fig-height: 3
 
-daily_cost_by_component <- all_daily_costs_six_months |>
-  filter(date >= start_date, date <= end_date) |>
+daily_cost_by_category_plot <- all_daily_costs_six_months |>
+  filter(month(date) == month(end_date)) |>
   summarise(cost = sum(cost), .by = c(date, service_component)) |>
-  mutate(service_component = fct_reorder(service_component, cost, .fun = sum))
-
-ggplot(daily_cost_by_component, aes(x = date, y = cost, fill = service_component)) +
+  mutate(
+    service_component = fct_reorder(service_component, cost, .fun = sum)
+  ) |>
+  ggplot(aes(x = date, y = cost, fill = service_component)) +
   geom_col() +
   scale_x_date(
     breaks = seq(start_date, end_date, by = "week"),
@@ -272,20 +275,21 @@ ggplot(daily_cost_by_component, aes(x = date, y = cost, fill = service_component
   scale_fill_brewer(palette = "Set2") +
   theme(legend.position = "bottom") +
   labs(
-    title = glue::glue("Daily cost by category in {reporting_my}"),
+    title = glue("Daily cost by category for {reporting_my}"),
     x = "Date",
     y = "Daily cost ($)",
     fill = "Category"
   )
+
+daily_cost_by_category_plot
 ```
 
 ### Home directory sizes
 
 The following figure shows the total size of home directories in the NMFS Hub. Usage is broken
-out by the GitHub team by which they are granted access to the Hub (Long-Term Access and NMFS Champions 2024).
+out by the GitHub team by which they are granted access to the Hub (Long-Term Access and NMFS Champions 2024). Only teams with >= 5GB total home storage are included.
 
 ```{r homedir-size-by-date}
-
 size_by_date <- dir_sizes(
   grafana_url = "https://grafana.nmfs-openscapes.2i2c.cloud",
   start_time = floor_date(end_date, unit = "months") %m-% months(5),
@@ -295,15 +299,7 @@ size_by_date <- dir_sizes(
 ) |>
   mutate(dirsize_gb = dirsize_mb * 1e-3)
 
-# list_teams("nmfs-openscapes")
-
-team_names <- c(
-  "longterm-access-2i2c",
-  "mentors",
-  "2024-nmfs-champions-cohort",
-  "2026-jupyterhub",
-  "gpu-access-2i2c"
-)
+team_names <- list_teams("nmfs-openscapes", names_only = FALSE)$slug
 
 teams <- lapply(team_names, \(x) {
   members <- list_team_members(x, org = "nmfs-openscapes", names_only = TRUE)
@@ -311,10 +307,6 @@ teams <- lapply(team_names, \(x) {
 }) |>
   bind_rows() |>
   distinct(user, .keep_all = TRUE)
-
-# teams_df <- list_teams("nmfs-openscapes", names_only = FALSE)
-
-# setdiff(champions_members, unique(size_by_date$directory))
 
 size_by_date_by_team <- size_by_date |>
   left_join(
@@ -324,7 +316,13 @@ size_by_date_by_team <- size_by_date |>
   filter(namespace %in% c("prod", "workshop")) |>
   mutate(
     team = case_when(
-      is.na(team) & directory %in% c("_shared", "deployment-service-check") ~
+      is.na(team) &
+        directory %in%
+          c(
+            "_shared",
+            "_shared-public",
+            "deployment-service-check"
+          ) ~
         "shared",
       namespace == "workshop" ~ "workshop",
       is.na(team) ~ "No team",
@@ -344,6 +342,13 @@ all_dirs_sum_by_date <- size_by_date_by_team |>
   mutate(
     team = fct_reorder(team, desc(total_size_gb), .fun = max, .desc = TRUE)
   )
+
+small_teams <- all_dirs_sum_by_date |>
+  ungroup() |>
+  filter(date == max(date), total_size_gb < 5)
+
+all_dirs_sum_by_date <- all_dirs_sum_by_date |>
+  anti_join(small_teams, by = "team")
 ```
 
 
@@ -409,7 +414,6 @@ can help us understand users's needs as well as compute costs. This helps us
 develop policies and recommendations for Hub compute usage.
 
 ```{r ec2-costs}
-
 # https://www.paws-r-sdk.com/docs/costexplorer_get_cost_and_usage/
 # https://docs.aws.amazon.com/aws-cost-management/latest/APIReference/API_GetDimensionValues.html
 
