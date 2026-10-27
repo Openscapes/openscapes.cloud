@@ -17,7 +17,7 @@ See our [Data Storage Policies](data-storage.qmd) for tips on managing your stor
 ## Compute
 
 Compute usage is measured in **GiB-hours**: the amount of memory (RAM) of the server you selected, multiplied by the number of hours your server is running.
-For example, running a ~4 GB server for 10 hours uses about 36 GiB-hours, while running a ~60 GB server for the same 10 hours uses about 600 GiB-hours.
+For example, running a ~4 GB server for 10 hours uses about 40 GiB-hours, while running a ~60 GB server for the same 10 hours uses about 600 GiB-hours.
 
 Usage is counted over a rolling 30-day window, so older usage gradually drops off and frees up quota.
 If you use up your compute quota, you will not be able to start a new server until enough usage has aged out of the window; the Hub will tell you when you can try again.
